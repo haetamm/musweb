@@ -1,5 +1,14 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'SpotifyMixUI';
+  src: url('/fonts/SpotifyMixUI-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -24,18 +33,45 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'SpotifyMixUI', Helvetica, sans-serif;
 }
-
 
 .glass-card {
   background: rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
+
 .hover-grow {
   transition: transform 0.2s ease;
 }
 .hover-grow:hover {
   transform: scale(1.03);
+}
+
+.custom-blur {
+  background-color: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.kontener {
+  width: 100%;
+  @media (width >= 1300px /* 1536px */) {
+      max-width: 1300px  /* 1536px */;
+  }
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+
+.carousel-container {
+  transition: transform 0.3s ease-in-out;
 }
