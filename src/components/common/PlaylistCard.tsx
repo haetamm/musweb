@@ -1,3 +1,5 @@
+import { urlPage } from '@/utils/constans';
+import Link from 'next/link';
 import React from 'react';
 import { FaMusic } from 'react-icons/fa';
 
@@ -33,9 +35,12 @@ const PlaylistCard: React.FC<{ playlist: Playlist }> = ({ playlist }) => {
 
         {/* Bottom text */}
         <div>
-          <h3 className="font-bold text-white text-xl line-clamp-1 drop-shadow-md">
+          <Link
+            href={`${urlPage.PLAYLIST}/${playlist.id}`}
+            className="font-bold text-white text-xl line-clamp-1 drop-shadow-md"
+          >
             {playlist.name}
-          </h3>
+          </Link>
           <p className="text-indigo-300 text-lg">@{playlist.username}</p>
         </div>
       </div>

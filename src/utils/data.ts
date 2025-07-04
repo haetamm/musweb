@@ -1,3 +1,5 @@
+import { Playlist } from './types';
+
 export const albums = [
   {
     id: 1,
@@ -320,3 +322,16 @@ export const playlists = [
     username: 'gari',
   },
 ];
+
+export const playlist: Playlist = {
+  id: 'playlist--9dZXNouH4Agd0FJ',
+  name: 'Lagu Untuk Membaca',
+  username: 'john',
+  songs: [
+    {
+      id: 'song-CnO-LmZCkTifZYiN',
+      title: 'Fix You',
+      performer: 'Coldplay',
+    },
+  ],
+};

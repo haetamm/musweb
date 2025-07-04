@@ -16,16 +16,16 @@ const NavbarBottom = () => {
             <Link
               key={id}
               href={to}
-              className="relative flex flex-col items-center justify-center p-3 group transition-all duration-200"
+              className="relative flex flex-col items-center justify-center p-3.5 group transition-all duration-200"
             >
               <div
-                className={`p-2 rounded-lg group-hover:bg-white/10 group-active:bg-white/20 transition-all duration-200 ${
+                className={`p-1 rounded-lg group-hover:bg-white/10 group-active:bg-white/20 transition-all duration-200 ${
                   isActive(to, pathname)
-                    ? 'bg-white text-indigo-900 font-medium'
+                    ? ' text-indigo-900 font-medium'
                     : 'hover:bg-white/10 text-white'
                 }`}
               >
-                <Icon />
+                <Icon className="h-6 w-6 shrink-0" />
               </div>
             </Link>
           ))}
