@@ -287,3 +287,36 @@ export const songs = [
     cover: 'https://picsum.photos/222/300',
   },
 ];
+
+export const playlists = [
+  {
+    id: 'playlist-rurCL1SOIgbUStup',
+    name: 'Lagu Indie Hits Indonesia',
+    username: 'sueb',
+  },
+  {
+    id: 'playlist--9dZXNouH4Agd0FJ',
+    name: 'Lagu Untuk Membaca',
+    username: 'hapi',
+  },
+  {
+    id: 'playlist--9dZXNouH4Agd0djf',
+    name: 'Lagu Tidur',
+    username: 'thaetamii',
+  },
+  {
+    id: 'playlist--erererererer343',
+    name: 'Lagu Tidur',
+    username: 'haeroni',
+  },
+  {
+    id: 'playlist--9dZXNouH4Agd078weh',
+    name: 'Lagu Kenyang',
+    username: 'sujai',
+  },
+  {
+    id: 'playlist--dkfeurieurerer',
+    name: 'Subuh',
+    username: 'gari',
+  },
+];

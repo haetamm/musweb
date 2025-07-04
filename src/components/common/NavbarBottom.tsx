@@ -10,7 +10,7 @@ const NavbarBottom = () => {
   const pathname = usePathname();
   return (
     <>
-      <nav className="lg:hidden fixed bottom-4 left-4 right-4 bg-white/20 backdrop-blur-xl border border-white/30 shadow-xl shadow-purple-900/20 rounded-full z-100 py-1 px-6 transition-all duration-300 hover:bg-white/30 hover:border-white/40">
+      <nav className="max-w-[400px] mx-auto lg:hidden fixed bottom-4 left-4 right-4 bg-white/20 backdrop-blur-xl border border-white/30 shadow-xl shadow-purple-900/20 rounded-full z-100 py-1 px-6 transition-all duration-300 hover:bg-white/30 hover:border-white/40">
         <div className="flex justify-around items-center">
           {navLink.map(({ id, icon: Icon, to }) => (
             <Link
