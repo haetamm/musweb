@@ -1,43 +1,23 @@
 'use client';
 
-import { songs } from '@/app/utils/data';
+import { useCarousel } from '@/hooks/useCarousel';
+import { albums, songs } from '@/utils/data';
 import Image from 'next/image';
-import React, { useState, useRef, useEffect } from 'react';
+import React from 'react';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
-import { useMediaQuery } from 'react-responsive';
 
 const SongCarousel = () => {
-  const [currentIndex, setCurrentIndex] = useState<number>(0);
-  const isMobile = useMediaQuery({ query: '(max-width: 768px)' }); // Ganti window.innerWidth
-  const itemsPerPage: number = 5;
-  const carouselRef = useRef<HTMLDivElement>(null);
+  const { mounted, carouselRef, currentIndex, isMobile, next, prev } =
+    useCarousel(albums, 5);
 
-  const nextSlide = (): void => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex + 1 <= songs.length - itemsPerPage ? prevIndex + 1 : prevIndex
-    );
-  };
-
-  const prevSlide = (): void => {
-    setCurrentIndex((prevIndex) => (prevIndex > 0 ? prevIndex - 1 : 0));
-  };
-
-  // Smooth scroll untuk desktop
-  useEffect(() => {
-    if (carouselRef.current && !isMobile) {
-      carouselRef.current.scrollTo({
-        left: currentIndex * (carouselRef.current.offsetWidth / itemsPerPage),
-        behavior: 'smooth',
-      });
-    }
-  }, [currentIndex, isMobile]);
+  if (!mounted) return null;
 
   return (
     <div className="relative mt-10">
       <h2 className="text-lg font-bold mt-4 mb-2">More of what you like</h2>
       <div className="relative">
         <button
-          onClick={prevSlide}
+          onClick={prev}
           className={`absolute left-2 md:left-1.5 xl:left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 z-10 p-3 rounded-full xs:bg-white/10 hover:bg-white/20 transition ${
             currentIndex === 0 ? 'hidden' : ''
           }`}
@@ -60,7 +40,7 @@ const SongCarousel = () => {
           {songs.map(({ id, cover, title, artist }) => (
             <div
               key={id}
-              className={`flex-shrink-0 w-[156px] h-[260px] xs:w-[188px] xs:h-[292px] md:w-[240px] md:h-[344px] lg:w-[190px] lg:h-[294px] xl:w-[210px] xl:h-[314px] transition-transform ${
+              className={`flex-shrink-0 w-[156px] h-[260px] xs:w-[188px] xs:h-[292px] md:w-[240px] md:h-[344px] lg:w-[190px] lg:h-[294px] xl:w-[210px]  transition-transform ${
                 isMobile ? 'snap-start' : ''
               } flex flex-col`}
             >
@@ -74,7 +54,7 @@ const SongCarousel = () => {
                   loading="lazy"
                 />
               </div>
-              <div className="p-2 flex-grow relative z-10">
+              <div className="p-2 flex-grow relative ">
                 <p className="font-medium truncate text-lg">
                   {title || 'Unknown Title'}
                 </p>
@@ -87,9 +67,9 @@ const SongCarousel = () => {
         </div>
 
         <button
-          onClick={nextSlide}
+          onClick={next}
           className={`absolute right-2 md:right-0 xl:right-3.5 top-1/2 -translate-y-1/2 translate-x-1/2 z-10 p-3 rounded-full xs:bg-white/10 hover:bg-white/20 transition ${
-            currentIndex >= songs.length - itemsPerPage ? 'hidden' : ''
+            currentIndex >= songs.length - 5 ? 'hidden' : ''
           }`}
           aria-label="Next songs"
         >

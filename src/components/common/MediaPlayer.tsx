@@ -1,6 +1,8 @@
-import { songs } from '@/app/utils/data';
+'use client';
+
+import { songs } from '@/utils/data';
 import Image from 'next/image';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   FaRandom,
   FaStepBackward,
@@ -16,8 +18,15 @@ const MediaPlayer = () => {
   const [currentSong] = useState(songs[0]);
   const [volume] = useState(80);
   const [progress] = useState(30);
+  const [mounted, setMounted] = useState(false);
 
   const togglePlay = () => setIsPlaying(!isPlaying);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
 
   return (
     <>

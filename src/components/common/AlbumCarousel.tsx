@@ -1,10 +1,10 @@
 'use client';
 
-import React, { useState, useRef, useEffect } from 'react';
+import React from 'react';
 import Image from 'next/image';
 import { FaHeart, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
-import { albums } from '@/app/utils/data';
-import { useMediaQuery } from 'react-responsive';
+import { albums } from '@/utils/data';
+import { useCarousel } from '@/hooks/useCarousel';
 
 interface Album {
   id: string | number;
@@ -16,30 +16,10 @@ interface Album {
 }
 
 const AlbumCarousel = () => {
-  const [currentIndex, setCurrentIndex] = useState<number>(0);
-  const isMobile = useMediaQuery({ query: '(max-width: 768px)' }); // Ganti window.innerWidth
-  const itemsPerPage: number = 5;
-  const carouselRef = useRef<HTMLDivElement>(null);
+  const { mounted, carouselRef, currentIndex, isMobile, next, prev } =
+    useCarousel(albums, 5);
 
-  const nextSlide = (): void => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex + 1 <= albums.length - itemsPerPage ? prevIndex + 1 : prevIndex
-    );
-  };
-
-  const prevSlide = (): void => {
-    setCurrentIndex((prevIndex) => (prevIndex > 0 ? prevIndex - 1 : 0));
-  };
-
-  // Smooth scroll for desktop button navigation
-  useEffect(() => {
-    if (carouselRef.current && !isMobile) {
-      carouselRef.current.scrollTo({
-        left: currentIndex * (carouselRef.current.offsetWidth / itemsPerPage),
-        behavior: 'smooth',
-      });
-    }
-  }, [currentIndex, isMobile]);
+  if (!mounted) return null;
 
   return (
     <div className="relative mt-10 lg:mt-0">
@@ -49,7 +29,7 @@ const AlbumCarousel = () => {
 
       <div className="relative">
         <button
-          onClick={prevSlide}
+          onClick={prev}
           className={`absolute left-2 md:left-1.5 xl:left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 z-10 p-3 rounded-full xs:bg-white/10transition ${
             currentIndex === 0 ? 'hidden' : ''
           }`}
@@ -106,9 +86,9 @@ const AlbumCarousel = () => {
         </div>
 
         <button
-          onClick={nextSlide}
+          onClick={next}
           className={`absolute right-2 md:right-0 xl:right-3.5 top-1/2 -translate-y-1/2 translate-x-1/2 z-10 p-3 rounded-full xs:bg-white/10 hover:bg-white/20 transition ${
-            currentIndex >= albums.length - itemsPerPage ? 'hidden' : ''
+            currentIndex >= albums.length - 5 ? 'hidden' : ''
           }`}
           aria-label="Next albums"
         >

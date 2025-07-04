@@ -1,4 +1,4 @@
-import { albums } from '@/app/utils/data';
+import { albums } from '@/utils/data';
 import Image from 'next/image';
 import React from 'react';
 import { FaHeart } from 'react-icons/fa';

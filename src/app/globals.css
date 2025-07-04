@@ -36,6 +36,17 @@ body {
   font-family: 'SpotifyMixUI', Helvetica, sans-serif;
 }
 
+html,
+body {
+  -ms-overflow-style: none;  /* IE dan Edge lama */
+  scrollbar-width: none;     /* Firefox */
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
 .glass-card {
   background: rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(10px);

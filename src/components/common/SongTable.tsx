@@ -1,11 +1,19 @@
-import { songs } from '@/app/utils/data';
+'use client';
+
+import { songs } from '@/utils/data';
 import Image from 'next/image';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaPlay, FaEllipsisH } from 'react-icons/fa';
 
 const SongTable = () => {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) return null;
   return (
-    <div className="lg:sticky lg:top-[85px] lg:h-[calc(100vh-230px)]">
+    <div className="lg:sticky lg:top-[80px] lg:h-[calc(100vh-230px)]">
       <div className="flex items-center justify-between mt-2 lg:mt-0 mb-2">
         <h2 className="text-lg font-bold">Tranding Right Nows</h2>
       </div>
