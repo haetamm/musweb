@@ -3,15 +3,17 @@
 import React from 'react';
 import Image from 'next/image';
 import { Album } from '@/utils/types';
+import Link from 'next/link';
+import { urlPage } from '@/utils/constans';
 
 interface AlbumCardProps {
   album: Album;
 }
 
 const AlbumCard: React.FC<AlbumCardProps> = ({ album }) => {
-  const { cover, title, duration, songs } = album;
+  const { id, cover, title, duration, songs } = album;
   return (
-    <div className="relative ">
+    <Link href={`${urlPage.ALBUM}/${id}`} className="relative ">
       <Image
         src={cover}
         alt={`${title} Cover`}
@@ -28,7 +30,7 @@ const AlbumCard: React.FC<AlbumCardProps> = ({ album }) => {
           </p>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 

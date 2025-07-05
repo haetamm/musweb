@@ -1,5 +1,7 @@
+import { urlPage } from '@/utils/constans';
 import { Song } from '@/utils/types';
 import Image from 'next/image';
+import Link from 'next/link';
 import React from 'react';
 
 interface SongCardProps {
@@ -7,10 +9,10 @@ interface SongCardProps {
 }
 
 const SongCard: React.FC<SongCardProps> = ({ song }) => {
-  const { cover, title, performer } = song;
+  const { id, cover, title, performer } = song;
 
   return (
-    <div>
+    <Link href={`${urlPage.SONG}/${id}`}>
       <div className="aspect-square">
         <Image
           src={cover}
@@ -24,7 +26,7 @@ const SongCard: React.FC<SongCardProps> = ({ song }) => {
         <p className="font-medium truncate text-lg xl:text-xl">{title}</p>
         <p className="text-sm text-gray-400 truncate">{performer}</p>
       </div>
-    </div>
+    </Link>
   );
 };
 

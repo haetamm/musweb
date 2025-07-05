@@ -1,7 +1,9 @@
 'use client';
 
+import { urlPage } from '@/utils/constans';
 import { songs } from '@/utils/data';
 import Image from 'next/image';
+import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { FaPlay, FaEllipsisH } from 'react-icons/fa';
 
@@ -44,15 +46,17 @@ const SongTable = () => {
 
               {/* Song Info */}
               <div className="flex-1 min-w-0">
-                <h3 className="text-white font-medium truncate">
+                <Link
+                  href={`${urlPage.SONG}/${song.id}`}
+                  className="text-white font-medium truncate"
+                >
                   {song.title}
-                </h3>
+                </Link>
                 <p className="text-indigo-300 text-sm truncate">
                   {song.performer}
                 </p>
               </div>
 
-              {/* Duration and Actions */}
               <div className="flex items-center gap-4">
                 <span className="text-white/70 text-sm">{song.duration}</span>
                 <button className="text-indigo-300 hover:text-white">
@@ -64,7 +68,6 @@ const SongTable = () => {
         </div>
       </div>
 
-      {/* Footer */}
       <div className="mt-auto text-sm hidden lg:block pt-6">
         <p>Terms of Service | Privacy Policy | Cookie Policy</p>
         <p>© 2025 Musweb.</p>
