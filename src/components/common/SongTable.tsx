@@ -48,7 +48,7 @@ const SongTable = () => {
                   {song.title}
                 </h3>
                 <p className="text-indigo-300 text-sm truncate">
-                  {song.artist}
+                  {song.performer}
                 </p>
               </div>
 

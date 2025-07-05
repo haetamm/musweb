@@ -115,7 +115,7 @@ export const songs = [
   {
     id: 1,
     title: 'Not Like Us',
-    artist: 'Kendrick Lamar',
+    performer: 'Kendrick Lamar',
     album: 'GNX',
     duration: '4:34',
     cover: 'https://picsum.photos/100/300',
@@ -123,7 +123,7 @@ export const songs = [
   {
     id: 2,
     title: 'Luther',
-    artist: 'Kendrick Lamar feat. SZA',
+    performer: 'Kendrick Lamar feat. SZA',
     album: 'GNX',
     duration: '4:12',
     cover: 'https://picsum.photos/200/300',
@@ -131,7 +131,7 @@ export const songs = [
   {
     id: 3,
     title: 'Messy',
-    artist: 'Lola Young',
+    performer: 'Lola Young',
     album: 'This Wasn’t Meant For You Anyway',
     duration: '4:44',
     cover: 'https://picsum.photos/110/300',
@@ -139,7 +139,7 @@ export const songs = [
   {
     id: 4,
     title: 'APT.',
-    artist: 'ROSÉ & Bruno Mars',
+    performer: 'ROSÉ & Bruno Mars',
     album: 'Rosie',
     duration: '2:59',
     cover: 'https://picsum.photos/130/300',
@@ -147,7 +147,7 @@ export const songs = [
   {
     id: 5,
     title: 'Die With A Smile',
-    artist: 'Lady Gaga & Bruno Mars',
+    performer: 'Lady Gaga & Bruno Mars',
     album: 'LG7',
     duration: '3:15',
     cover: 'https://picsum.photos/140/300',
@@ -155,7 +155,7 @@ export const songs = [
   {
     id: 6,
     title: 'Denial Is A River',
-    artist: 'Doechii',
+    performer: 'Doechii',
     album: 'Alligator Bites Never Heal',
     duration: '4:09',
     cover: 'https://picsum.photos/150/300',
@@ -163,7 +163,7 @@ export const songs = [
   {
     id: 7,
     title: 'Good Luck, Babe!',
-    artist: 'Chappell Roan',
+    performer: 'Chappell Roan',
     album: 'The Rise and Fall of a Midwest Princess',
     duration: '3:38',
     cover: 'https://picsum.photos/160/300',
@@ -171,7 +171,7 @@ export const songs = [
   {
     id: 8,
     title: 'Pink Pony Club',
-    artist: 'Chappell Roan',
+    performer: 'Chappell Roan',
     album: 'The Rise and Fall of a Midwest Princess',
     duration: '4:18',
     cover: 'https://picsum.photos/170/300',
@@ -179,7 +179,7 @@ export const songs = [
   {
     id: 9,
     title: 'Baile Inolvidable',
-    artist: 'Bad Bunny',
+    performer: 'Bad Bunny',
     album: 'Debí Tirar Más Fotos',
     duration: '3:50',
     cover: 'https://picsum.photos/180/300',
@@ -187,7 +187,7 @@ export const songs = [
   {
     id: 10,
     title: 'Nokia',
-    artist: 'Drake feat. PartyNextDoor',
+    performer: 'Drake feat. PartyNextDoor',
     album: 'Some Sexy Songs 4 U',
     duration: '3:22',
     cover: 'https://picsum.photos/190/300',
@@ -195,7 +195,7 @@ export const songs = [
   {
     id: 11,
     title: 'Ordinary',
-    artist: 'Alex Warren',
+    performer: 'Alex Warren',
     album: 'Ordinary',
     duration: '3:03',
     cover: 'https://picsum.photos/200/300',
@@ -203,7 +203,7 @@ export const songs = [
   {
     id: 12,
     title: 'Sports Car',
-    artist: 'Tate McRae',
+    performer: 'Tate McRae',
     album: 'Sports Car',
     duration: '3:10',
     cover: 'https://picsum.photos/210/300',
@@ -211,7 +211,7 @@ export const songs = [
   {
     id: 13,
     title: 'Burning Blue',
-    artist: 'Mariah The Scientist',
+    performer: 'Mariah The Scientist',
     album: 'Burning Blue',
     duration: '3:25',
     cover: 'https://picsum.photos/220/300',
@@ -219,7 +219,7 @@ export const songs = [
   {
     id: 14,
     title: 'Tweaker',
-    artist: 'LiAngelo Ball',
+    performer: 'LiAngelo Ball',
     album: 'Tweaker',
     duration: '2:55',
     cover: 'https://picsum.photos/230/300',
@@ -227,7 +227,7 @@ export const songs = [
   {
     id: 15,
     title: 'Anxiety',
-    artist: 'Doechii',
+    performer: 'Doechii',
     album: 'Alligator Bites Never Heal',
     duration: '4:09',
     cover: 'https://picsum.photos/240/300',
@@ -235,7 +235,7 @@ export const songs = [
   {
     id: 16,
     title: 'Café Con Ron',
-    artist: 'Bad Bunny feat. Pleneros de la Cresta',
+    performer: 'Bad Bunny feat. Pleneros de la Cresta',
     album: 'Debí Tirar Más Fotos',
     duration: '3:40',
     cover: 'https://picsum.photos/250/300',
@@ -243,7 +243,7 @@ export const songs = [
   {
     id: 17,
     title: 'I’m The Problem',
-    artist: 'Morgan Wallen feat. Tate McRae',
+    performer: 'Morgan Wallen feat. Tate McRae',
     album: 'I’m The Problem',
     duration: '3:05',
     cover: 'https://picsum.photos/270/300',
@@ -251,7 +251,7 @@ export const songs = [
   {
     id: 18,
     title: 'The Giver',
-    artist: 'Chappell Roan',
+    performer: 'Chappell Roan',
     album: 'The Giver',
     duration: '3:30',
     cover: 'https://picsum.photos/260/300',
@@ -259,7 +259,7 @@ export const songs = [
   {
     id: 19,
     title: 'Crybaby',
-    artist: 'SZA',
+    performer: 'SZA',
     album: 'Lana',
     duration: '3:45',
     cover: 'https://picsum.photos/270/300',
@@ -267,7 +267,7 @@ export const songs = [
   {
     id: 20,
     title: 'Esa Noche',
-    artist: 'Eslabón Armado feat. Macario Martínez',
+    performer: 'Eslabón Armado feat. Macario Martínez',
     album: 'Vibras de Noche II',
     duration: '4:00',
     cover: 'https://picsum.photos/290/300',
@@ -275,7 +275,7 @@ export const songs = [
   {
     id: 21,
     title: 'Rather Lie',
-    artist: 'Playboi Carti feat. The Weeknd & Keith Lawson',
+    performer: 'Playboi Carti feat. The Weeknd & Keith Lawson',
     album: 'Music',
     duration: '3:20',
     cover: 'https://picsum.photos/400/300',
@@ -283,7 +283,7 @@ export const songs = [
   {
     id: 22,
     title: 'Nice to Each Other',
-    artist: 'Olivia Dean',
+    performer: 'Olivia Dean',
     album: 'Messy',
     duration: '3:15',
     cover: 'https://picsum.photos/222/300',
@@ -329,9 +329,10 @@ export const playlist: Playlist = {
   username: 'john',
   songs: [
     {
-      id: 'song-CnO-LmZCkTifZYiN',
+      id: 1,
       title: 'Fix You',
       performer: 'Coldplay',
+      cover: 'https://picsum.photos/260/300',
     },
   ],
 };

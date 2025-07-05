@@ -10,13 +10,13 @@ import { MdLibraryMusic } from 'react-icons/md';
 
 const PlaylistDetail = () => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-900 to-purple-800 text-white  pt-6 mb-13 lg:mb-0">
-      <div className="xl:px-10 mx-auto">
+    <div className=" bg-gradient-to-br from-indigo-900 to-purple-800 pt-5 text-white mb-13 lg:mb-0">
+      <div className="md:px-6 mx-auto">
         {/* Header */}
-        <header className="flex justify-between items-center mb-8">
-          <div className="flex items-center space-x-4">
+        <header className="hidden md:flex justify-between items-center mb-8">
+          <div className=" flex items-center space-x-4">
             <MdLibraryMusic className="text-3xl text-purple-300" />
-            <h1 className="text-2xl font-bold">Playlist Details</h1>
+            <h1 className=" text-lg lg:text-xl font-bold">Playlist Details</h1>
           </div>
           <button className="flex items-center space-x-2 bg-white/10 hover:bg-white/20 px-4 py-2 rounded-full transition">
             <FaUser className="text-purple-300" />
@@ -25,7 +25,7 @@ const PlaylistDetail = () => {
         </header>
 
         {/* Playlist Info */}
-        <section className="flex flex-col md:flex-row items-center md:items-end space-y-6 md:space-y-0 md:space-x-8 mb-12">
+        <section className="flex flex-col xs:flex-row items-center md:items-end space-y-6 xs:space-y-0 xs:space-x-8 mb-12">
           <div className="w-48 h-48 md:w-64 md:h-64 bg-indigo-800/30 rounded-xl shadow-lg flex items-center justify-center">
             <MdLibraryMusic className="text-7xl md:text-9xl text-purple-300/50" />
           </div>

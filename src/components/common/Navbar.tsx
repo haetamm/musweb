@@ -20,7 +20,7 @@ const Navbar = () => {
                 : 'hover:bg-white/10 text-white'
             }`}
           >
-            <Icon />
+            <Icon className="h-6 w-6 shrink-0" />
             {label}
           </Link>
         ))}

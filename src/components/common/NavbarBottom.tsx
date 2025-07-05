@@ -21,7 +21,7 @@ const NavbarBottom = () => {
               <div
                 className={`p-1 rounded-lg group-hover:bg-white/10 group-active:bg-white/20 transition-all duration-200 ${
                   isActive(to, pathname)
-                    ? ' text-indigo-900 font-medium'
+                    ? ' text-indigo-900 font-medium bg-white'
                     : 'hover:bg-white/10 text-white'
                 }`}
               >

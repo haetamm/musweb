@@ -13,7 +13,7 @@ const PageWrapper = ({ children }: Props) => {
   return (
     <div className="bg-gradient-to-br from-indigo-900 to-purple-800 text-white min-h-screen pb-32">
       <header className="sticky top-0 z-50 backdrop-blur-md py-4 ">
-        <div className=" px-4 kontener mx-auto">
+        <div className=" px-3 kontener mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
             <Navbar />
             <Searchbar />

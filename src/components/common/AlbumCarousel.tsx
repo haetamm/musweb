@@ -1,19 +1,10 @@
 'use client';
 
 import React from 'react';
-import Image from 'next/image';
-import { FaHeart, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { albums } from '@/utils/data';
 import { useCarousel } from '@/hooks/useCarousel';
-
-interface Album {
-  id: string | number;
-  title: string;
-  cover: string;
-  songs: number;
-  duration: string;
-  likes: number;
-}
+import AlbumCard from './AlbumCard';
 
 const AlbumCarousel = () => {
   const { mounted, carouselRef, currentIndex, isMobile, next, prev } =
@@ -49,38 +40,14 @@ const AlbumCarousel = () => {
             WebkitOverflowScrolling: isMobile ? 'touch' : 'auto',
           }}
         >
-          {albums.map((album: Album) => (
+          {albums.map((album) => (
             <div
               key={album.id}
               className={`flex-shrink-0 glass-card overflow-hidden no-scrollbar w-[156px] h-[156px] xs:w-[188px] xs:h-[188px] md:h-[240px] md:w-[240px] lg:w-[190px] lg:h-[190px] xl:h-[210px] xl:w-[210px] transition-transform ${
                 isMobile ? 'snap-start' : ''
               }`}
             >
-              <div className="relative h-full">
-                <Image
-                  src={album.cover}
-                  alt={`${album.title} Cover`}
-                  width={180}
-                  height={180}
-                  className="object-cover w-full h-full"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex items-end p-3">
-                  <div>
-                    <h3 className="font-bold text-2xl line-clamp-1">
-                      {album.title}
-                    </h3>
-                    <p className="text-indigo-200 text-xs">
-                      {`${album.songs} Songs • ${album.duration}`}
-                    </p>
-                  </div>
-                </div>
-                <button
-                  className="absolute top-2 right-2 w-6 h-6 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center hover:bg-white/30 transition"
-                  aria-label={`Like ${album.title}`}
-                >
-                  <FaHeart className="text-white text-xs" />
-                </button>
-              </div>
+              <AlbumCard album={album} />
             </div>
           ))}
         </div>
