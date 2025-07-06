@@ -30,7 +30,7 @@ const MediaPlayer = () => {
 
   return (
     <>
-      <div className="max-w-[400px] mx-auto lg:max-w-none fixed left-4 right-4 bottom-12 lg:left-0 lg:right-0 lg:bottom-0 z-4 bg-indigo-900/90 backdrop-blur-lg border border-white/30 lg:border-t lg:border-white/10 shadow-xl shadow-purple-900/20 rounded-t-[38px] lg:rounded-none px-4  transition-all duration-300">
+      <div className="max-w-[400px] mx-auto lg:max-w-none fixed left-4 right-4 bottom-12 lg:left-0 lg:right-0 lg:bottom-0 z-20 bg-indigo-900/90 backdrop-blur-lg border border-white/30 lg:border-t lg:border-white/10 shadow-xl shadow-purple-900/20 rounded-t-[38px] lg:rounded-none px-4  transition-all duration-300">
         <div className="kontener mx-auto px-4 py-1 ">
           <div className="flex items-center gap-4">
             {/* Song Info */}
@@ -44,7 +44,9 @@ const MediaPlayer = () => {
               />
               <div className="hidden sm:block">
                 <p className="font-medium truncate">{currentSong.title}</p>
-                <p className="text-xs text-indigo-300">{currentSong.artist}</p>
+                <p className="text-xs text-indigo-300">
+                  {currentSong.performer}
+                </p>
               </div>
             </div>
 

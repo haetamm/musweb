@@ -1,5 +1,6 @@
 'use client';
 
+import { song } from '@/utils/data';
 import { useState } from 'react';
 import {
   FaPlay,
@@ -13,25 +14,7 @@ import {
 } from 'react-icons/fa';
 import { IoMdTime } from 'react-icons/io';
 
-interface Song {
-  id: string;
-  title: string;
-  year: number;
-  performer: string;
-  genre: string;
-  duration: number;
-}
-
 const SongDetailPage = () => {
-  const song: Song = {
-    id: 'song-LzIvZG4HeJsEW1ln',
-    title: 'Rindu in echnicolo',
-    year: 2008,
-    performer: 'Coldplay',
-    genre: 'Pop',
-    duration: 120,
-  };
-
   const [isPlaying, setIsPlaying] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
 
@@ -47,7 +30,7 @@ const SongDetailPage = () => {
       <div className="px-6 mx-auto">
         {/* Header */}
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold">Song Details</h1>
+          <h1 className="text-2xl font-bold">Song Details</h1>
           <button className="p-2 rounded-full hover:bg-gray-700">
             <FaEllipsisH className="text-xl" />
           </button>

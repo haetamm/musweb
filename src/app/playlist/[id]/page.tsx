@@ -1,3 +1,4 @@
+import SongDetailTable from '@/components/common/SongDetailTable';
 import { playlist } from '@/utils/data';
 import {
   FaPlay,
@@ -16,7 +17,7 @@ const PlaylistDetail = () => {
         <header className="hidden md:flex justify-between items-center mb-8">
           <div className=" flex items-center space-x-4">
             <MdLibraryMusic className="text-3xl text-purple-300" />
-            <h1 className=" text-lg lg:text-xl font-bold">Playlist Details</h1>
+            <h1 className="text-2xl font-bold">Playlist Details</h1>
           </div>
           <button className="flex items-center space-x-2 bg-white/10 hover:bg-white/20 px-4 py-2 rounded-full transition">
             <FaUser className="text-purple-300" />
@@ -26,7 +27,7 @@ const PlaylistDetail = () => {
 
         {/* Playlist Info */}
         <section className="flex flex-col xs:flex-row items-center md:items-end space-y-6 xs:space-y-0 xs:space-x-8 mb-12">
-          <div className="w-48 h-48 md:w-64 md:h-64 bg-indigo-800/30 rounded-xl shadow-lg flex items-center justify-center">
+          <div className="w-full xs:w-48 h-48 md:w-64 md:h-64 bg-indigo-800/30 rounded-xl shadow-lg flex items-center justify-center">
             <MdLibraryMusic className="text-7xl md:text-9xl text-purple-300/50" />
           </div>
 
@@ -55,45 +56,7 @@ const PlaylistDetail = () => {
         </section>
 
         {/* Songs List */}
-        <section className="bg-white/5 backdrop-blur-sm rounded-xl p-6">
-          <div className="mb-6 flex justify-between items-center">
-            <h2 className="text-2xl font-bold">Songs</h2>
-            <p className="text-purple-200">
-              {playlist.songs.length}{' '}
-              {playlist.songs.length === 1 ? 'song' : 'songs'}
-            </p>
-          </div>
-
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead>
-                <tr className="border-b border-white/10 text-purple-200 text-left">
-                  <th className="pb-4">#</th>
-                  <th className="pb-4">Title</th>
-                  <th className="pb-4">Performer</th>
-                  <th className="pb-4 text-right"></th>
-                </tr>
-              </thead>
-              <tbody>
-                {playlist.songs.map((song, index) => (
-                  <tr
-                    key={song.id}
-                    className="border-b border-white/10 hover:bg-white/5 transition"
-                  >
-                    <td className="py-4">{index + 1}</td>
-                    <td className="py-4 font-medium">{song.title}</td>
-                    <td className="py-4 text-purple-200">{song.performer}</td>
-                    <td className="py-4 text-right">
-                      <button className="text-purple-300 hover:text-white transition">
-                        <FaEllipsisH />
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </section>
+        <SongDetailTable songs={playlist.songs} />
 
         {/* Stats */}
         <section className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">

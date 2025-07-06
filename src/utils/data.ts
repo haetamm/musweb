@@ -1,4 +1,4 @@
-import { Playlist } from './types';
+import { Playlist, SongDetail } from './types';
 
 export const albums = [
   {
@@ -335,4 +335,30 @@ export const playlist: Playlist = {
       cover: 'https://picsum.photos/260/300',
     },
   ],
+};
+
+export const albumDetail = {
+  id: 1,
+  name: 'Viva la vida Revision',
+  year: 2010,
+  coverUrl: null,
+  duration: 329,
+  likes: 30,
+  songs: [
+    {
+      id: 1,
+      title: 'Life in Technicolor',
+      performer: 'Coldplay',
+      cover: 'https://picsum.photos/260/300',
+    },
+  ],
+};
+
+export const song: SongDetail = {
+  id: 'song-LzIvZG4HeJsEW1ln',
+  title: 'Rindu in echnicolo',
+  year: 2008,
+  performer: 'Coldplay',
+  genre: 'Pop',
+  duration: 120,
 };

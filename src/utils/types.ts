@@ -14,10 +14,19 @@ export interface Playlist {
 
 export interface Album {
   id: number;
-  title: string;
-  artist: string;
-  cover: string;
-  songs: number;
-  duration: string;
+  name: string;
+  year: number;
+  coverUrl: string | null;
+  songs: Song[];
+  duration: number;
   likes: number;
+}
+
+export interface SongDetail {
+  id: string;
+  title: string;
+  year: number;
+  performer: string;
+  genre: string;
+  duration: number;
 }
