@@ -27,7 +27,7 @@ const PlaylistDetail = () => {
 
         {/* Playlist Info */}
         <section className="flex flex-col xs:flex-row items-center md:items-end space-y-6 xs:space-y-0 xs:space-x-8 mb-12">
-          <div className="w-full xs:w-48 h-48 md:w-64 md:h-64 bg-indigo-800/30 rounded-xl shadow-lg flex items-center justify-center">
+          <div className="w-48 h-48 md:w-64 md:h-64 bg-indigo-800/30 rounded-xl shadow-lg flex items-center justify-center">
             <MdLibraryMusic className="text-7xl md:text-9xl text-purple-300/50" />
           </div>
 

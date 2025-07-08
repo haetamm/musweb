@@ -8,7 +8,7 @@ import { isActive } from '@/utils/helper';
 const Navbar = () => {
   const pathname = usePathname();
   return (
-    <div className="hidden lg:flex overflow-x-auto">
+    <div className="hidden lg:flex overflow-x-auto w-full">
       <div className="flex space-x-1 bg-white/10 rounded-full p-1">
         {navLink.map(({ id, to, label, icon: Icon }) => (
           <Link

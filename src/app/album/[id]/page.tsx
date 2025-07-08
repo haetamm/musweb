@@ -33,6 +33,7 @@ const AlbumDetailPage = () => {
 
           {/* Album Info */}
           <div className="flex-1">
+            <p className="text-sm text-purple-200 mb-2">ALBUM</p>
             <h1 className="text-4xl md:text-5xl font-bold mb-2">
               {album.name}
             </h1>

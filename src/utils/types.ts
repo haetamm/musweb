@@ -15,6 +15,18 @@ export interface Playlist {
 export interface Album {
   id: number;
   name: string;
+  artist: string;
+  year: number;
+  coverUrl: string | null;
+  songs: number;
+  duration: string;
+  likes: number;
+}
+
+export interface AlbumDetail {
+  id: number;
+  name: string;
+  artist: string;
   year: number;
   coverUrl: string | null;
   songs: Song[];

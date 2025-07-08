@@ -14,9 +14,20 @@ const PageWrapper = ({ children }: Props) => {
     <div className="bg-gradient-to-br from-indigo-900 to-purple-800 text-white min-h-screen pb-32">
       <header className="sticky top-0 z-50 backdrop-blur-md py-4 ">
         <div className=" px-3 kontener mx-auto">
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-            <Navbar />
-            <Searchbar />
+          <div className="flex w-full items-center lg:gap-10">
+            <div className="flex-shrink-0">
+              <Navbar />
+            </div>
+
+            <div className="flex-1 flex justify-center">
+              <Searchbar />
+            </div>
+
+            <div className="flex-shrink-0 ml-4 lg:ml-0">
+              <button className="w-auto bg-white/10 hover:bg-white/20 border border-white/20 px-6 py-2 rounded-full items-center justify-center">
+                Login
+              </button>
+            </div>
           </div>
         </div>
       </header>

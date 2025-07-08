@@ -5,7 +5,7 @@ import { FaSearch } from 'react-icons/fa';
 
 const Searchbar = () => {
   return (
-    <div className="flex flex-row gap-3 w-full lg:w-auto">
+    <div className="w-full lg:auto xl:max-w-[460px]">
       <div className="relative flex-1">
         <input
           type="text"
@@ -14,9 +14,6 @@ const Searchbar = () => {
         />
         <FaSearch className="absolute left-3 top-3.5 " />
       </div>
-      <button className="xs:flex bg-white/10 hover:bg-white/20 border border-white/20 px-6 py-2 rounded-full items-center justify-center">
-        Search
-      </button>
     </div>
   );
 };
