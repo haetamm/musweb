@@ -6,9 +6,10 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { FaArrowCircleLeft } from 'react-icons/fa';
 import FormControllerInput from './FormControllerInput';
-import useAuthStore, { LoginRequest } from '@/stores/auth';
+import useAuthStore from '@/stores/auth';
 import toast from 'react-hot-toast';
 import { useHandleErrors } from '@/hooks/useHandleErrors';
+import { LoginRequest } from '@/lib/action/AuthAction';
 
 const LoginForm = () => {
   const { showGoogleLogin } = useModalStore();

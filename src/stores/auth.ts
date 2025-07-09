@@ -1,18 +1,20 @@
 import Cookies from 'js-cookie';
 import { create } from 'zustand';
-import axiosInstance from '../utils/api';
 import { urlPage } from '@/utils/constans';
-
-export type LoginRequest = {
-  email: string;
-  password: string;
-};
+import {
+  AuthAction,
+  LoginRequest,
+  LogoutRequest,
+} from '@/lib/action/AuthAction';
+import { signInWithPopup, signOut } from 'firebase/auth';
+import { auth, googleProvider } from '@/lib/firebase/firebaseConfig';
 
 interface AuthState {
   accessToken: string;
   refreshToken: string;
   loading: boolean;
   loginUser: (data: LoginRequest) => Promise<void>;
+  loginWithGoogle: () => Promise<void>;
 }
 
 const accessToken = Cookies.get('accessToken');
@@ -26,12 +28,7 @@ const useAuthStore = create<AuthState>((set) => ({
   loginUser: async (data: LoginRequest) => {
     set({ loading: true });
     try {
-      const { data: response } = await axiosInstance.post(
-        '/authentications',
-        data
-      );
-      const { data: user } = response;
-      const { accessToken, refreshToken } = user;
+      const { accessToken, refreshToken } = await AuthAction.login(data);
       Cookies.set('accessToken', accessToken, { expires: 1 / 48 });
       Cookies.set('refreshToken', refreshToken, { expires: 7 });
       set({ accessToken, refreshToken });
@@ -40,6 +37,40 @@ const useAuthStore = create<AuthState>((set) => ({
       throw error;
     } finally {
       set({ loading: false });
+    }
+  },
+
+  loginWithGoogle: async () => {
+    set({ loading: true });
+    try {
+      const result = await signInWithPopup(auth, googleProvider);
+      const idToken = await result.user.getIdToken();
+
+      const { accessToken, refreshToken } =
+        await AuthAction.loginWithGoogle(idToken);
+
+      Cookies.set('accessToken', accessToken, { expires: 1 / 48 });
+      Cookies.set('refreshToken', refreshToken, { expires: 7 });
+      set({ accessToken, refreshToken });
+      window.location.assign(urlPage.HOME);
+    } catch (error) {
+      throw error;
+    } finally {
+      set({ loading: false });
+    }
+  },
+
+  logoutUser: async (data: LogoutRequest) => {
+    try {
+      await AuthAction.logout(data);
+      await signOut(auth);
+    } catch (error) {
+      throw error;
+    } finally {
+      Cookies.remove('accessToken');
+      Cookies.remove('refreshToken');
+      set({ accessToken: '', refreshToken: '' });
+      window.location.assign(urlPage.HOME);
     }
   },
 }));

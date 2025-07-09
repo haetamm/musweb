@@ -16,7 +16,7 @@ const SongTable = () => {
   if (!mounted) return null;
 
   return (
-    <div className="lg:sticky lg:top-[80px] lg:h-[calc(100vh-210px)] flex flex-col">
+    <div className="lg:sticky lg:top-[83px] lg:h-[calc(100vh-218px)] flex flex-col">
       {/* Header */}
       <div className="flex items-center justify-between mt-2 lg:mt-0 mb-2">
         <h2 className="text-lg font-bold">Tranding Right Nows</h2>

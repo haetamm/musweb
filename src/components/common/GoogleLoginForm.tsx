@@ -1,9 +1,24 @@
+import { useHandleErrors } from '@/hooks/useHandleErrors';
+import useAuthStore from '@/stores/auth';
 import { useModalStore } from '@/stores/modal';
 import React from 'react';
+import toast from 'react-hot-toast';
 import { FcGoogle } from 'react-icons/fc';
 
 const GoogleLoginForm = () => {
   const { showLogin } = useModalStore();
+  const { loginWithGoogle, loading } = useAuthStore();
+  const { handleErrors } = useHandleErrors();
+
+  const handleGoogleLogin = async () => {
+    try {
+      await loginWithGoogle();
+      toast.success('Login berhasil!');
+    } catch (error) {
+      handleErrors(error);
+    }
+  };
+
   return (
     <>
       <h2 className="text-3xl md:text-4xl font-bold mb-6">
@@ -11,9 +26,13 @@ const GoogleLoginForm = () => {
       </h2>
 
       {/* Google Button */}
-      <button className="w-full bg-gray-800 text-white font-semibold py-2 rounded mb-4 flex items-center justify-center">
+      <button
+        disabled={loading}
+        onClick={handleGoogleLogin}
+        className="w-full bg-gray-800 text-white font-semibold py-2 rounded mb-4 flex items-center justify-center"
+      >
         <FcGoogle className="mr-2" />
-        Continue with Google
+        {loading ? 'Loading' : 'Continue with Google'}
       </button>
 
       {/* Or with Email */}
