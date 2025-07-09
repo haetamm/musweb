@@ -7,3 +7,11 @@ export const urlPage = {
   LIBRARY_SONG: '/you/song',
   LIBRARY_ALBUM: '/you/album',
 };
+
+export const MODAL_TYPES = {
+  LOGOUT: 'logout',
+  DELETE: 'delete',
+  USER_GOOGLE_FORM: 'userGoogleForm',
+  LOGIN_FORM: 'loginForm',
+  GOOGLE_LOGIN_FORM: 'googleLoginForm',
+} as const;
