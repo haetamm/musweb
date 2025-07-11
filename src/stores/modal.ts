@@ -10,7 +10,7 @@ interface ModalState {
     type: string,
     callback?: (() => void | Promise<void>) | null
   ) => void;
-  showLogout: () => void;
+  showLogout: (callback: () => void | Promise<void>) => void;
   showLogin: () => void;
   showGoogleLogin: () => void;
   showDelete: (callback: () => void | Promise<void>) => void;
@@ -35,8 +35,8 @@ export const useModalStore = create<ModalState>((set, get) => ({
     });
   },
 
-  showLogout: () => {
-    get().showModal(MODAL_TYPES.LOGOUT);
+  showLogout: (callback) => {
+    get().showModal(MODAL_TYPES.LOGOUT, callback);
   },
 
   showDelete: (callback) => {

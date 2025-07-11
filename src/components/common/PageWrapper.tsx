@@ -1,46 +1,33 @@
-'use client';
 import React, { ReactNode } from 'react';
 import MediaPlayer from './MediaPlayer';
 import Navbar from './Navbar';
 import NavbarBottom from './NavbarBottom';
 import Searchbar from './Searchbar';
 import Modal from './Modal';
-import { useModalStore } from '@/stores/modal';
 import { Toaster } from 'react-hot-toast';
+import ButtonLoginOrLogout from './ButtonLoginOrLogout';
 
 type Props = {
   children: ReactNode;
 };
 
 const PageWrapper = ({ children }: Props) => {
-  const { showGoogleLogin } = useModalStore();
-
   return (
     <>
       <div className="bg-gradient-to-br from-indigo-900 to-purple-800 text-white min-h-screen pb-32">
-        <header className="sticky top-0 z-50 backdrop-blur-md py-4 ">
-          <div className=" px-3 kontener mx-auto">
+        <header className="sticky top-0 z-50 backdrop-blur-md py-4">
+          <div className="px-3 kontener mx-auto">
             <div className="flex w-full items-center lg:gap-5">
               <div className="flex-shrink-0">
                 <Navbar />
               </div>
-
               <div className="flex-1 flex justify-end">
                 <Searchbar />
               </div>
-
-              <div className="flex-shrink-0 ml-4 lg:ml-0 p-1 bg-white/10 rounded-full">
-                <button
-                  onClick={showGoogleLogin}
-                  className="w-auto cursor-pointer  hover:bg-white/20 px-6 py-2 rounded-full items-center justify-center"
-                >
-                  Login
-                </button>
-              </div>
+              <ButtonLoginOrLogout />
             </div>
           </div>
         </header>
-
         <div className="mx-auto px-4 kontener">
           {children}
           <MediaPlayer />

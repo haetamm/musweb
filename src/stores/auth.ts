@@ -1,20 +1,20 @@
 import Cookies from 'js-cookie';
 import { create } from 'zustand';
 import { urlPage } from '@/utils/constans';
-import {
-  AuthAction,
-  LoginRequest,
-  LogoutRequest,
-} from '@/lib/action/AuthAction';
+import { AuthAction, LoginRequest } from '@/lib/action/AuthAction';
 import { signInWithPopup, signOut } from 'firebase/auth';
 import { auth, googleProvider } from '@/lib/firebase/firebaseConfig';
+import { UserResponse } from '@/lib/action/UserAction';
+import { useModalStore } from './modal';
 
 interface AuthState {
   accessToken: string;
   refreshToken: string;
   loading: boolean;
+  user: UserResponse | null;
   loginUser: (data: LoginRequest) => Promise<void>;
   loginWithGoogle: () => Promise<void>;
+  logoutUser: () => Promise<void>;
 }
 
 const accessToken = Cookies.get('accessToken');
@@ -23,6 +23,7 @@ const refreshToken = Cookies.get('refreshToken');
 const useAuthStore = create<AuthState>((set) => ({
   accessToken: accessToken || '',
   refreshToken: refreshToken || '',
+  user: null,
   loading: false,
 
   loginUser: async (data: LoginRequest) => {
@@ -52,7 +53,7 @@ const useAuthStore = create<AuthState>((set) => ({
       Cookies.set('accessToken', accessToken, { expires: 1 / 48 });
       Cookies.set('refreshToken', refreshToken, { expires: 7 });
       set({ accessToken, refreshToken });
-      window.location.assign(urlPage.HOME);
+      window.location.reload();
     } catch (error) {
       throw error;
     } finally {
@@ -60,17 +61,18 @@ const useAuthStore = create<AuthState>((set) => ({
     }
   },
 
-  logoutUser: async (data: LogoutRequest) => {
+  logoutUser: async () => {
     try {
-      await AuthAction.logout(data);
-      await signOut(auth);
+      if (refreshToken) {
+        await AuthAction.logout({ refreshToken });
+        await signOut(auth);
+        Cookies.remove('accessToken');
+        Cookies.remove('refreshToken');
+        set({ accessToken: '', refreshToken: '' });
+        useModalStore.getState().hideModal();
+      }
     } catch (error) {
       throw error;
-    } finally {
-      Cookies.remove('accessToken');
-      Cookies.remove('refreshToken');
-      set({ accessToken: '', refreshToken: '' });
-      window.location.assign(urlPage.HOME);
     }
   },
 }));

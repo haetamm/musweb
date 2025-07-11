@@ -26,10 +26,10 @@ const SongDetailPage = () => {
   };
 
   return (
-    <div className=" glass-card text-white py-6 xl:mt-2 rounded-xl mb-13 lg:mb-0">
+    <div className=" glass-card text-white pt-6 xl:mt-2 rounded-xl mb-13 lg:mb-0">
       <div className="px-6 mx-auto">
         {/* Header */}
-        <div className="flex justify-between items-center mb-8">
+        <div className="flex justify-between items-center mb-4">
           <h1 className="text-2xl font-bold">Song Details</h1>
           <button className="p-2 rounded-full hover:bg-gray-700">
             <FaEllipsisH className="text-xl" />

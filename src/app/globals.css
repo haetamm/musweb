@@ -59,10 +59,11 @@ html {
 /* Optional: Membuat scrollbar lebih minimalis */
 ::-webkit-scrollbar {
   width: 4px;
+  background: rgb(67, 67, 122);
 }
 ::-webkit-scrollbar-thumb {
   border-radius: 4px;
-  background: #312c85;
+  background: oklch(62.7% 0.265 303.9) ;
 }
 
 .glass-card {

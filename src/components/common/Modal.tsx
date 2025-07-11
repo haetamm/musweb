@@ -1,10 +1,13 @@
+'use client';
 import { useModalStore } from '@/stores/modal';
 import { MODAL_TYPES } from '@/utils/constans';
 import React from 'react';
 import LoginSection from './LoginSection';
+import SmallModalSection from './SmallModalSection';
 
 const Modal = () => {
-  const { isVisible, type } = useModalStore();
+  const { isVisible, type, hideModal, loading, executeCallback } =
+    useModalStore();
 
   if (!isVisible) return null;
 
@@ -25,6 +28,16 @@ const Modal = () => {
           {(type === MODAL_TYPES.LOGIN_FORM ||
             type === MODAL_TYPES.GOOGLE_LOGIN_FORM) && (
             <LoginSection type={type} />
+          )}
+          {type === MODAL_TYPES.LOGOUT && (
+            <SmallModalSection
+              title="Logout Confirmation"
+              desc="Are you sure you want to logout?"
+              buttonLabel="Logout"
+              handleButton={executeCallback}
+              cancelButton={hideModal}
+              loading={loading}
+            />
           )}
         </div>
       </div>
