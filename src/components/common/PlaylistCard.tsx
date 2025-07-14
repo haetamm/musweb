@@ -1,18 +1,15 @@
+import { PlaylistResponse } from '@/lib/action/PlaylistAction';
 import { urlPage } from '@/utils/constans';
+import { formatDurationToMinutes } from '@/utils/helper';
 import Link from 'next/link';
 import React from 'react';
-import { FaMusic } from 'react-icons/fa';
+import { FaMusic, FaClock, FaHeadphones } from 'react-icons/fa';
 
-interface Playlist {
-  id: string;
-  name: string;
-  username: string;
-  songCount?: number;
-}
-
-const PlaylistCard: React.FC<{ playlist: Playlist }> = ({ playlist }) => {
+const PlaylistCard: React.FC<{ playlist: PlaylistResponse }> = ({
+  playlist,
+}) => {
   return (
-    <div className="relative glass-card bg-black rounded-xl overflow-hidden bg-gradient-to-br from-indigo-900 to-purple-800 text-white shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1  group w-full h-full">
+    <div className="relative glass-card bg-black rounded-xl overflow-hidden bg-gradient-to-br from-indigo-900 to-purple-800 text-white shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 group w-full h-full">
       {/* Glowing accent */}
       <div className="absolute inset-0 bg-gradient-to-br from-purple-900/30 to-pink-700/20 group-hover:opacity-80 opacity-60 transition-opacity" />
 
@@ -28,20 +25,29 @@ const PlaylistCard: React.FC<{ playlist: Playlist }> = ({ playlist }) => {
           <div className="p-4 rounded-lg bg-gradient-to-br from-purple-600 to-pink-500 shadow-lg">
             <FaMusic className="text-white text-xl" />
           </div>
-          <div className="text-xs bg-black/50 text-white/80 px-2 py-1 rounded-full border border-white/10">
-            {playlist.songCount || 0}
+
+          {/* Stats badge */}
+          <div className="flex space-x-2 bg-black/30 backdrop-blur-sm rounded-full px-3 py-1 text-sm">
+            <span className="flex items-center text-indigo-200">
+              <FaHeadphones className="mr-1" />
+              {playlist.songCount}
+            </span>
+            <span className="flex items-center text-pink-200">
+              <FaClock className="mr-1" />
+              {formatDurationToMinutes(playlist.totalDuration)}
+            </span>
           </div>
         </div>
 
         {/* Bottom text */}
         <div>
           <Link
-            href={`${urlPage.PLAYLIST}/${playlist.id}`}
-            className="font-bold text-white text-xl line-clamp-1 drop-shadow-md"
+            href={`${urlPage.PLAYLIST_DETAIL}/${playlist.id}`}
+            className="font-bold text-white text-xl line-clamp-1 drop-shadow-md hover:text-indigo-200 transition-colors"
           >
-            {playlist.name}
+            {playlist.title}
           </Link>
-          <p className="text-indigo-300 text-lg">@{playlist.username}</p>
+          <p className="text-indigo-300 text-md">{playlist.owner}</p>
         </div>
       </div>
 

@@ -1,10 +1,9 @@
 import Cookies from 'js-cookie';
 import { create } from 'zustand';
-import { urlPage } from '@/utils/constans';
 import { AuthAction, LoginRequest } from '@/lib/action/AuthAction';
 import { signInWithPopup, signOut } from 'firebase/auth';
 import { auth, googleProvider } from '@/lib/firebase/firebaseConfig';
-import { UserResponse } from '@/lib/action/UserAction';
+import { UserAction, UserResponse } from '@/lib/action/UserAction';
 import { useModalStore } from './modal';
 
 interface AuthState {
@@ -15,6 +14,8 @@ interface AuthState {
   loginUser: (data: LoginRequest) => Promise<void>;
   loginWithGoogle: () => Promise<void>;
   logoutUser: () => Promise<void>;
+  isAuthenticated: boolean;
+  checkAuth: () => Promise<void>;
 }
 
 const accessToken = Cookies.get('accessToken');
@@ -25,6 +26,7 @@ const useAuthStore = create<AuthState>((set) => ({
   refreshToken: refreshToken || '',
   user: null,
   loading: false,
+  isAuthenticated: false,
 
   loginUser: async (data: LoginRequest) => {
     set({ loading: true });
@@ -33,7 +35,9 @@ const useAuthStore = create<AuthState>((set) => ({
       Cookies.set('accessToken', accessToken, { expires: 1 / 48 });
       Cookies.set('refreshToken', refreshToken, { expires: 7 });
       set({ accessToken, refreshToken });
-      window.location.assign(urlPage.HOME);
+      const user = await UserAction.getUserCurrent();
+      set({ user, isAuthenticated: true });
+      useModalStore.getState().hideModal();
     } catch (error) {
       throw error;
     } finally {
@@ -53,7 +57,9 @@ const useAuthStore = create<AuthState>((set) => ({
       Cookies.set('accessToken', accessToken, { expires: 1 / 48 });
       Cookies.set('refreshToken', refreshToken, { expires: 7 });
       set({ accessToken, refreshToken });
-      window.location.reload();
+      const user = await UserAction.getUserCurrent();
+      set({ user, isAuthenticated: true });
+      useModalStore.getState().hideModal();
     } catch (error) {
       throw error;
     } finally {
@@ -63,16 +69,35 @@ const useAuthStore = create<AuthState>((set) => ({
 
   logoutUser: async () => {
     try {
-      if (refreshToken) {
-        await AuthAction.logout({ refreshToken });
-        await signOut(auth);
-        Cookies.remove('accessToken');
-        Cookies.remove('refreshToken');
-        set({ accessToken: '', refreshToken: '' });
-        useModalStore.getState().hideModal();
-      }
+      await AuthAction.logout();
+      await signOut(auth);
+      Cookies.remove('accessToken');
+      Cookies.remove('refreshToken');
+      set({ accessToken: '', refreshToken: '', isAuthenticated: false });
+      useModalStore.getState().hideModal();
     } catch (error) {
       throw error;
+    }
+  },
+
+  checkAuth: async () => {
+    if (!accessToken) {
+      set({ isAuthenticated: false, user: null });
+      return;
+    }
+
+    set({ loading: true });
+    try {
+      const user = await UserAction.getUserCurrent();
+      set({
+        user,
+        isAuthenticated: true,
+        loading: false,
+      });
+    } catch (error) {
+      throw error;
+    } finally {
+      set({ loading: false });
     }
   },
 }));

@@ -1,4 +1,4 @@
-import axiosInstance from '@/utils/api';
+import axios from 'axios';
 
 export type LoginRequest = {
   email: string;
@@ -16,18 +16,17 @@ export type LoginResponse = {
 
 export class AuthAction {
   static async login(data: LoginRequest): Promise<LoginResponse> {
-    const response = await axiosInstance.post('/authentications', data);
-    return response.data.data;
+    const response = await axios.post('/api/login', data);
+    return response.data;
   }
 
   static async loginWithGoogle(idToken: string): Promise<LoginResponse> {
-    const response = await axiosInstance.post('/authentications/google', {
-      idToken,
-    });
-    return response.data.data;
+    const response = await axios.post('/api/login-with-google', { idToken });
+    return response.data;
   }
 
-  static async logout(data: LogoutRequest): Promise<void> {
-    await axiosInstance.delete('/authentications', { data: data });
+  static async logout(): Promise<void> {
+    const response = await axios.delete('/api/logout');
+    return response.data;
   }
 }

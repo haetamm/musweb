@@ -35,7 +35,7 @@ const PageWrapper = ({ children }: Props) => {
         </div>
       </div>
       <Modal />
-      <Toaster position="top-right" reverseOrder={false} />
+      <Toaster position="bottom-right" reverseOrder={false} />
     </>
   );
 };

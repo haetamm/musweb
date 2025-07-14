@@ -36,7 +36,7 @@ const MediaPlayer = () => {
             {/* Song Info */}
             <div className="hidden lg:flex items-center gap-3 flex-shrink-0 w-1/4">
               <Image
-                src={currentSong.cover}
+                src={currentSong.coverUrl}
                 alt={currentSong.title}
                 width={20}
                 height={20}

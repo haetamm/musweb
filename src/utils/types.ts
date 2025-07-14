@@ -1,44 +1,23 @@
-export interface Song {
-  id: number;
-  title: string;
-  performer: string;
-  cover: string;
+export interface ApiResponse<T = any> {
+  data: T | null;
+  error?: string;
+  status?: number;
 }
 
-export interface Playlist {
-  id: string;
-  name: string;
-  username: string;
-  songs: Song[];
-}
-
-export interface Album {
-  id: number;
-  name: string;
-  artist: string;
-  year: number;
-  coverUrl: string | null;
-  songs: number;
-  duration: string;
-  likes: number;
-}
-
-export interface AlbumDetail {
-  id: number;
-  name: string;
-  artist: string;
-  year: number;
-  coverUrl: string | null;
-  songs: Song[];
-  duration: number;
-  likes: number;
-}
-
-export interface SongDetail {
+export type SongDetail = {
   id: string;
   title: string;
-  year: number;
   performer: string;
-  genre: string;
-  duration: number;
-}
+  duration: number; // dalam detik
+  coverUrl: string;
+};
+
+export type likeDetail = {
+  userId: string;
+  fullname: string;
+};
+
+export type collaborationDetail = {
+  userId: string;
+  fullname: string;
+};

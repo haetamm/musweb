@@ -4,9 +4,9 @@ import { usePathname, useRouter } from 'next/navigation';
 import { navLink } from '@/utils/links';
 import { isActive } from '@/utils/helper';
 import { useModalStore } from '@/stores/modal';
-import usePreload from '@/hooks/usePreload';
 import React from 'react';
 import { urlPage } from '@/utils/constans';
+import useAuthStore from '@/stores/auth';
 
 export const protectedPaths = [urlPage.PLAYLIST, urlPage.LIBRARY];
 
@@ -14,7 +14,7 @@ const Navbar = () => {
   const pathname = usePathname();
   const router = useRouter();
   const { showGoogleLogin } = useModalStore();
-  const { isAuthenticated } = usePreload();
+  const { isAuthenticated } = useAuthStore();
 
   const handleClick = (to: string) => {
     if (protectedPaths.includes(to) && !isAuthenticated) {

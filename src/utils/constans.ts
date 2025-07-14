@@ -1,6 +1,7 @@
 export const urlPage = {
   HOME: '/discover',
   PLAYLIST: '/playlist',
+  PLAYLIST_DETAIL: '/playlist-detail',
   LIBRARY: '/you',
   SONG: '/song',
   ALBUM: '/album',

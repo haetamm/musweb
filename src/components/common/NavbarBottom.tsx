@@ -1,18 +1,18 @@
 'use client';
 
-import usePreload from '@/hooks/usePreload';
 import { useModalStore } from '@/stores/modal';
 import { isActive } from '@/utils/helper';
 import { navLink } from '@/utils/links';
 import { usePathname, useRouter } from 'next/navigation';
 import React from 'react';
 import { protectedPaths } from './Navbar';
+import useAuthStore from '@/stores/auth';
 
 const NavbarBottom = () => {
   const pathname = usePathname();
   const router = useRouter();
   const { showGoogleLogin } = useModalStore();
-  const { isAuthenticated } = usePreload();
+  const { isAuthenticated } = useAuthStore();
 
   const handleClick = (to: string) => {
     if (protectedPaths.includes(to) && !isAuthenticated) {

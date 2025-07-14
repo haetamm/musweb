@@ -1,21 +1,21 @@
+import { SongResponse } from '@/lib/action/SongAction';
 import { urlPage } from '@/utils/constans';
-import { Song } from '@/utils/types';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 
 interface SongCardProps {
-  song: Song;
+  song: SongResponse;
 }
 
 const SongCard: React.FC<SongCardProps> = ({ song }) => {
-  const { id, cover, title, performer } = song;
+  const { id, title, coverUrl, performer } = song;
 
   return (
     <Link href={`${urlPage.SONG}/${id}`}>
       <div className="aspect-square">
         <Image
-          src={cover}
+          src={coverUrl || '/img/default.png'}
           alt={`${title} Cover`}
           className="w-full h-full object-cover"
           width={240}

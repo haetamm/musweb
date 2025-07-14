@@ -1,4 +1,4 @@
-import axiosInstance from '@/utils/api';
+import axios from 'axios';
 
 export type UserResponse = {
   fullname: string;
@@ -7,7 +7,7 @@ export type UserResponse = {
 
 export class UserAction {
   static async getUserCurrent(): Promise<UserResponse> {
-    const response = await axiosInstance.get('/users');
-    return response.data.data.user;
+    const response = await axios.post('/api/me');
+    return response.data;
   }
 }

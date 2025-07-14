@@ -35,7 +35,7 @@ const SongTable = () => {
                 <Image
                   width={6}
                   height={6}
-                  src={song.cover}
+                  src={song.coverUrl}
                   alt={`${song.title} cover`}
                   className="w-14 h-14 object-cover"
                 />

@@ -1,16 +1,15 @@
 import { toast } from 'react-hot-toast';
 import { AxiosError } from 'axios';
 import { FiAlertCircle, FiX } from 'react-icons/fi';
+import Cookies from 'js-cookie';
 
 interface ErrorResponse {
   status?: string;
   message?: string;
-  messages?: string;
 }
 
 export const useHandleErrors = () => {
   const handleErrors = (error: unknown): void => {
-    console.log(error);
     const axiosError = error as AxiosError<ErrorResponse>;
 
     const showErrorToast = (message: string) => {
@@ -47,22 +46,27 @@ export const useHandleErrors = () => {
     const fallbackMessage = 'Terjadi kesalahan. Silakan coba lagi.';
 
     switch (status) {
-      case 400:
-        showErrorToast(
-          data.message || data.messages || 'Permintaan tidak valid.'
-        );
-        break;
       case 401:
-        showErrorToast(data.message || 'Email atau kata sandi salah.');
+        // Hapus token dan tampilkan pesan
+        Cookies.remove('accessToken');
+        Cookies.remove('refreshToken');
+        showErrorToast(data.message || 'Sesi berakhir, silahkan login kembali');
         break;
+
       case 403:
         showErrorToast(
-          `${data.message || data.messages || fallbackMessage} | Anda tidak memiliki izin.`
+          data.message || 'Anda tidak memiliki izin untuk aksi ini.'
         );
         break;
-      case 422:
-        showErrorToast(data.message || 'Kesalahan validasi data.');
+
+      case 404:
+        showErrorToast(data.message || 'Data tidak ditemukan.');
         break;
+
+      case 422:
+        showErrorToast(data.message || 'Data yang dikirim tidak valid.');
+        break;
+
       default:
         if (status >= 500) {
           showErrorToast('Kesalahan server. Silakan coba lagi nanti.');

@@ -4,7 +4,7 @@ import SongCarousel from '@/components/common/SongCarousel';
 import SongTable from '@/components/common/SongTable';
 import React from 'react';
 
-const Discover = () => {
+const DiscoverPage = () => {
   return (
     <div className="mx-auto kontener">
       <main className="mb-16 grid grid-cols-1 lg:grid-cols-[65%_35%] xl:grid-cols-[73%_27%] lg:mb-0 md:px-3 xl:px-0">
@@ -21,4 +21,4 @@ const Discover = () => {
   );
 };
 
-export default Discover;
+export default DiscoverPage;
