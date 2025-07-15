@@ -1,17 +1,28 @@
 import ErrorMessage from '@/components/common/ErrorMessage';
+import Pagination from '@/components/common/Pagination';
 import PlaylistCard from '@/components/common/PlaylistCard';
 import { PlaylistAction } from '@/lib/action/PlaylistAction';
+import { urlPage } from '@/utils/constans';
 import React from 'react';
 import { FaPlus } from 'react-icons/fa6';
 
-const PlaylistPage = async () => {
-  const { data: playlists, error } =
-    await PlaylistAction.getPlaylistByUserCurrent();
-  const isEmpty = playlists?.length === 0;
+const PlaylistPage = async ({
+  searchParams,
+}: {
+  searchParams: Promise<{ page?: string }>;
+}) => {
+  const { page } = await searchParams;
+  const currentPage = Number(page) || 1;
 
-  if (error) {
+  const { data, error } =
+    await PlaylistAction.getPlaylistByUserCurrent(currentPage);
+
+  if (error || !data) {
     return <ErrorMessage message={error || 'Unknown error occurred'} />;
   }
+
+  const { playlists, _pagination } = data;
+  const isEmpty = playlists.length === 0;
 
   return (
     <div className="mb-13 lg:mb-0 lg:px-4">
@@ -31,6 +42,9 @@ const PlaylistPage = async () => {
           <PlaylistCard key={playlist.id} playlist={playlist} />
         ))}
       </div>
+      {_pagination.total > 0 && (
+        <Pagination pagination={_pagination} baseUrl={urlPage.PLAYLIST} />
+      )}
     </div>
   );
 };

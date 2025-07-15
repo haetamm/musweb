@@ -14,8 +14,8 @@ const useSongStore = create<SongState>((set) => ({
   getSongsByUserCurrent: async () => {
     set({ loading: true });
     const { data } = await SongAction.getSongByCurrentUser();
-    if (data) {
-      set({ songs: data });
+    if (data?.songs) {
+      set({ songs: data.songs });
     }
 
     set({ loading: false });

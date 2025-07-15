@@ -1,13 +1,6 @@
 import { handleApiError } from '@/utils/helper';
 import { createServerApiAxios } from '@/utils/serverAxios';
-import { ApiResponse, likeDetail } from '@/utils/types';
-
-export type SongResponse = {
-  id: string;
-  title: string;
-  performer: string;
-  coverUrl: string | null;
-};
+import { ApiResponse, likeDetail, PaginationResponse } from '@/utils/types';
 
 export type AlbumSectionResponse = {
   id: string;
@@ -30,26 +23,70 @@ export type SongDetailResponse = {
   album: AlbumSectionResponse | null;
 };
 
+export type SongResponse = {
+  id: string;
+  title: string;
+  performer: string;
+  coverUrl: string | null;
+};
+
+export type PaginatedSongResponse = {
+  songs: SongResponse[];
+  _pagination: PaginationResponse;
+};
+
 export class SongAction {
-  static async getSongByCurrentUser(): Promise<ApiResponse<SongResponse[]>> {
+  static async getSongByCurrentUser(
+    page: number = 1,
+    limit: number = 10
+  ): Promise<ApiResponse<PaginatedSongResponse>> {
     try {
       const axios = await createServerApiAxios();
-      const response = await axios.get('/songs/me');
-      return { data: response.data.data.songs };
+      const response = await axios.get('/songs/me', {
+        params: { page, limit },
+      });
+      return { data: response.data.data };
     } catch (error) {
-      return handleApiError<SongResponse[]>(error, []);
+      return handleApiError<PaginatedSongResponse>(error, {
+        songs: [],
+        _pagination: {
+          total: 0,
+          page: 1,
+          limit: 10,
+          totalPages: 1,
+          hasPreviousPage: false,
+          hasNextPage: false,
+          previousPage: null,
+          nextPage: null,
+        },
+      });
     }
   }
 
-  static async getSongsLikedByCurrentUser(): Promise<
-    ApiResponse<SongResponse[]>
-  > {
+  static async getSongsLikedByCurrentUser(
+    page: number = 1,
+    limit: number = 10
+  ): Promise<ApiResponse<PaginatedSongResponse>> {
     try {
       const axios = await createServerApiAxios();
-      const response = await axios.get('/songs/likes');
-      return { data: response.data.data.songs };
+      const response = await axios.get('/songs/likes', {
+        params: { page, limit },
+      });
+      return { data: response.data.data };
     } catch (error) {
-      return handleApiError<SongResponse[]>(error, []);
+      return handleApiError<PaginatedSongResponse>(error, {
+        songs: [],
+        _pagination: {
+          total: 0,
+          page: 1,
+          limit: 10,
+          totalPages: 1,
+          hasPreviousPage: false,
+          hasNextPage: false,
+          previousPage: null,
+          nextPage: null,
+        },
+      });
     }
   }
 

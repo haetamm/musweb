@@ -19,12 +19,12 @@ export const navLink = [
 ];
 
 export const libraryNav = [
-  { name: 'Song', href: '/you/song' },
-  { name: 'Album', href: '/you/album' },
-  { name: 'Likes', href: '/you/likes' },
+  { name: 'Song', href: urlPage.LIBRARY_SONG },
+  { name: 'Album', href: urlPage.LIBRARY_ALBUM },
+  { name: 'Likes', href: urlPage.LIBRARY_SONG_LIKES },
 ];
 
 export const playlistNav = [
-  { name: 'Playlist', href: '/playlist' },
-  { name: 'Likes', href: '/playlist/likes' },
+  { name: 'Playlist', href: urlPage.PLAYLIST },
+  { name: 'Likes', href: urlPage.PLAYLIST_LIKES },
 ];

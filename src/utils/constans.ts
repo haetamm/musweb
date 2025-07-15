@@ -1,11 +1,13 @@
 export const urlPage = {
   HOME: '/discover',
   PLAYLIST: '/playlist',
+  PLAYLIST_LIKES: '/playlist/likes',
   PLAYLIST_DETAIL: '/playlist-detail',
   LIBRARY: '/you',
   SONG: '/song',
   ALBUM: '/album',
   LIBRARY_SONG: '/you/song',
+  LIBRARY_SONG_LIKES: '/you/likes',
   LIBRARY_ALBUM: '/you/album',
 };
 

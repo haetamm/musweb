@@ -1,6 +1,6 @@
 import { handleApiError } from '@/utils/helper';
 import { createServerApiAxios } from '@/utils/serverAxios';
-import { ApiResponse, SongDetail } from '@/utils/types';
+import { ApiResponse, PaginationResponse, SongDetail } from '@/utils/types';
 
 export type AlbumDetailResponse = {
   id: string;
@@ -22,14 +22,36 @@ export type AlbumResponse = {
   totalDuration: string;
 };
 
+export type PaginatedAlbumResponse = {
+  albums: AlbumResponse[];
+  _pagination: PaginationResponse;
+};
+
 export class AlbumAction {
-  static async getAlbumByUserCurrent(): Promise<ApiResponse<AlbumResponse[]>> {
+  static async getAlbumByUserCurrent(
+    page: number = 1,
+    limit: number = 10
+  ): Promise<ApiResponse<PaginatedAlbumResponse>> {
     try {
       const axios = await createServerApiAxios();
-      const response = await axios.get('/albums/me');
-      return { data: response.data.data.albums };
+      const response = await axios.get('/albums/me', {
+        params: { page, limit },
+      });
+      return { data: response.data.data };
     } catch (error) {
-      return handleApiError<AlbumResponse[]>(error, []);
+      return handleApiError<PaginatedAlbumResponse>(error, {
+        albums: [],
+        _pagination: {
+          total: 0,
+          page: 1,
+          limit: 10,
+          totalPages: 1,
+          hasPreviousPage: false,
+          hasNextPage: false,
+          previousPage: null,
+          nextPage: null,
+        },
+      });
     }
   }
 

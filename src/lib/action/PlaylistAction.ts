@@ -1,15 +1,7 @@
-import { collaborationDetail } from './../../utils/types';
+import { collaborationDetail, PaginationResponse } from './../../utils/types';
 import { handleApiError } from '@/utils/helper';
 import { createServerApiAxios } from '@/utils/serverAxios';
 import { ApiResponse, likeDetail, SongDetail } from '@/utils/types';
-
-export type PlaylistResponse = {
-  id: string;
-  title: string;
-  owner: string;
-  songCount: string;
-  totalDuration: string;
-};
 
 export type PlaylistDetailResponse = {
   id: string;
@@ -22,28 +14,71 @@ export type PlaylistDetailResponse = {
   collaborations: collaborationDetail[];
 };
 
+export type PlaylistResponse = {
+  id: string;
+  title: string;
+  owner: string;
+  songCount: string;
+  totalDuration: string;
+};
+
+export type PaginatedPlaylistResponse = {
+  playlists: PlaylistResponse[];
+  _pagination: PaginationResponse;
+};
+
 export class PlaylistAction {
-  static async getPlaylistByUserCurrent(): Promise<
-    ApiResponse<PlaylistResponse[]>
-  > {
+  static async getPlaylistByUserCurrent(
+    page: number = 1,
+    limit: number = 10
+  ): Promise<ApiResponse<PaginatedPlaylistResponse>> {
     try {
       const axios = await createServerApiAxios();
-      const response = await axios.get('/playlists/me');
-      return { data: response.data.data.playlists };
+      const response = await axios.get('/playlists/me', {
+        params: { page, limit },
+      });
+      return { data: response.data.data };
     } catch (error) {
-      return handleApiError<PlaylistResponse[]>(error, []);
+      return handleApiError<PaginatedPlaylistResponse>(error, {
+        playlists: [],
+        _pagination: {
+          total: 0,
+          page: 1,
+          limit: 10,
+          totalPages: 1,
+          hasPreviousPage: false,
+          hasNextPage: false,
+          previousPage: null,
+          nextPage: null,
+        },
+      });
     }
   }
 
-  static async getPlaylistLikedByUserCurrent(): Promise<
-    ApiResponse<PlaylistResponse[]>
-  > {
+  static async getPlaylistLikedByUserCurrent(
+    page: number = 1,
+    limit: number = 10
+  ): Promise<ApiResponse<PaginatedPlaylistResponse>> {
     try {
       const axios = await createServerApiAxios();
-      const response = await axios.get('/playlists/likes');
-      return { data: response.data.data.playlists };
+      const response = await axios.get('/playlists/likes', {
+        params: { page, limit },
+      });
+      return { data: response.data.data };
     } catch (error) {
-      return handleApiError<PlaylistResponse[]>(error, []);
+      return handleApiError<PaginatedPlaylistResponse>(error, {
+        playlists: [],
+        _pagination: {
+          total: 0,
+          page: 1,
+          limit: 10,
+          totalPages: 1,
+          hasPreviousPage: false,
+          hasNextPage: false,
+          previousPage: null,
+          nextPage: null,
+        },
+      });
     }
   }
 

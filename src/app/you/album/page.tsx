@@ -1,16 +1,27 @@
 import AlbumCard from '@/components/common/AlbumCard';
 import ErrorMessage from '@/components/common/ErrorMessage';
+import Pagination from '@/components/common/Pagination';
 import { AlbumAction } from '@/lib/action/AlbumAction';
+import { urlPage } from '@/utils/constans';
 import React from 'react';
 import { FaPlus } from 'react-icons/fa';
 
-const MyAlbumPage = async () => {
-  const { data: albums, error } = await AlbumAction.getAlbumByUserCurrent();
-  const isEmpty = albums?.length === 0;
+const MyAlbumPage = async ({
+  searchParams,
+}: {
+  searchParams: Promise<{ page?: string }>;
+}) => {
+  const { page } = await searchParams;
+  const currentPage = Number(page) || 1;
 
-  if (error) {
+  const { data, error } = await AlbumAction.getAlbumByUserCurrent(currentPage);
+
+  if (error || !data) {
     return <ErrorMessage message={error || 'Unknown error occurred'} />;
   }
+
+  const { albums, _pagination } = data;
+  const isEmpty = albums.length === 0;
 
   return (
     <div className="lg:px-4 mb-13 lg:mb-0">
@@ -32,6 +43,9 @@ const MyAlbumPage = async () => {
           <AlbumCard key={album.id} album={album} />
         ))}
       </div>
+      {_pagination.total > 0 && (
+        <Pagination pagination={_pagination} baseUrl={urlPage.LIBRARY_ALBUM} />
+      )}
     </div>
   );
 };

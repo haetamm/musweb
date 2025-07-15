@@ -1,15 +1,27 @@
 import ErrorMessage from '@/components/common/ErrorMessage';
+import Pagination from '@/components/common/Pagination';
 import SongCard from '@/components/common/SongCard';
 import { SongAction } from '@/lib/action/SongAction';
+import { urlPage } from '@/utils/constans';
 import React from 'react';
 
-const SongLikesPage = async () => {
-  const { data: songs, error } = await SongAction.getSongsLikedByCurrentUser();
-  const isEmpty = songs?.length === 0;
+const SongLikesPage = async ({
+  searchParams,
+}: {
+  searchParams: Promise<{ page?: string }>;
+}) => {
+  const { page } = await searchParams;
+  const currentPage = Number(page) || 1;
 
-  if (error) {
+  const { data, error } =
+    await SongAction.getSongsLikedByCurrentUser(currentPage);
+
+  if (error || !data) {
     return <ErrorMessage message={error || 'Unknown error occurred'} />;
   }
+
+  const { songs, _pagination } = data;
+  const isEmpty = songs.length === 0;
 
   return (
     <div className="mb-13 lg:mb-0 lg:px-4">
@@ -26,6 +38,13 @@ const SongLikesPage = async () => {
           <SongCard key={song.id} song={song} />
         ))}
       </div>
+
+      {_pagination.total > 0 && (
+        <Pagination
+          pagination={_pagination}
+          baseUrl={urlPage.LIBRARY_SONG_LIKES}
+        />
+      )}
     </div>
   );
 };
