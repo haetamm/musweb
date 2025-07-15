@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from 'axios';
 import { cookies, headers } from 'next/headers';
-import { HandleApiErrors } from './handleApiErrors';
+import { HandleServerInternalErrors } from './handleServerInternalErrors';
 
 const ALLOWED_ORIGINS = ['http://localhost:3000'];
 
@@ -15,7 +15,7 @@ export async function createServerInternalAxios(): Promise<AxiosInstance> {
     );
 
     if (!isAllowed) {
-      throw new HandleApiErrors(403, 'Access denied: origin not allowed');
+      throw new HandleServerInternalErrors(403, 'Access denied');
     }
 
     return axios.create({
@@ -25,9 +25,9 @@ export async function createServerInternalAxios(): Promise<AxiosInstance> {
         : undefined,
     });
   } catch (error) {
-    throw error instanceof HandleApiErrors
+    throw error instanceof HandleServerInternalErrors
       ? error
-      : new HandleApiErrors(500, 'Internal server error');
+      : new HandleServerInternalErrors(500, 'Internal server error');
   }
 }
 

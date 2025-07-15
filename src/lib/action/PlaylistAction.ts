@@ -28,7 +28,7 @@ export class PlaylistAction {
   > {
     try {
       const axios = await createServerApiAxios();
-      const response = await axios.get('/playlists');
+      const response = await axios.get('/playlists/me');
       return { data: response.data.data.playlists };
     } catch (error) {
       return handleApiError<PlaylistResponse[]>(error, []);

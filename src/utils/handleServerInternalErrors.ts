@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 
-export class HandleApiErrors extends Error {
+export class HandleServerInternalErrors extends Error {
   status: number;
   message: string;
 
@@ -11,7 +11,7 @@ export class HandleApiErrors extends Error {
   }
 
   static toNextResponse(error: any): NextResponse {
-    if (error instanceof HandleApiErrors) {
+    if (error instanceof HandleServerInternalErrors) {
       return NextResponse.json(
         { message: error.message },
         { status: error.status }

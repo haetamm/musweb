@@ -1,4 +1,4 @@
-import { HandleApiErrors } from '@/utils/handleApiErrors';
+import { HandleServerInternalErrors } from '@/utils/handleServerInternalErrors';
 import { createServerInternalAxios } from '@/utils/serverAxios';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -12,6 +12,6 @@ export async function POST(req: NextRequest) {
     const response = NextResponse.json({ accessToken, refreshToken });
     return response;
   } catch (error: any) {
-    return HandleApiErrors.toNextResponse(error);
+    return HandleServerInternalErrors.toNextResponse(error);
   }
 }

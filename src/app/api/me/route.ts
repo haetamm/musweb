@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { createServerInternalAxios } from '@/utils/serverAxios';
-import { HandleApiErrors } from '@/utils/handleApiErrors';
+import { HandleServerInternalErrors } from '@/utils/handleServerInternalErrors';
 
 export async function POST() {
   try {
@@ -10,6 +10,6 @@ export async function POST() {
     const response = NextResponse.json({ user });
     return response;
   } catch (error: any) {
-    return HandleApiErrors.toNextResponse(error);
+    return HandleServerInternalErrors.toNextResponse(error);
   }
 }

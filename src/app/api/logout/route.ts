@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { createServerInternalAxios } from '@/utils/serverAxios';
 import { cookies } from 'next/headers';
-import { HandleApiErrors } from '@/utils/handleApiErrors';
+import { HandleServerInternalErrors } from '@/utils/handleServerInternalErrors';
 
 export async function DELETE() {
   try {
@@ -11,6 +11,6 @@ export async function DELETE() {
     const res = NextResponse.json({ message: 'Logged out' });
     return res;
   } catch (error: any) {
-    return HandleApiErrors.toNextResponse(error);
+    return HandleServerInternalErrors.toNextResponse(error);
   }
 }
