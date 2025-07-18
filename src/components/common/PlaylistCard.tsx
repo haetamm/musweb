@@ -9,50 +9,56 @@ const PlaylistCard: React.FC<{ playlist: PlaylistResponse }> = ({
   playlist,
 }) => {
   return (
-    <div className="relative glass-card bg-black rounded-xl overflow-hidden bg-gradient-to-br from-indigo-900 to-purple-800 text-white shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 group w-full h-full">
-      {/* Glowing accent */}
-      <div className="absolute inset-0 bg-gradient-to-br from-purple-900/30 to-pink-700/20 group-hover:opacity-80 opacity-60 transition-opacity" />
+    <div className="relative group overflow-hidden rounded-2xl bg-gradient-to-br from-indigo-900 to-purple-800 shadow-xl hover:shadow-2xl transition-all duration-500 h-full w-full">
+      {/* Subtle noise texture */}
+      <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 group-hover:opacity-15 transition-opacity duration-700" />
 
-      {/* Pulsing center element */}
-      <div className="absolute inset-0 flex items-center justify-center">
-        <div className="absolute w-32 h-32 rounded-full bg-pink-600/10 group-hover:bg-pink-600/20 blur-xl transition-all" />
-      </div>
+      {/* Animated gradient elements */}
+      <div className="absolute -top-20 -left-20 w-40 h-40 bg-gradient-to-r from-indigo-700/40 to-purple-700/40 rounded-full blur-xl group-hover:opacity-50 group-hover:scale-110 transition-all duration-1000" />
+      <div className="absolute -bottom-20 -right-20 w-40 h-40 bg-gradient-to-r from-purple-700/40 to-indigo-700/40 rounded-full blur-xl group-hover:opacity-50 group-hover:scale-110 transition-all duration-1000" />
 
-      {/* Tightly packed content */}
-      <div className="relative p-4 h-full flex flex-col justify-between space-y-3">
-        {/* Top row */}
+      {/* Content container */}
+      <div className="relative z-10 p-6 h-full flex flex-col justify-between">
+        {/* Header section */}
         <div className="flex justify-between items-start">
-          <div className="p-4 rounded-lg bg-gradient-to-br from-purple-600 to-pink-500 shadow-lg">
-            <FaMusic className="text-white text-xl" />
+          {/* Icon with floating effect */}
+          <div className="relative">
+            <div className="absolute -inset-4 bg-gradient-to-r from-indigo-600/30 to-purple-600/30 rounded-xl blur-md opacity-0 group-hover:opacity-40 transition-opacity" />
+            <div className="relative p-3 rounded-lg bg-gradient-to-br from-indigo-800/50 to-purple-800/50 shadow-lg backdrop-blur-sm border border-indigo-700/30 group-hover:border-purple-400/30 transition-all">
+              <FaMusic className="text-purple-300 text-xl group-hover:text-purple-100 transition-colors" />
+            </div>
           </div>
 
-          {/* Stats badge */}
-          <div className="flex space-x-2 bg-black/30 backdrop-blur-sm rounded-full px-3 py-1 text-sm">
-            <span className="flex items-center text-indigo-200">
-              <FaHeadphones className="mr-1" />
-              {playlist.songCount}
-            </span>
-            <span className="flex items-center text-pink-200">
-              <FaClock className="mr-1" />
-              {formatDurationToMinutes(playlist.totalDuration)}
-            </span>
+          {/* Stats with matching colors */}
+          <div className="flex space-x-3">
+            <div className="flex items-center space-x-1 text-sm text-indigo-200/80 group-hover:text-indigo-100 transition-colors">
+              <FaHeadphones className="text-current" />
+              <span>{playlist.songCount}</span>
+            </div>
+            <div className="flex items-center space-x-1 text-sm text-purple-200/80 group-hover:text-purple-100 transition-colors">
+              <FaClock className="text-current" />
+              <span>{formatDurationToMinutes(playlist.totalDuration)}</span>
+            </div>
           </div>
         </div>
 
-        {/* Bottom text */}
-        <div>
+        {/* Text section with subtle hover effects */}
+        <div className="mt-6">
           <Link
             href={`${urlPage.PLAYLIST_DETAIL}/${playlist.id}`}
-            className="font-bold text-white text-xl line-clamp-1 drop-shadow-md hover:text-indigo-200 transition-colors"
+            className="block font-bold text-white text-2xl tracking-tight mb-1 transition-all duration-300 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-indigo-300 group-hover:to-purple-300"
           >
             {playlist.title}
           </Link>
-          <p className="text-indigo-300 text-md">{playlist.owner}</p>
+          <p className="text-indigo-200/70 text-sm font-medium group-hover:text-indigo-100 transition-colors">
+            {playlist.owner}
+          </p>
         </div>
-      </div>
 
-      {/* Glow effect on hover */}
-      <div className="absolute inset-0 shadow-[0_0_30px_0_rgba(236,72,153,0.5)] opacity-0 group-hover:opacity-50 transition-opacity pointer-events-none" />
+        {/* Hover effect elements */}
+        <div className="absolute inset-0 border border-transparent group-hover:border-purple-400/20 rounded-2xl pointer-events-none transition-all duration-500" />
+        <div className="absolute inset-0 shadow-[inset_0_0_30px_0_rgba(139,92,246,0.2)] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+      </div>
     </div>
   );
 };

@@ -28,3 +28,9 @@ export const playlistNav = [
   { name: 'Playlist', href: urlPage.PLAYLIST },
   { name: 'Likes', href: urlPage.PLAYLIST_LIKES },
 ];
+
+export const searchNav = [
+  { name: 'Songs', href: urlPage.SEARCH },
+  { name: 'Albums', href: urlPage.SEARCH_ALBUM },
+  { name: 'Playlists', href: urlPage.SEARCH_PLAYLIST },
+];

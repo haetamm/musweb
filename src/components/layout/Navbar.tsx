@@ -14,13 +14,17 @@ const Navbar = () => {
   const pathname = usePathname();
   const router = useRouter();
   const { showGoogleLogin } = useModalStore();
-  const { isAuthenticated } = useAuthStore();
+  const { isAuthenticated, accessToken } = useAuthStore();
 
   const handleClick = (to: string) => {
-    if (protectedPaths.includes(to) && !isAuthenticated) {
-      showGoogleLogin();
-    } else {
+    const isProtected = protectedPaths.some((path) => to.startsWith(path));
+
+    if (!isProtected) {
       router.push(to);
+    } else if (accessToken || isAuthenticated) {
+      router.push(to);
+    } else {
+      showGoogleLogin();
     }
   };
 

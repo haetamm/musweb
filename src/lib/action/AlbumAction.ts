@@ -16,6 +16,7 @@ export type AlbumDetailResponse = {
 export type AlbumResponse = {
   id: string;
   title: string;
+  artist: string;
   year: number;
   coverUrl: string;
   songCount: string;
@@ -64,6 +65,34 @@ export class AlbumAction {
       return { data: response.data.data.album };
     } catch (error) {
       return handleApiError<AlbumDetailResponse>(error);
+    }
+  }
+
+  static async getAlbumByQuery(
+    title: string,
+    page: number = 1,
+    limit: number = 10
+  ): Promise<ApiResponse<PaginatedAlbumResponse>> {
+    try {
+      const axios = await createServerApiAxios();
+      const response = await axios.get('/albums', {
+        params: { title, page, limit },
+      });
+      return { data: response.data.data };
+    } catch (error) {
+      return handleApiError<PaginatedAlbumResponse>(error, {
+        albums: [],
+        _pagination: {
+          total: 0,
+          page: 1,
+          limit: 10,
+          totalPages: 1,
+          hasPreviousPage: false,
+          hasNextPage: false,
+          previousPage: null,
+          nextPage: null,
+        },
+      });
     }
   }
 }

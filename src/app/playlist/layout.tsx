@@ -3,7 +3,7 @@
 import React from 'react';
 import { isActiveSubNav } from '@/utils/helper';
 import { playlistNav } from '@/utils/links';
-import SubNavLayout from '@/components/common/SubNavLayout';
+import SubNavLayout from '@/components/layout/SubNavLayout';
 
 const PlaylistLayout = ({ children }: { children: React.ReactNode }) => {
   const showPlaylistHeader = (pathname: string) =>

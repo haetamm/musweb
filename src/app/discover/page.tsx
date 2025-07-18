@@ -6,7 +6,7 @@ import React from 'react';
 
 const DiscoverPage = () => {
   return (
-    <div className="mx-auto kontener">
+    <div className="mx-auto kontener px-4 lg:px-8">
       <main className="mb-16 grid grid-cols-1 lg:grid-cols-[65%_35%] xl:grid-cols-[73%_27%] lg:mb-0 md:px-3 xl:px-0">
         <div className="order-2 lg:order-1 lg:pr-5">
           <AlbumCarousel />

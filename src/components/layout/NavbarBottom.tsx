@@ -12,15 +12,20 @@ const NavbarBottom = () => {
   const pathname = usePathname();
   const router = useRouter();
   const { showGoogleLogin } = useModalStore();
-  const { isAuthenticated } = useAuthStore();
+  const { isAuthenticated, accessToken } = useAuthStore();
 
   const handleClick = (to: string) => {
-    if (protectedPaths.includes(to) && !isAuthenticated) {
-      showGoogleLogin();
-    } else {
+    const isProtected = protectedPaths.some((path) => to.startsWith(path));
+
+    if (!isProtected) {
       router.push(to);
+    } else if (accessToken || isAuthenticated) {
+      router.push(to);
+    } else {
+      showGoogleLogin();
     }
   };
+
   return (
     <>
       <nav className="max-w-[400px] mx-auto lg:hidden fixed bottom-4 left-4 right-4 bg-white/20 backdrop-blur-xl border border-white/30 shadow-xl shadow-purple-900/20 rounded-full z-100 py-1 px-6 transition-all duration-300 hover:bg-white/30 hover:border-white/40">

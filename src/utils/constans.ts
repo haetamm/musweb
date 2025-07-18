@@ -9,6 +9,9 @@ export const urlPage = {
   LIBRARY_SONG: '/you/song',
   LIBRARY_SONG_LIKES: '/you/likes',
   LIBRARY_ALBUM: '/you/album',
+  SEARCH: '/search',
+  SEARCH_ALBUM: '/search/albums',
+  SEARCH_PLAYLIST: '/search/playlists',
 };
 
 export const MODAL_TYPES = {

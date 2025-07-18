@@ -2,8 +2,8 @@
 import { useModalStore } from '@/stores/modal';
 import { MODAL_TYPES } from '@/utils/constans';
 import React from 'react';
-import LoginSection from './LoginSection';
-import SmallModalSection from './SmallModalSection';
+import SmallModalSection from '../common/SmallModalSection';
+import LoginSection from '../common/LoginSection';
 
 const Modal = () => {
   const { isVisible, type, hideModal, loading, executeCallback } =

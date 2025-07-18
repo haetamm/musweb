@@ -4,7 +4,7 @@ import SongCard from '@/components/common/SongCard';
 import { SongAction } from '@/lib/action/SongAction';
 import { urlPage } from '@/utils/constans';
 import React from 'react';
-import { FaPlus } from 'react-icons/fa';
+import { FaPlus } from 'react-icons/fa6';
 
 const MySongPage = async ({
   searchParams,

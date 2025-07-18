@@ -21,6 +21,7 @@
   --font-mono: var(--font-geist-mono);
   --breakpoint-xxs: 390px;
   --breakpoint-xs: 600px;
+  --breakpoint-md: 768px;
 }
 
 /* @media (prefers-color-scheme: dark) {

@@ -4,7 +4,7 @@ import Pagination from '@/components/common/Pagination';
 import { AlbumAction } from '@/lib/action/AlbumAction';
 import { urlPage } from '@/utils/constans';
 import React from 'react';
-import { FaPlus } from 'react-icons/fa';
+import { FaPlus } from 'react-icons/fa6';
 
 const MyAlbumPage = async ({
   searchParams,

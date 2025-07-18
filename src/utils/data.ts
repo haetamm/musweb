@@ -6,6 +6,7 @@ export const albums = [
     coverUrl: 'https://picsum.photos/200/600',
     songCount: '23',
     totalDuration: '68',
+    artist: 'SZA',
   },
   {
     id: '2',
@@ -14,6 +15,7 @@ export const albums = [
     coverUrl: 'https://picsum.photos/300/600',
     songCount: '12',
     totalDuration: '42',
+    artist: 'Boygenius',
   },
   {
     id: '3',
@@ -22,6 +24,7 @@ export const albums = [
     coverUrl: 'https://picsum.photos/220/600',
     songCount: '12',
     totalDuration: '39',
+    artist: 'Olivia Rodrigo',
   },
   {
     id: '4',
@@ -30,6 +33,7 @@ export const albums = [
     coverUrl: 'https://picsum.photos/600/600',
     songCount: '14',
     totalDuration: '57',
+    artist: 'Lil Yachty',
   },
   {
     id: '5',
@@ -38,6 +42,7 @@ export const albums = [
     coverUrl: 'https://picsum.photos/250/600',
     songCount: '14',
     totalDuration: '45',
+    artist: 'Amaarae',
   },
   {
     id: '6',
@@ -46,6 +51,7 @@ export const albums = [
     coverUrl: 'https://picsum.photos/280/600',
     songCount: '12',
     totalDuration: '66',
+    artist: 'Lankum',
   },
   {
     id: '7',
@@ -54,6 +60,7 @@ export const albums = [
     coverUrl: 'https://picsum.photos/270/600',
     songCount: '14',
     totalDuration: '49',
+    artist: 'Chappell Roan',
   },
   {
     id: '8',
@@ -62,6 +69,7 @@ export const albums = [
     coverUrl: 'https://picsum.photos/290/600',
     songCount: '11',
     totalDuration: '33',
+    artist: 'Ice Spice',
   },
   {
     id: '9',
@@ -70,6 +78,7 @@ export const albums = [
     coverUrl: 'https://picsum.photos/310/600',
     songCount: '17',
     totalDuration: '60',
+    artist: 'Rosalía',
   },
   {
     id: '10',
@@ -78,6 +87,7 @@ export const albums = [
     coverUrl: 'https://picsum.photos/320/600',
     songCount: '9',
     totalDuration: '36',
+    artist: 'Fiona Apple', // Asumsi fiktif
   },
   {
     id: '11',
@@ -86,6 +96,7 @@ export const albums = [
     coverUrl: 'https://picsum.photos/330/600',
     songCount: '10',
     totalDuration: '40',
+    artist: 'Beach House', // Asumsi fiktif
   },
   {
     id: '12',
@@ -94,6 +105,7 @@ export const albums = [
     coverUrl: 'https://picsum.photos/340/600',
     songCount: '12',
     totalDuration: '50',
+    artist: 'Sufjan Stevens', // Asumsi fiktif
   },
 ];
 

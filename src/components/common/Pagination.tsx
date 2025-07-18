@@ -34,11 +34,13 @@ const Pagination = ({ pagination, baseUrl }: PaginationProps) => {
 
   // Handle navigation on button click
   const handleNavigation = (pageNum: number) => {
-    router.push(`${baseUrl}?page=${pageNum}`);
+    const hasQuery = baseUrl.includes('?');
+    const separator = hasQuery ? '&' : '?';
+    router.push(`${baseUrl}${separator}page=${pageNum}`);
   };
 
   return (
-    <div className="flex items-center justify-center gap-3 py-5 mt-10">
+    <div className="flex items-center justify-center gap-3 pt-5 pb-10 lg:pt-10 lg:pb-0">
       {/* Jump Backward Button */}
       <button
         onClick={() => handleNavigation(Math.max(1, page - 4))}

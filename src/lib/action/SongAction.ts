@@ -1,6 +1,11 @@
 import { handleApiError } from '@/utils/helper';
 import { createServerApiAxios } from '@/utils/serverAxios';
-import { ApiResponse, likeDetail, PaginationResponse } from '@/utils/types';
+import {
+  ApiResponse,
+  likeDetail,
+  PaginationResponse,
+  SongDetail,
+} from '@/utils/types';
 
 export type AlbumSectionResponse = {
   id: string;
@@ -31,7 +36,21 @@ export type SongResponse = {
 };
 
 export type PaginatedSongResponse = {
-  songs: SongResponse[];
+  songs: SongDetail[];
+  _pagination: PaginationResponse;
+};
+
+export type SongSearchResponse = {
+  id: string;
+  title: string;
+  performer: string;
+  coverUrl: string | null;
+  duration: number;
+  likesCount: string;
+};
+
+export type PaginatedSongSearchResponse = {
+  songs: SongSearchResponse[];
   _pagination: PaginationResponse;
 };
 
@@ -101,6 +120,34 @@ export class SongAction {
       };
     } catch (error) {
       return handleApiError<SongDetailResponse>(error, null);
+    }
+  }
+
+  static async getSongByQuery(
+    title: string,
+    page: number = 1,
+    limit: number = 10
+  ): Promise<ApiResponse<PaginatedSongSearchResponse>> {
+    try {
+      const axios = await createServerApiAxios();
+      const response = await axios.get('/songs', {
+        params: { title, page, limit },
+      });
+      return { data: response.data.data };
+    } catch (error) {
+      return handleApiError<PaginatedSongSearchResponse>(error, {
+        songs: [],
+        _pagination: {
+          total: 0,
+          page: 1,
+          limit: 10,
+          totalPages: 1,
+          hasPreviousPage: false,
+          hasNextPage: false,
+          previousPage: null,
+          nextPage: null,
+        },
+      });
     }
   }
 }
