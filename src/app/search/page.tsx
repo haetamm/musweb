@@ -1,6 +1,7 @@
 import ErrorMessage from '@/components/common/ErrorMessage';
 import Pagination from '@/components/common/Pagination';
 import SearchSongCard from '@/components/common/SearchSongCard';
+import SearchNotFound from '@/components/layout/SearchNotFound';
 import { SongAction } from '@/lib/action/SongAction';
 import { urlPage } from '@/utils/constans';
 import React from 'react';
@@ -34,16 +35,7 @@ const SearchPage = async ({
         ))}
       </div>
 
-      {isEmpty && (
-        <div className="flex justify-center w-full items-center h-[calc(100vh-255px)] xl:h-[calc(100vh-280px)] px-4">
-          <div className="flex-col text-center">
-            <p className="text-xl">
-              {`Sorry we didn't find any results for “${q}”.`}
-            </p>
-            <p>Check the spelling, or try a different search.</p>
-          </div>
-        </div>
-      )}
+      {isEmpty && <SearchNotFound q={q || ''} />}
 
       {_pagination.total > 0 && (
         <Pagination pagination={_pagination} baseUrl={baseUrl} />

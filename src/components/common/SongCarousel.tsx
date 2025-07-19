@@ -1,14 +1,18 @@
 'use client';
 
 import { useCarousel } from '@/hooks/useCarousel';
-import { albums, songs } from '@/utils/data';
 import React from 'react';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import SongCard from './SongCard';
+import { SongSearchResponse } from '@/lib/action/SongAction';
 
-const SongCarousel = () => {
+interface SongCarouselProps {
+  songs: SongSearchResponse[];
+}
+
+const SongCarousel: React.FC<SongCarouselProps> = ({ songs }) => {
   const { mounted, carouselRef, currentIndex, isMobile, next, prev } =
-    useCarousel(albums, 5);
+    useCarousel(songs, 5);
 
   if (!mounted) return null;
 

@@ -34,7 +34,7 @@ const SongDetailPage = async ({
   }
 
   return (
-    <div className="lg:px-10">
+    <div className="lg:px-5">
       <div className="text-white pt-6 xl:mt-2 rounded-xl mb-13 lg:mb-0">
         <div className="px-6 mx-auto max-w-7xl">
           {/* Header */}

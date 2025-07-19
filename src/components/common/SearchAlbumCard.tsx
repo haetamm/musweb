@@ -1,5 +1,6 @@
 import { AlbumResponse } from '@/lib/action/AlbumAction';
 import { urlPage } from '@/utils/constans';
+import { formatDurationToMinutes } from '@/utils/helper';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
@@ -9,15 +10,8 @@ interface SearchAlbumCardProps {
   album: AlbumResponse;
 }
 const SearchAlbumCard: React.FC<SearchAlbumCardProps> = ({ album }) => {
-  // Convert total duration in seconds to minutes
-  const formatDuration = (seconds: string) => {
-    const totalSeconds = parseInt(seconds);
-    const mins = Math.floor(totalSeconds / 60);
-    return `${mins} min`;
-  };
-
   return (
-    <div className="group w-full min-h-38 flex flex-col lg:flex-row lg:gap-6 px-3 pt-6 pb-3  lg:p-6 glass-card rounded-xl border border-gray-700 hover:border-indigo-500/30 transition-all duration-500 shadow-2xl hover:shadow-indigo-500/20 overflow-hidden">
+    <div className="group w-full min-h-38 flex flex-col glass-card lg:flex-row lg:gap-6 px-3 pt-6 pb-2  lg:p-4 rounded-xl border border-gray-700 hover:border-indigo-500/30 transition-all duration-500 shadow-2xl hover:shadow-indigo-500/20 overflow-hidden">
       {/* Album Cover */}
       <div className="relative w-24 h-24 lg:w-38 lg:h-38 flex-shrink-0 overflow-hidden rounded-lg border-2 border-gray-600/50 group-hover:border-indigo-500/50 transition-all duration-300">
         <Image
@@ -58,7 +52,7 @@ const SearchAlbumCard: React.FC<SearchAlbumCardProps> = ({ album }) => {
           <div className="flex items-center text-cyan-300/90">
             <FaClock className="mr-2 text-indigo-300" />
             <span className="font-medium">
-              {formatDuration(album.totalDuration)}
+              {formatDurationToMinutes(album.totalDuration)}
             </span>
           </div>
         </div>

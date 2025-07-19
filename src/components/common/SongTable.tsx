@@ -1,20 +1,16 @@
-'use client';
-
+import { SongSearchResponse } from '@/lib/action/SongAction';
 import { urlPage } from '@/utils/constans';
-import { songs } from '@/utils/data';
+import { formatDurationToMinutes } from '@/utils/helper';
 import Image from 'next/image';
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { FaPlay, FaEllipsisH } from 'react-icons/fa';
 
-const SongTable = () => {
-  const [mounted, setMounted] = useState(false);
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+interface SongTableProps {
+  songs: SongSearchResponse[];
+}
 
-  if (!mounted) return null;
-
+const SongTable: React.FC<SongTableProps> = ({ songs }) => {
   return (
     <div className="lg:sticky lg:top-[83px] lg:h-[calc(100vh-218px)] flex flex-col">
       {/* Header */}
@@ -35,7 +31,7 @@ const SongTable = () => {
                 <Image
                   width={6}
                   height={6}
-                  src={song.coverUrl}
+                  src={song.coverUrl || '/img/default.png'}
                   alt={`${song.title} cover`}
                   className="w-14 h-14 object-cover"
                 />
@@ -45,7 +41,7 @@ const SongTable = () => {
               </div>
 
               {/* Song Info */}
-              <div className="flex-1 min-w-0">
+              <div className="flex-1">
                 <Link
                   href={`${urlPage.SONG}/${song.id}`}
                   className="text-white font-medium truncate"
@@ -58,7 +54,9 @@ const SongTable = () => {
               </div>
 
               <div className="flex items-center gap-4">
-                <span className="text-white/70 text-sm">{song.duration}</span>
+                <span className="text-white/70 text-sm">
+                  {formatDurationToMinutes(song.duration)}
+                </span>
                 <button className="text-indigo-300 hover:text-white">
                   <FaEllipsisH size={14} />
                 </button>

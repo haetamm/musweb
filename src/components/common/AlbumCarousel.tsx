@@ -2,11 +2,14 @@
 
 import React from 'react';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
-import { albums } from '@/utils/data';
 import { useCarousel } from '@/hooks/useCarousel';
 import AlbumCard from './AlbumCard';
+import { AlbumResponse } from '@/lib/action/AlbumAction';
 
-const AlbumCarousel = () => {
+interface AlbumCarouselProps {
+  albums: AlbumResponse[];
+}
+const AlbumCarousel: React.FC<AlbumCarouselProps> = ({ albums }) => {
   const { mounted, carouselRef, currentIndex, isMobile, next, prev } =
     useCarousel(albums, 5);
 
@@ -15,7 +18,7 @@ const AlbumCarousel = () => {
   return (
     <div className="relative mt-10 lg:mt-0">
       <div className="flex items-center justify-between mt-4 lg:mt-0 mb-2">
-        <h2 className="text-lg font-bold">Your Albums</h2>
+        <h2 className="text-lg font-bold">New Albums</h2>
       </div>
 
       <div className="relative">

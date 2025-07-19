@@ -1,5 +1,6 @@
 import { SongSearchResponse } from '@/lib/action/SongAction';
 import { urlPage } from '@/utils/constans';
+import { formatDurationToMinutes } from '@/utils/helper';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
@@ -11,12 +12,6 @@ interface SearchSongCardProps {
 }
 
 const SearchSongCard: React.FC<SearchSongCardProps> = ({ song }) => {
-  const formatDuration = (seconds: number) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
-  };
-
   return (
     <div className="group w-full h-28 lg:h-38 flex items-center gap-4 rounded-lg">
       {/* Cover Image with Play Button */}
@@ -50,7 +45,7 @@ const SearchSongCard: React.FC<SearchSongCardProps> = ({ song }) => {
           <div className="flex items-center space-x-4 ml-4">
             <span className="text-sm xl:text-lg text-cyan-300/80 flex items-center font-mono">
               <MdAccessTime className="mr-1 text-indigo-300" />
-              {formatDuration(song.duration)}
+              {formatDurationToMinutes(song.duration)}
             </span>
           </div>
         </div>

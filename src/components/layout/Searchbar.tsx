@@ -2,13 +2,15 @@
 
 import React, { useEffect, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useSearchParams, useRouter, usePathname } from 'next/navigation';
+import { urlPage } from '@/utils/constans';
 
-const Searchbar: React.FC = () => {
+const Searchbar = () => {
   const [mounted, setMounted] = useState<boolean>(false);
   const [query, setQuery] = useState<string>('');
   const searchParams = useSearchParams();
   const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     setMounted(true);
@@ -18,8 +20,15 @@ const Searchbar: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (query.trim()) {
-      router.push(`/search?q=${encodeURIComponent(query)}`);
+    if (!query.trim()) return;
+
+    const encodedQuery = encodeURIComponent(query);
+    const searchUrl = `${urlPage.SEARCH}?q=${encodedQuery}`;
+
+    if (pathname?.startsWith(urlPage.SEARCH)) {
+      router.replace(`${pathname}?q=${encodedQuery}`);
+    } else {
+      router.push(searchUrl);
     }
   };
 
