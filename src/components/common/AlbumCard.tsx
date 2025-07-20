@@ -17,7 +17,7 @@ const AlbumCard: React.FC<AlbumCardProps> = ({ album }) => {
   return (
     <Link href={`${urlPage.ALBUM}/${id}`} className="relative ">
       <Image
-        src={coverUrl || '/img/default.png'}
+        src={coverUrl || '/img/default.svg'}
         alt={`${title} Cover`}
         className="w-full h-full object-cover"
         width={240}

@@ -17,7 +17,7 @@ const SearchSongCard: React.FC<SearchSongCardProps> = ({ song }) => {
       {/* Cover Image with Play Button */}
       <div className="relative w-24 h-24 lg:w-38 lg:h-38 flex-shrink-0 overflow-hidden rounded-md">
         <Image
-          src={song.coverUrl || '/img/default.png'}
+          src={song.coverUrl || '/img/default.svg'}
           alt={`${song.title} cover`}
           width={64}
           height={64}

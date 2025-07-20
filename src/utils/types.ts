@@ -4,6 +4,15 @@ export interface ApiResponse<T = any> {
   status?: number;
 }
 
+export interface SongMetadata {
+  title: string;
+  year: string;
+  performer: string;
+  genre: string;
+  duration: string;
+  albumId: string;
+}
+
 export type SongDetail = {
   id: string;
   title: string;

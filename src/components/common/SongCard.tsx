@@ -15,7 +15,7 @@ const SongCard: React.FC<SongCardProps> = ({ song }) => {
     <Link href={`${urlPage.SONG}/${id}`}>
       <div className="aspect-square">
         <Image
-          src={coverUrl || '/img/default.png'}
+          src={coverUrl || '/img/default.svg'}
           alt={`${title} Cover`}
           className="w-full h-full object-cover"
           width={240}

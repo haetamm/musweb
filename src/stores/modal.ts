@@ -13,6 +13,8 @@ interface ModalState {
   showLogout: (callback: () => void | Promise<void>) => void;
   showLogin: () => void;
   showGoogleLogin: () => void;
+  showCreateSong: () => void;
+  showCreateAlbum: () => void;
   showDelete: (callback: () => void | Promise<void>) => void;
   showUserGoogleForm: () => void;
   hideModal: () => void;
@@ -49,6 +51,14 @@ export const useModalStore = create<ModalState>((set, get) => ({
 
   showGoogleLogin: () => {
     get().showModal(MODAL_TYPES.GOOGLE_LOGIN_FORM);
+  },
+
+  showCreateSong: () => {
+    get().showModal(MODAL_TYPES.CREATE_SONG_FORM);
+  },
+
+  showCreateAlbum: () => {
+    get().showModal(MODAL_TYPES.CREATE_ALBUM_FORM);
   },
 
   showUserGoogleForm: () => {

@@ -35,7 +35,7 @@ const FormControllerInput = <T extends FieldValues>({
             placeholder={placeholder}
             className={`${
               error ? 'border-red-500 border' : ''
-            } w-full bg-gray-700 focus:bg-white focus:text-black focus:outline-none text-white placeholder-gray-400 p-2 rounded`}
+            } w-full bg-gray-900 focus:bg-white p-3 focus:text-black focus:outline-none text-white placeholder-gray-400 rounded-lg`}
           />
           <small
             className={`${error ? 'text-red-300' : 'text-transparent'} ml-3`}

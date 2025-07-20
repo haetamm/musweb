@@ -15,7 +15,7 @@ const SearchAlbumCard: React.FC<SearchAlbumCardProps> = ({ album }) => {
       {/* Album Cover */}
       <div className="relative w-24 h-24 lg:w-38 lg:h-38 flex-shrink-0 overflow-hidden rounded-lg border-2 border-gray-600/50 group-hover:border-indigo-500/50 transition-all duration-300">
         <Image
-          src={album.coverUrl || '/img/default-album.png'}
+          src={album.coverUrl || '/img/default.svg'}
           alt={`${album.title} album cover`}
           width={10}
           height={10}

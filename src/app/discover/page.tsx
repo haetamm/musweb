@@ -15,9 +15,10 @@ const DiscoverPage = async ({
   const currentPage = Number(page) || 1;
 
   const { data } = await AlbumAction.getAlbumByQuery('', currentPage);
-  const { data: dataSongs } = await SongAction.getSongByQuery('', currentPage);
+
+  const { data: results } = await SongAction.getSongByQuery('', currentPage);
   const albums = data?.albums || [];
-  const songs = dataSongs?.songs || [];
+  const songs = results?.songs || [];
 
   return (
     <div className="mx-auto kontener px-4 lg:px-8">
@@ -28,7 +29,7 @@ const DiscoverPage = async ({
           <ListSong />
         </div>
         <div className="relative order-1 lg:order-2 ">
-          <SongTable songs={songs} />
+          <SongTable />
         </div>
       </main>
     </div>

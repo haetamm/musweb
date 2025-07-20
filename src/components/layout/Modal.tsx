@@ -4,6 +4,8 @@ import { MODAL_TYPES } from '@/utils/constans';
 import React from 'react';
 import SmallModalSection from '../common/SmallModalSection';
 import LoginSection from '../common/LoginSection';
+import CreateSongForm from '../common/CreateSongForm';
+import AlbumForm from '../common/AlbumForm';
 
 const Modal = () => {
   const { isVisible, type, hideModal, loading, executeCallback } =
@@ -39,6 +41,8 @@ const Modal = () => {
               loading={loading}
             />
           )}
+          {type === MODAL_TYPES.CREATE_SONG_FORM && <CreateSongForm />}
+          {type === MODAL_TYPES.CREATE_ALBUM_FORM && <AlbumForm />}
         </div>
       </div>
     </>

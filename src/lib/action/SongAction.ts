@@ -53,7 +53,6 @@ export type PaginatedSongSearchResponse = {
   songs: SongSearchResponse[];
   _pagination: PaginationResponse;
 };
-
 export class SongAction {
   static async getSongByCurrentUser(
     page: number = 1,
@@ -126,12 +125,13 @@ export class SongAction {
   static async getSongByQuery(
     title: string,
     page: number = 1,
+    random: boolean = false,
     limit: number = 10
   ): Promise<ApiResponse<PaginatedSongSearchResponse>> {
     try {
       const axios = await createServerApiAxios();
       const response = await axios.get('/songs', {
-        params: { title, page, limit },
+        params: { title, page, limit, random },
       });
       return { data: response.data.data };
     } catch (error) {

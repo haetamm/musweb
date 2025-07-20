@@ -18,7 +18,7 @@ const SongCarousel: React.FC<SongCarouselProps> = ({ songs }) => {
 
   return (
     <div className="relative mt-10">
-      <h2 className="text-lg font-bold mt-4 mb-2">More of what you like</h2>
+      <h2 className="text-lg font-bold mt-4 mb-2">New Songs</h2>
       <div className="relative">
         <button
           onClick={prev}
