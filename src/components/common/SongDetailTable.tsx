@@ -51,9 +51,9 @@ const SongDetailTable: React.FC<SongDetailTableProps> = ({ songs }) => {
                 <td className="py-4 px-2 text-right pr-4 text-gray-400">
                   {formatDurationToMinutes(song.duration)}
                 </td>
-                <td className="py-4 text-right">
-                  <button className="text-purple-300 hover:text-white transition opacity-0 group-hover:opacity-100">
-                    <FaEllipsisH />
+                <td className="py-4 text-right hidden xs:block">
+                  <button className="text-white hover:text-white/20 cursor-pointer">
+                    <FaEllipsisH className="text-lg" />
                   </button>
                 </td>
               </tr>

@@ -6,24 +6,20 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { songFields } from '@/utils/fields';
 import { songFormSchema, SongFormData } from '@/utils/validation';
 import FormControllerInput from './FormControllerInput';
-import toast from 'react-hot-toast';
 import { FiLoader } from 'react-icons/fi';
-import { useHandleErrors } from '@/hooks/useHandleErrors';
-import { useRouter } from 'next/navigation';
-import { urlPage } from '@/utils/constans';
-import { ClientSongAction } from '@/lib/action/ClientSongAction';
-import { useModalStore } from '@/stores/modal';
+import { useHandleErrors } from '@/hooks/useHandleToast';
+import { SongMetadata } from '@/utils/types';
+import useSongStore from '@/stores/song';
 
 interface SongFormProps {
-  metadata: SongFormData;
+  metadata: SongMetadata;
   onCancel: () => void;
 }
 
 const SongForm: React.FC<SongFormProps> = ({ metadata, onCancel }) => {
   const [loading, setLoading] = useState(false);
   const { handleErrors } = useHandleErrors();
-  const { hideModal } = useModalStore();
-  const router = useRouter();
+  const { createSong, updateSongById } = useSongStore();
 
   const {
     control,
@@ -31,7 +27,14 @@ const SongForm: React.FC<SongFormProps> = ({ metadata, onCancel }) => {
     reset,
     formState: { isValid, isSubmitting },
   } = useForm<SongFormData>({
-    defaultValues: metadata,
+    defaultValues: {
+      title: metadata.title ?? '',
+      year: metadata.year ?? '',
+      performer: metadata.performer ?? '',
+      genre: metadata.genre ?? '',
+      duration: metadata.duration ?? '',
+      albumId: metadata.albumId ?? '',
+    },
     resolver: zodResolver(songFormSchema),
     mode: 'onChange',
   });
@@ -39,10 +42,11 @@ const SongForm: React.FC<SongFormProps> = ({ metadata, onCancel }) => {
   const onSubmit = async (data: SongFormData) => {
     setLoading(true);
     try {
-      await ClientSongAction.createSong(data);
-      hideModal();
-      toast.success('Song saved successfully!');
-      router.push(urlPage.LIBRARY_SONG);
+      if (metadata.id) {
+        await updateSongById(metadata.id, data);
+      } else {
+        await createSong(data);
+      }
     } catch (error) {
       handleErrors(error);
     } finally {
@@ -73,7 +77,9 @@ const SongForm: React.FC<SongFormProps> = ({ metadata, onCancel }) => {
         <div className="flex space-x-4">
           <button
             type="button"
-            onClick={handleCancel}
+            onClick={() => {
+              metadata.id ? onCancel() : handleCancel();
+            }}
             className="w-full bg-gray-600 text-white font-semibold py-2 rounded"
           >
             Cancel
@@ -85,7 +91,7 @@ const SongForm: React.FC<SongFormProps> = ({ metadata, onCancel }) => {
           >
             <span className="inline-flex items-center justify-center">
               {loading && <FiLoader className="animate-spin h-4 w-4 mr-2" />}
-              <span>Save</span>
+              <span>{metadata.id ? 'Update' : 'Save'}</span>
             </span>
           </button>
         </div>

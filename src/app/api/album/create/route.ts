@@ -8,8 +8,8 @@ export async function POST(req: NextRequest) {
   try {
     const axios = await createServerInternalAxios();
     const res = await axios.post('/albums', body);
-    const { newSong } = res.data.data;
-    const response = NextResponse.json({ newSong });
+    const { album } = res.data.data;
+    const response = NextResponse.json({ album });
     return response;
   } catch (error: any) {
     return HandleServerInternalErrors.toNextResponse(error);

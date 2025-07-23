@@ -8,12 +8,12 @@ import Link from 'next/link';
 import {
   FaPlay,
   FaHeart,
-  FaEllipsisH,
   FaCalendarAlt,
   FaMicrophone,
   FaMusic,
   FaCompactDisc,
   FaUser,
+  FaEllipsisH,
 } from 'react-icons/fa';
 import { IoMdTime } from 'react-icons/io';
 
@@ -42,8 +42,8 @@ const SongDetailPage = async ({
             <h1 className="text-3xl font-bold bg-gradient-to-r from-indigo-400 to-purple-600 bg-clip-text text-transparent">
               Song Details
             </h1>
-            <button className="p-2 rounded-full hover:bg-gray-700 transition-colors duration-200">
-              <FaEllipsisH className="text-xl" />
+            <button className="text-white hover:text-white/20 cursor-pointer">
+              <FaEllipsisH className="text-lg" />
             </button>
           </div>
 
@@ -84,9 +84,12 @@ const SongDetailPage = async ({
                 {song?.album?.title && (
                   <p className="text-lg text-gray-400 mb-6">
                     From the album{' '}
-                    <span className="text-indigo-300 hover:underline cursor-pointer">
+                    <Link
+                      href={`${urlPage.ALBUM}/${song.album.id}`}
+                      className="text-indigo-300 hover:underline cursor-pointer"
+                    >
                       {song.album.title}
-                    </span>
+                    </Link>
                   </p>
                 )}
               </div>

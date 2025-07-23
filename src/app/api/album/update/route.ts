@@ -6,10 +6,11 @@ export async function PUT(req: NextRequest) {
   const body = await req.json();
 
   try {
+    const { id, ...updateData } = body;
     const axios = await createServerInternalAxios();
-    const res = await axios.put('/albums', body);
-    const { newSong } = res.data.data;
-    const response = NextResponse.json({ newSong });
+    const res = await axios.put(`/albums/${id}`, updateData);
+    const { album } = res.data.data;
+    const response = NextResponse.json({ album });
     return response;
   } catch (error: any) {
     return HandleServerInternalErrors.toNextResponse(error);

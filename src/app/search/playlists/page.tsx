@@ -1,6 +1,6 @@
 import ErrorMessage from '@/components/common/ErrorMessage';
 import Pagination from '@/components/common/Pagination';
-import PlaylistCard from '@/components/common/PlaylistCard';
+import PlaylistSection from '@/components/common/PlaylistSection';
 import SearchNotFound from '@/components/layout/SearchNotFound';
 import { PlaylistAction } from '@/lib/action/PlaylistAction';
 import { urlPage } from '@/utils/constans';
@@ -29,14 +29,12 @@ const SearchPalylistPage = async ({
   return (
     <>
       <div className="py-4 lg:py-0 space-y-6">
-        {playlists.map((playlist) => (
-          <PlaylistCard key={playlist.id} playlist={playlist} />
-        ))}
+        <PlaylistSection playlistResults={playlists} />
       </div>
 
       {isEmpty && <SearchNotFound q={q || ''} />}
 
-      {_pagination.total > 0 && (
+      {_pagination.total > 10 && (
         <Pagination pagination={_pagination} baseUrl={baseUrl} />
       )}
     </>

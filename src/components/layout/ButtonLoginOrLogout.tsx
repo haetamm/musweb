@@ -1,6 +1,6 @@
 'use client';
 
-import { useHandleErrors } from '@/hooks/useHandleErrors';
+import { useHandleErrors } from '@/hooks/useHandleToast';
 import usePreload from '@/hooks/usePreload';
 import useAuthStore from '@/stores/auth';
 import { useModalStore } from '@/stores/modal';
@@ -10,7 +10,7 @@ import React from 'react';
 import toast from 'react-hot-toast';
 
 const ButtonLoginOrLogout = () => {
-  const { showGoogleLogin, showLogout } = useModalStore();
+  const { showGoogleLogin, showLogout, hideModal } = useModalStore();
   const { loading } = usePreload();
   const { isAuthenticated, accessToken } = useAuthStore();
   const { logoutUser } = useAuthStore();
@@ -23,6 +23,7 @@ const ButtonLoginOrLogout = () => {
         await logoutUser();
         toast.success('Logout berhasil!');
         router.push(urlPage.HOME);
+        hideModal();
       } catch (error) {
         handleErrors(error);
       }

@@ -1,7 +1,9 @@
 export const urlPage = {
   HOME: '/discover',
   PLAYLIST: '/playlist',
+  PLAYLIST_CREATE: '/playlist/create',
   PLAYLIST_LIKES: '/playlist/likes',
+  PLAYLIST_COLLAB: '/playlist/collaboration',
   PLAYLIST_DETAIL: '/playlist-detail',
   LIBRARY: '/you',
   SONG: '/song',
@@ -22,6 +24,8 @@ export const MODAL_TYPES = {
   USER_GOOGLE_FORM: 'userGoogleForm',
   LOGIN_FORM: 'loginForm',
   CREATE_SONG_FORM: 'createSongForm',
+  UPDATE_SONG_FORM: 'updateSongForm',
   CREATE_ALBUM_FORM: 'createAlbumForm',
+  UPDATE_ALBUM_FORM: 'updateAlbumForm',
   GOOGLE_LOGIN_FORM: 'googleLoginForm',
 } as const;

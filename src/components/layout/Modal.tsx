@@ -6,6 +6,7 @@ import SmallModalSection from '../common/SmallModalSection';
 import LoginSection from '../common/LoginSection';
 import CreateSongForm from '../common/CreateSongForm';
 import AlbumForm from '../common/AlbumForm';
+import UpdateSongForm from '../common/UpdateSongForm';
 
 const Modal = () => {
   const { isVisible, type, hideModal, loading, executeCallback } =
@@ -42,7 +43,11 @@ const Modal = () => {
             />
           )}
           {type === MODAL_TYPES.CREATE_SONG_FORM && <CreateSongForm />}
-          {type === MODAL_TYPES.CREATE_ALBUM_FORM && <AlbumForm />}
+          {type === MODAL_TYPES.UPDATE_SONG_FORM && (
+            <UpdateSongForm fetchSong={executeCallback} />
+          )}
+          {(type === MODAL_TYPES.CREATE_ALBUM_FORM ||
+            type === MODAL_TYPES.UPDATE_ALBUM_FORM) && <AlbumForm />}
         </div>
       </div>
     </>

@@ -8,7 +8,7 @@ import { FaArrowCircleLeft } from 'react-icons/fa';
 import FormControllerInput from './FormControllerInput';
 import useAuthStore from '@/stores/auth';
 import toast from 'react-hot-toast';
-import { useHandleErrors } from '@/hooks/useHandleErrors';
+import { useHandleErrors } from '@/hooks/useHandleToast';
 import { LoginRequest } from '@/lib/action/AuthAction';
 import { FiLoader } from 'react-icons/fi';
 

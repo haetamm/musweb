@@ -1,19 +1,37 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import { useCarousel } from '@/hooks/useCarousel';
 import AlbumCard from './AlbumCard';
 import { AlbumResponse } from '@/lib/action/AlbumAction';
+import useAlbumStore from '@/stores/album';
+import ErrorMessageSection from '../layout/ErrorMessageSection';
+import AlbumCardSkeleton from './AlbumCardSkeleton';
 
 interface AlbumCarouselProps {
-  albums: AlbumResponse[];
+  albumResults: AlbumResponse[] | undefined;
+  error: string | undefined;
 }
-const AlbumCarousel: React.FC<AlbumCarouselProps> = ({ albums }) => {
-  const { mounted, carouselRef, currentIndex, isMobile, next, prev } =
-    useCarousel(albums, 5);
 
-  if (!mounted) return null;
+const AlbumCarousel: React.FC<AlbumCarouselProps> = ({
+  albumResults,
+  error,
+}) => {
+  const { albums, setAlbums } = useAlbumStore();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setAlbums(albumResults ?? []);
+    setLoading(false);
+  }, [setAlbums, albumResults]);
+
+  const { carouselRef, currentIndex, isMobile, next, prev } = useCarousel(
+    albums,
+    5
+  );
+
+  const skeletons = Array.from({ length: 7 });
 
   return (
     <div className="relative mt-10 lg:mt-0">
@@ -21,50 +39,63 @@ const AlbumCarousel: React.FC<AlbumCarouselProps> = ({ albums }) => {
         <h2 className="text-lg font-bold">New Albums</h2>
       </div>
 
-      <div className="relative">
-        <button
-          onClick={prev}
-          className={`absolute left-2 md:left-1.5 xl:left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 z-10 p-3 rounded-full xs:bg-white/10transition ${
-            currentIndex === 0 ? 'hidden' : ''
-          }`}
-          aria-label="Previous albums"
-        >
-          <FaChevronLeft className="text-white" />
-        </button>
+      {error ? (
+        <ErrorMessageSection error={error} />
+      ) : (
+        <div className="relative">
+          <button
+            onClick={prev}
+            className={`absolute left-2 md:left-1.5 xl:left-0 top-1/2 -translate-y-1/2 -translate-x-1/2 z-10 p-3 rounded-full xs:bg-white/10 transition ${
+              currentIndex === 0 ? 'hidden' : ''
+            }`}
+            aria-label="Previous albums"
+          >
+            <FaChevronLeft className="text-white" />
+          </button>
 
-        <div
-          ref={carouselRef}
-          className={`flex gap-4 overflow-x-auto no-scrollbar ${
-            isMobile ? 'snap-x snap-mandatory' : ''
-          }`}
-          style={{
-            scrollBehavior: isMobile ? 'auto' : 'smooth',
-            touchAction: isMobile ? 'pan-x' : 'auto',
-            WebkitOverflowScrolling: isMobile ? 'touch' : 'auto',
-          }}
-        >
-          {albums.map((album) => (
-            <div
-              key={album.id}
-              className={`flex-shrink-0 glass-card overflow-hidden no-scrollbar w-[156px] h-[156px] xs:w-[188px] xs:h-[188px] md:h-[240px] md:w-[240px] lg:w-[190px] lg:h-[190px] xl:h-[210px] xl:w-[210px] transition-transform ${
-                isMobile ? 'snap-start' : ''
-              }`}
-            >
-              <AlbumCard album={album} />
-            </div>
-          ))}
+          <div
+            ref={carouselRef}
+            className={`flex gap-4 overflow-x-auto no-scrollbar ${
+              isMobile ? 'snap-x snap-mandatory' : ''
+            }`}
+            style={{
+              scrollBehavior: isMobile ? 'auto' : 'smooth',
+              touchAction: isMobile ? 'pan-x' : 'auto',
+              WebkitOverflowScrolling: isMobile ? 'touch' : 'auto',
+            }}
+          >
+            {loading
+              ? skeletons.map((_, index) => (
+                  <div
+                    key={index}
+                    className={`flex-shrink-0 w-[156px] h-[156px] xs:w-[188px] xs:h-[188px] md:h-[240px] md:w-[240px] lg:w-[190px] lg:h-[190px] xl:h-[210px] xl:w-[210px]`}
+                  >
+                    <AlbumCardSkeleton />
+                  </div>
+                ))
+              : albums.map((album) => (
+                  <div
+                    key={album.id}
+                    className={`flex-shrink-0 glass-card overflow-hidden no-scrollbar w-[156px] h-[156px] xs:w-[188px] xs:h-[188px] md:h-[240px] md:w-[240px] lg:w-[190px] lg:h-[190px] xl:h-[210px] xl:w-[210px] transition-transform ${
+                      isMobile ? 'snap-start' : ''
+                    }`}
+                  >
+                    <AlbumCard album={album} />
+                  </div>
+                ))}
+          </div>
+
+          <button
+            onClick={next}
+            className={`absolute right-2 md:right-0 xl:right-3.5 top-1/2 -translate-y-1/2 translate-x-1/2 z-10 p-3 rounded-full xs:bg-white/10 hover:bg-white/20 transition ${
+              currentIndex >= albums.length - 5 ? 'hidden' : ''
+            }`}
+            aria-label="Next albums"
+          >
+            <FaChevronRight className="text-white" />
+          </button>
         </div>
-
-        <button
-          onClick={next}
-          className={`absolute right-2 md:right-0 xl:right-3.5 top-1/2 -translate-y-1/2 translate-x-1/2 z-10 p-3 rounded-full xs:bg-white/10 hover:bg-white/20 transition ${
-            currentIndex >= albums.length - 5 ? 'hidden' : ''
-          }`}
-          aria-label="Next albums"
-        >
-          <FaChevronRight className="text-white" />
-        </button>
-      </div>
+      )}
     </div>
   );
 };

@@ -9,17 +9,14 @@ export const loginFormSchema = z.object({
 });
 
 const title = z.string().min(1, 'Title is required');
-const year = z
-  .string()
-  .regex(/^\d{4}$/, 'Year must be a valid 4-digit number')
-  .optional();
+const year = z.string().regex(/^\d{4}$/, 'Year must be a valid 4-digit number');
 
 export const songFormSchema = z.object({
   title,
   year,
   performer: z.string().min(1, 'Performer is required'),
   genre: z.string().min(1, 'Genre is required'),
-  duration: z.string().regex(/^\d+$/, 'Duration must be a number').optional(),
+  duration: z.string().regex(/^\d+$/, 'Duration must be a number'),
   albumId: z.string().optional(),
 });
 

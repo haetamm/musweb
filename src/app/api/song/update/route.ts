@@ -7,9 +7,9 @@ export async function PUT(req: NextRequest) {
 
   try {
     const axios = await createServerInternalAxios();
-    const res = await axios.put('/songs', body);
-    const { newSong } = res.data.data;
-    const response = NextResponse.json({ newSong });
+    const res = await axios.put(`/songs/${body.id}`, body);
+    const { song } = res.data.data;
+    const response = NextResponse.json({ song });
     return response;
   } catch (error: any) {
     return HandleServerInternalErrors.toNextResponse(error);

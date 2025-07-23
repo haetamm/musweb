@@ -1,6 +1,6 @@
 import ErrorMessage from '@/components/common/ErrorMessage';
 import Pagination from '@/components/common/Pagination';
-import SearchSongCard from '@/components/common/SearchSongCard';
+import SearchSongList from '@/components/common/SearchSongList';
 import SearchNotFound from '@/components/layout/SearchNotFound';
 import { SongAction } from '@/lib/action/SongAction';
 import { urlPage } from '@/utils/constans';
@@ -30,14 +30,12 @@ const SearchPage = async ({
   return (
     <>
       <div className="py-4 lg:py-0 xs:space-y-2 xl:space-y-7">
-        {songs.map((song) => (
-          <SearchSongCard key={song.id} song={song} />
-        ))}
+        <SearchSongList songsResult={songs} />
       </div>
 
       {isEmpty && <SearchNotFound q={q || ''} />}
 
-      {_pagination.total > 0 && (
+      {_pagination.total > 10 && (
         <Pagination pagination={_pagination} baseUrl={baseUrl} />
       )}
     </>

@@ -37,6 +37,7 @@ const SongInputFile: React.FC<SongInputFileProps> = ({
                 ? Math.floor(format.duration).toString()
                 : '',
               albumId: '',
+              id: null,
             });
           })
           .catch((err) => {

@@ -1,6 +1,6 @@
 import ErrorMessage from '@/components/common/ErrorMessage';
+import MySongList from '@/components/common/MySongList';
 import Pagination from '@/components/common/Pagination';
-import SongCard from '@/components/common/SongCard';
 import { SongAction } from '@/lib/action/SongAction';
 import { urlPage } from '@/utils/constans';
 import React from 'react';
@@ -33,13 +33,9 @@ const SongLikesPage = async ({
         </div>
       )}
 
-      <div className="grid grid-cols-2 xs:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 gap-y-6 xl:gap-y-10">
-        {songs?.map((song) => (
-          <SongCard key={song.id} song={song} />
-        ))}
-      </div>
+      <MySongList songsResult={songs} />
 
-      {_pagination.total > 0 && (
+      {_pagination.total > 10 && (
         <Pagination
           pagination={_pagination}
           baseUrl={urlPage.LIBRARY_SONG_LIKES}

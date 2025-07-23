@@ -73,7 +73,12 @@ const useAuthStore = create<AuthState>((set) => ({
       await signOut(auth);
       Cookies.remove('accessToken');
       Cookies.remove('refreshToken');
-      set({ accessToken: '', refreshToken: '', isAuthenticated: false });
+      set({
+        accessToken: '',
+        refreshToken: '',
+        isAuthenticated: false,
+        user: null,
+      });
       useModalStore.getState().hideModal();
     } catch (error) {
       throw error;

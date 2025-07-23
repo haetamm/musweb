@@ -24,15 +24,9 @@ export type SongDetailResponse = {
   duration: number;
   coverUrl: string | null;
   uploader: string;
+  userId: string;
   likes: likeDetail[];
   album: AlbumSectionResponse | null;
-};
-
-export type SongResponse = {
-  id: string;
-  title: string;
-  performer: string;
-  coverUrl: string | null;
 };
 
 export type PaginatedSongResponse = {
@@ -40,19 +34,6 @@ export type PaginatedSongResponse = {
   _pagination: PaginationResponse;
 };
 
-export type SongSearchResponse = {
-  id: string;
-  title: string;
-  performer: string;
-  coverUrl: string | null;
-  duration: number;
-  likesCount: string;
-};
-
-export type PaginatedSongSearchResponse = {
-  songs: SongSearchResponse[];
-  _pagination: PaginationResponse;
-};
 export class SongAction {
   static async getSongByCurrentUser(
     page: number = 1,
@@ -113,7 +94,7 @@ export class SongAction {
   ): Promise<ApiResponse<SongDetailResponse>> {
     try {
       const axios = await createServerApiAxios();
-      const response = await axios.get(`/songs/${id}`);
+      const response = await axios.get(`/songs/${id}/detail`);
       return {
         data: response.data.data.song,
       };
@@ -127,7 +108,7 @@ export class SongAction {
     page: number = 1,
     random: boolean = false,
     limit: number = 10
-  ): Promise<ApiResponse<PaginatedSongSearchResponse>> {
+  ): Promise<ApiResponse<PaginatedSongResponse>> {
     try {
       const axios = await createServerApiAxios();
       const response = await axios.get('/songs', {
@@ -135,7 +116,7 @@ export class SongAction {
       });
       return { data: response.data.data };
     } catch (error) {
-      return handleApiError<PaginatedSongSearchResponse>(error, {
+      return handleApiError<PaginatedSongResponse>(error, {
         songs: [],
         _pagination: {
           total: 0,

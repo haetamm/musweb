@@ -82,6 +82,33 @@ export class PlaylistAction {
     }
   }
 
+  static async getPlaylistCollaboration(
+    page: number = 1,
+    limit: number = 10
+  ): Promise<ApiResponse<PaginatedPlaylistResponse>> {
+    try {
+      const axios = await createServerApiAxios();
+      const response = await axios.get('/playlists/collab', {
+        params: { page, limit },
+      });
+      return { data: response.data.data };
+    } catch (error) {
+      return handleApiError<PaginatedPlaylistResponse>(error, {
+        playlists: [],
+        _pagination: {
+          total: 0,
+          page: 1,
+          limit: 10,
+          totalPages: 1,
+          hasPreviousPage: false,
+          hasNextPage: false,
+          previousPage: null,
+          nextPage: null,
+        },
+      });
+    }
+  }
+
   static async getPlaylistById(
     id: string
   ): Promise<ApiResponse<PlaylistDetailResponse>> {

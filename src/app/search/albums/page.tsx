@@ -1,6 +1,6 @@
 import ErrorMessage from '@/components/common/ErrorMessage';
 import Pagination from '@/components/common/Pagination';
-import SearchAlbumCard from '@/components/common/SearchAlbumCard';
+import SearchAlbumList from '@/components/common/SearchAlbumList';
 import SearchNotFound from '@/components/layout/SearchNotFound';
 import { AlbumAction } from '@/lib/action/AlbumAction';
 import { urlPage } from '@/utils/constans';
@@ -29,14 +29,12 @@ const SearchAlbumPage = async ({
   return (
     <>
       <div className="py-4 lg:py-0 space-y-6 xl:space-y-7">
-        {albums.map((album) => (
-          <SearchAlbumCard key={album.id} album={album} />
-        ))}
+        <SearchAlbumList albumResults={albums} />
       </div>
 
       {isEmpty && <SearchNotFound q={q || ''} />}
 
-      {_pagination.total > 0 && (
+      {_pagination.total > 10 && (
         <Pagination pagination={_pagination} baseUrl={baseUrl} />
       )}
     </>

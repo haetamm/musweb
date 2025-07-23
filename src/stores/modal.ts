@@ -14,7 +14,9 @@ interface ModalState {
   showLogin: () => void;
   showGoogleLogin: () => void;
   showCreateSong: () => void;
+  showUpdateSong: (callback: () => void | Promise<void>) => void;
   showCreateAlbum: () => void;
+  showUpdateAlbum: () => void;
   showDelete: (callback: () => void | Promise<void>) => void;
   showUserGoogleForm: () => void;
   hideModal: () => void;
@@ -57,8 +59,16 @@ export const useModalStore = create<ModalState>((set, get) => ({
     get().showModal(MODAL_TYPES.CREATE_SONG_FORM);
   },
 
+  showUpdateSong: (callback) => {
+    get().showModal(MODAL_TYPES.UPDATE_SONG_FORM, callback);
+  },
+
   showCreateAlbum: () => {
     get().showModal(MODAL_TYPES.CREATE_ALBUM_FORM);
+  },
+
+  showUpdateAlbum: () => {
+    get().showModal(MODAL_TYPES.UPDATE_ALBUM_FORM);
   },
 
   showUserGoogleForm: () => {
@@ -82,12 +92,6 @@ export const useModalStore = create<ModalState>((set, get) => ({
         await callback();
       } catch (error) {
         console.error('Failed to execute callback:', error);
-      } finally {
-        set({
-          ...currentState,
-          loading: false,
-          isVisible: false,
-        });
       }
     }
   },

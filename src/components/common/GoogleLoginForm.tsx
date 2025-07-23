@@ -1,4 +1,4 @@
-import { useHandleErrors } from '@/hooks/useHandleErrors';
+import { useHandleErrors } from '@/hooks/useHandleToast';
 import useAuthStore from '@/stores/auth';
 import { useModalStore } from '@/stores/modal';
 import React from 'react';

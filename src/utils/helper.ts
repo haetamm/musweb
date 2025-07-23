@@ -19,16 +19,25 @@ export const handleApiError = <T = unknown>(
   defaultData: T | null = null
 ): ApiResponse<T> => {
   if (axios.isAxiosError(error)) {
+    if (!error.response) {
+      // Kasus API mati atau ga bisa connect
+      return {
+        data: defaultData,
+        error:
+          'Gagal terhubung ke server. Cek koneksi atau server mungkin sedang down.',
+        status: 503, // Service Unavailable
+      };
+    }
     return {
       data: defaultData,
       error: error.response?.data?.message || error.message,
-      status: error.response?.status,
+      status: error.response?.status || 500,
     };
   }
 
   return {
     data: defaultData,
-    error: (error as Error)?.message || 'Unknown error occurred',
+    error: (error as Error)?.message || 'Terjadi kesalahan tidak diketahui',
     status: 500,
   };
 };

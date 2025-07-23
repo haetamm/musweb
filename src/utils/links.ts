@@ -27,6 +27,7 @@ export const libraryNav = [
 export const playlistNav = [
   { name: 'Playlist', href: urlPage.PLAYLIST },
   { name: 'Likes', href: urlPage.PLAYLIST_LIKES },
+  { name: 'Collaborations', href: urlPage.PLAYLIST_COLLAB },
 ];
 
 export const searchNav = [

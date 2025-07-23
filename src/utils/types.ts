@@ -5,6 +5,7 @@ export interface ApiResponse<T = any> {
 }
 
 export interface SongMetadata {
+  id: string | null;
   title: string;
   year: string;
   performer: string;
@@ -19,6 +20,8 @@ export type SongDetail = {
   performer: string;
   duration: number;
   coverUrl: string;
+  userId: string;
+  likesCount: string;
 };
 
 export type likeDetail = {

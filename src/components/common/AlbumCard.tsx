@@ -6,16 +6,23 @@ import Link from 'next/link';
 import { urlPage } from '@/utils/constans';
 import { AlbumResponse } from '@/lib/action/AlbumAction';
 import { formatDurationToMinutes } from '@/utils/helper';
+import AlbumActionButton from './AlbumActionButton';
 
 interface AlbumCardProps {
   album: AlbumResponse;
 }
 
 const AlbumCard: React.FC<AlbumCardProps> = ({ album }) => {
-  const { id, title, coverUrl, songCount, totalDuration } = album;
+  const { id, title, coverUrl, songCount, totalDuration, userId } = album;
 
   return (
-    <Link href={`${urlPage.ALBUM}/${id}`} className="relative ">
+    <div className="relative aspect-square">
+      <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/20 to-transparent z-0" />
+
+      {/* Tombol aksi */}
+      <div className="absolute top-2 right-2 z-10">
+        <AlbumActionButton owner={userId} albumId={id} />
+      </div>
       <Image
         src={coverUrl || '/img/default.svg'}
         alt={`${title} Cover`}
@@ -26,13 +33,18 @@ const AlbumCard: React.FC<AlbumCardProps> = ({ album }) => {
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent flex items-end p-3 sm:p-4">
         <div>
-          <h3 className="font-bold text-lg sm:text-xl">{title}</h3>
+          <Link
+            href={`${urlPage.ALBUM}/${id}`}
+            className="font-bold text-lg sm:text-xl "
+          >
+            {title}
+          </Link>
           <p className="text-indigo-200 text-xs sm:text-sm">
             {`${songCount} Songs • ${formatDurationToMinutes(totalDuration)}`}
           </p>
         </div>
       </div>
-    </Link>
+    </div>
   );
 };
 

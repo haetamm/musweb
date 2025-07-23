@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import useAuthStore from '@/stores/auth';
-import { useHandleErrors } from './useHandleErrors';
+import { useHandleErrors } from './useHandleToast';
 
 const usePreload = () => {
   const { handleErrors } = useHandleErrors();

@@ -17,8 +17,9 @@ export type AlbumResponse = {
   id: string;
   title: string;
   artist: string;
-  year: number;
+  year: string;
   coverUrl: string;
+  userId: string;
   songCount: string;
   totalDuration: string;
 };
