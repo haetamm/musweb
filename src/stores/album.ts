@@ -5,6 +5,7 @@ import { ClientAlbumAction } from '@/lib/action/ClientAlbumAction';
 import { showSuccessToast } from '@/hooks/useHandleToast';
 import { urlPage } from '@/utils/constans';
 import { useModalStore } from './modal';
+import { AlbumSection } from '@/utils/types';
 
 interface AlbumState {
   loading: boolean;
@@ -14,6 +15,7 @@ interface AlbumState {
   createAlbum: (data: AlbumFormData) => void;
   updateAlbum: (id: string, data: AlbumFormData) => void;
   setAlbumDetail: (id: string) => void;
+  searchAlbums: (query: string) => Promise<AlbumSection[]>;
 }
 
 const useAlbumStore = create<AlbumState>((set, get) => ({
@@ -80,10 +82,22 @@ const useAlbumStore = create<AlbumState>((set, get) => ({
   },
 
   setAlbumDetail: (id: string) => {
-    console.log('aho');
     set((state) => ({
       albumDetail: state.albums.find((album) => album.id === id) || null,
     }));
+  },
+
+  searchAlbums: async (query: string): Promise<AlbumSection[]> => {
+    set({ loading: true });
+    try {
+      const data = await ClientAlbumAction.getAlbumByQuery(query);
+      console.log(data);
+      return data;
+    } catch (err) {
+      throw err;
+    } finally {
+      set({ loading: false });
+    }
   },
 }));
 

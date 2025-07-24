@@ -37,11 +37,6 @@ export const songFields = [
     type: 'text',
     placeholder: 'Duration (seconds)',
   },
-  {
-    name: 'albumId',
-    type: 'text',
-    placeholder: 'Album',
-  },
 ] as const;
 
 export const albumFields = [

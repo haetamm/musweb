@@ -4,6 +4,15 @@ export interface ApiResponse<T = any> {
   status?: number;
 }
 
+export interface AlbumSection {
+  id: string;
+  title: string;
+  artist: string;
+  year: string;
+  coverUrl: string;
+  uploader: string;
+}
+
 export interface SongMetadata {
   id: string | null;
   title: string;
@@ -11,13 +20,15 @@ export interface SongMetadata {
   performer: string;
   genre: string;
   duration: string;
-  albumId: string;
+  album: AlbumSection | null;
 }
 
 export type SongDetail = {
   id: string;
   title: string;
+  year: string;
   performer: string;
+  genre: string;
   duration: number;
   coverUrl: string;
   userId: string;

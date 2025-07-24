@@ -1,6 +1,7 @@
 import { AlbumFormData } from '@/utils/validation';
 import axios from 'axios';
 import { AlbumResponse } from './AlbumAction';
+import { AlbumSection } from '@/utils/types';
 
 export type CreateAlbumResponse = {
   album: AlbumResponse;
@@ -28,5 +29,10 @@ export class ClientAlbumAction {
     };
     const response = await axios.put('/api/album/update', payload);
     return response.data.album;
+  }
+
+  static async getAlbumByQuery(query: string): Promise<AlbumSection[]> {
+    const response = await axios.post('/api/album/search', { title: query });
+    return response.data.albums;
   }
 }

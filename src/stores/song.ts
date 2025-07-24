@@ -5,16 +5,19 @@ import { useModalStore } from './modal';
 import { SongDetail, SongMetadata } from '@/utils/types';
 import { showSuccessToast } from '@/hooks/useHandleToast';
 import { urlPage } from '@/utils/constans';
+import { SongDetailResponse } from '@/lib/action/SongAction';
 
 interface SongState {
   loading: boolean;
   loadingDetail: boolean;
   songs: SongDetail[];
   songDetail: SongMetadata | null;
+  songDetailPage: SongDetailResponse | null;
   createSong: (data: SongFormData) => Promise<void>;
   getSongById: (id: string) => Promise<void>;
   updateSongById: (id: string, data: SongFormData) => Promise<void>;
   setSongs: (data: SongDetail[]) => void;
+  setSongDetailPage: (data: SongDetailResponse) => void;
 }
 
 const useSongStore = create<SongState>((set) => ({
@@ -22,9 +25,14 @@ const useSongStore = create<SongState>((set) => ({
   loadingDetail: false,
   songs: [],
   songDetail: null,
+  songDetailPage: null,
 
   setSongs: (data: SongDetail[]) => {
     set({ songs: data });
+  },
+
+  setSongDetailPage: (data: SongDetailResponse) => {
+    set({ songDetailPage: data });
   },
 
   createSong: async (data: SongFormData) => {
@@ -51,12 +59,19 @@ const useSongStore = create<SongState>((set) => ({
 
   updateSongById: async (id: string, data: SongFormData) => {
     set({ loading: true });
+
     try {
       const response = await ClientSongAction.updateSong(id, data);
       const updatedSong = response.song;
 
       set((state) => ({
-        songs: state.songs.map((song) => (song.id === id ? updatedSong : song)),
+        songs: state.songs.map((song) =>
+          song.id === id ? { ...song, ...updatedSong } : song
+        ),
+        songDetailPage:
+          state.songDetailPage?.id === id
+            ? { ...state.songDetailPage, ...updatedSong }
+            : state.songDetailPage,
       }));
 
       useModalStore.getState().hideModal();
@@ -75,7 +90,7 @@ const useSongStore = create<SongState>((set) => ({
     set({ loadingDetail: true });
     console.log('hallo');
     try {
-      const { id, title, year, performer, genre, duration, albumId } =
+      const { id, title, year, performer, genre, duration, album } =
         await ClientSongAction.getSongById(songId);
       const song = {
         id,
@@ -84,7 +99,7 @@ const useSongStore = create<SongState>((set) => ({
         performer,
         genre,
         duration: duration.toString(),
-        albumId,
+        album,
       };
       set({ songDetail: song });
     } catch (err) {

@@ -18,7 +18,7 @@ export type AlbumSectionResponse = {
 export type SongDetailResponse = {
   id: string;
   title: string;
-  year: number;
+  year: string;
   performer: string;
   genre: string;
   duration: number;
