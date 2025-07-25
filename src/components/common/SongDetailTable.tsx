@@ -1,15 +1,46 @@
-import { urlPage } from '@/utils/constans';
+'use client';
+
 import { formatDurationToMinutes } from '@/utils/helper';
-import { SongDetail } from '@/utils/types';
+import { urlPage } from '@/utils/constans';
 import Link from 'next/link';
 import React from 'react';
-import { FaEllipsisH } from 'react-icons/fa';
+import { SongSection } from '@/utils/types';
+import ActionButton from '../layout/ActionButton';
+import { useModalStore } from '@/stores/modal';
+import { useHandleErrors } from '@/hooks/useHandleToast';
+import useAlbumStore from '@/stores/album';
 
 interface SongDetailTableProps {
-  songs: SongDetail[];
+  owner?: string;
+  resourceId?: string;
+  songs: SongSection[];
+  loading?: boolean;
 }
 
-const SongDetailTable: React.FC<SongDetailTableProps> = ({ songs }) => {
+const SongDetailTable: React.FC<SongDetailTableProps> = ({
+  owner,
+  resourceId,
+  songs,
+  loading,
+}) => {
+  const skeletonRows = Array.from({ length: 5 });
+  const { showDelete } = useModalStore();
+  const { handleErrors } = useHandleErrors();
+  const { deleteSongFromAlbum } = useAlbumStore();
+
+  const handleDelete = (songId: string) => {
+    showDelete(
+      `Are you sure you want to delete this song from album?`,
+      async () => {
+        try {
+          await deleteSongFromAlbum(resourceId!, songId);
+        } catch (error) {
+          handleErrors(error);
+        }
+      }
+    );
+  };
+
   return (
     <section className="bg-white/5 backdrop-blur-sm rounded-xl xs:p-6">
       <div className="mb-6 flex justify-between items-center px-3 pt-3 xs:px-0 xs:pt-0">
@@ -31,33 +62,61 @@ const SongDetailTable: React.FC<SongDetailTableProps> = ({ songs }) => {
             </tr>
           </thead>
           <tbody>
-            {songs.map((song, index) => (
-              <tr
-                key={song.id}
-                className="border-b border-white/10 hover:bg-white/5 transition group"
-              >
-                <td className="py-4 px-4 text-gray-400 group-hover:text-white">
-                  {index + 1}
-                </td>
-                <td className="py-4 px-2 text-purple-200">
-                  <Link
-                    href={`${urlPage.SONG}/${song.id}`}
-                    className="hover:underline cursor-pointer"
+            {loading
+              ? skeletonRows.map((_, index) => (
+                  <tr
+                    key={index}
+                    className="border-b border-white/10 animate-pulse"
                   >
-                    {song.title}
-                  </Link>
-                </td>
-                <td className="py-4 px-2 text-purple-200">{song.performer}</td>
-                <td className="py-4 px-2 text-right pr-4 text-gray-400">
-                  {formatDurationToMinutes(song.duration)}
-                </td>
-                <td className="py-4 text-right hidden xs:block">
-                  <button className="text-white hover:text-white/20 cursor-pointer">
-                    <FaEllipsisH className="text-lg" />
-                  </button>
-                </td>
-              </tr>
-            ))}
+                    <td className="py-4 px-4 text-gray-600">{index + 1}</td>
+                    <td className="py-4 px-2">
+                      <div className="h-4 w-32 bg-gray-600 rounded" />
+                    </td>
+                    <td className="py-4 px-2">
+                      <div className="h-4 w-24 bg-gray-600 rounded" />
+                    </td>
+                    <td className="py-4 px-2 text-right pr-4">
+                      <div className="h-4 w-12 bg-gray-600 rounded ml-auto" />
+                    </td>
+                    <td className="py-4"></td>
+                  </tr>
+                ))
+              : songs.map((song, index) => (
+                  <tr
+                    key={song.id}
+                    className="border-b border-white/10 hover:bg-white/5 transition group"
+                  >
+                    <td className="py-4 px-4 text-gray-400 group-hover:text-white">
+                      {index + 1}
+                    </td>
+                    <td className="py-4 px-2 text-purple-200">
+                      <Link
+                        href={`${urlPage.SONG}/${song.id}`}
+                        className="hover:underline cursor-pointer"
+                      >
+                        {song.title}
+                      </Link>
+                    </td>
+                    <td className="py-4 px-2 text-purple-200">
+                      {song.performer}
+                    </td>
+                    <td className="py-4 px-2 text-right pr-4 text-gray-400">
+                      {formatDurationToMinutes(song.duration)}
+                    </td>
+                    <td className="py-4 text-right hidden xs:block">
+                      <ActionButton owner={owner!} resourceId="" type="album">
+                        <button
+                          onClick={() => {
+                            handleDelete(song.id);
+                          }}
+                          className="w-full text-left px-4 py-2 text-red-600 hover:bg-white/20 rounded"
+                        >
+                          Delete
+                        </button>
+                      </ActionButton>
+                    </td>
+                  </tr>
+                ))}
           </tbody>
         </table>
       </div>

@@ -6,6 +6,7 @@ import { urlPage } from '@/utils/constans';
 import { formatDurationToMinutes } from '@/utils/helper';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { FaCalendarAlt } from 'react-icons/fa';
 import {
@@ -17,10 +18,6 @@ import {
   FaUser,
 } from 'react-icons/fa6';
 import { IoMdTime } from 'react-icons/io';
-
-interface Props {
-  songResult: SongDetailResponse;
-}
 
 const SongDetailItem = ({
   icon,
@@ -66,16 +63,26 @@ const SkeletonLoader = () => (
   </div>
 );
 
+interface Props {
+  songResult: SongDetailResponse;
+}
+
 const SongInfoSection: React.FC<Props> = ({ songResult }) => {
   const { songDetailPage: song, setSongDetailPage } = useSongStore();
   const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
     setSongDetailPage(songResult);
     setLoading(false);
   }, [setSongDetailPage, songResult]);
 
-  if (loading || !song) return <SkeletonLoader />;
+  if (loading) return <SkeletonLoader />;
+
+  if (!song) {
+    router.back();
+    return null;
+  }
 
   return (
     <div className="flex flex-col lg:flex-row gap-8 mb-10">

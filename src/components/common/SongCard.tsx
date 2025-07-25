@@ -2,8 +2,8 @@ import { urlPage } from '@/utils/constans';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
-import SongActionButton from './SongActionButton';
 import { SongDetail } from '@/utils/types';
+import ActionButton from '../layout/ActionButton';
 
 interface SongCardProps {
   song: SongDetail;
@@ -19,7 +19,7 @@ const SongCard: React.FC<SongCardProps> = ({ song }) => {
 
         {/* Tombol aksi */}
         <div className="absolute top-2 right-2 z-10">
-          <SongActionButton owner={userId} songId={id} />
+          <ActionButton owner={userId} resourceId={id} type="song" />
         </div>
 
         <Image

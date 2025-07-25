@@ -1,19 +1,32 @@
 import { create } from 'zustand';
-import { AlbumResponse } from '@/lib/action/AlbumAction';
+import { AlbumDetailResponse, AlbumResponse } from '@/lib/action/AlbumAction';
 import { AlbumFormData } from '@/utils/validation';
 import { ClientAlbumAction } from '@/lib/action/ClientAlbumAction';
 import { showSuccessToast } from '@/hooks/useHandleToast';
 import { urlPage } from '@/utils/constans';
 import { useModalStore } from './modal';
 import { AlbumSection } from '@/utils/types';
+import { formatDurationToMinutes } from '@/utils/helper';
+
+type AlbumMiniDetail = {
+  id: string;
+  title: string;
+  artist: string;
+  year: string;
+};
 
 interface AlbumState {
   loading: boolean;
   albums: AlbumResponse[];
-  albumDetail: AlbumResponse | null;
+  albumDetail: AlbumMiniDetail | null;
+  albumDetailPage: AlbumDetailResponse | null;
   setAlbums: (data: AlbumResponse[]) => void;
+  setAlbumDetailPage: (data: AlbumDetailResponse) => void;
+  resetAlbumDetail: () => void;
   createAlbum: (data: AlbumFormData) => void;
   updateAlbum: (id: string, data: AlbumFormData) => void;
+  deleteAlbumById: (id: string) => Promise<void>;
+  deleteSongFromAlbum: (id: string, songId: string) => Promise<void>;
   setAlbumDetail: (id: string) => void;
   searchAlbums: (query: string) => Promise<AlbumSection[]>;
 }
@@ -22,9 +35,54 @@ const useAlbumStore = create<AlbumState>((set, get) => ({
   loading: false,
   albums: [],
   albumDetail: null,
+  albumDetailPage: null,
 
   setAlbums: (data: AlbumResponse[]) => {
     set({ albums: data });
+  },
+
+  setAlbumDetailPage: (data: AlbumDetailResponse) => {
+    const formatted = {
+      ...data,
+      totalDuration: formatDurationToMinutes(data.totalDuration),
+    };
+
+    set({ albumDetailPage: formatted });
+  },
+
+  setAlbumDetail: (id: string) => {
+    const { albums, albumDetailPage } = get();
+
+    const fromAlbums = albums.find((album) => album.id === id);
+    if (fromAlbums) {
+      set({
+        albumDetail: {
+          id: fromAlbums.id,
+          title: fromAlbums.title,
+          artist: fromAlbums.artist,
+          year: fromAlbums.year,
+        },
+      });
+      return;
+    }
+
+    if (albumDetailPage && albumDetailPage.id === id) {
+      set({
+        albumDetail: {
+          id: albumDetailPage.id,
+          title: albumDetailPage.title,
+          artist: albumDetailPage.artist,
+          year: albumDetailPage.year,
+        },
+      });
+      return;
+    }
+
+    set({ albumDetail: null });
+  },
+
+  resetAlbumDetail: () => {
+    set({ albumDetail: null });
   },
 
   createAlbum: async (data: AlbumFormData) => {
@@ -50,25 +108,18 @@ const useAlbumStore = create<AlbumState>((set, get) => ({
   updateAlbum: async (id: string, data: AlbumFormData) => {
     set({ loading: true });
     try {
-      const response = await ClientAlbumAction.updateAlbum(id, data); // Returns Album
+      const response = await ClientAlbumAction.updateAlbum(id, data);
 
-      const state = get();
-      const existingAlbum = state.albums.find((album) => album.id === id);
-      if (!existingAlbum) {
-        return;
-      }
-
-      const updatedAlbum: AlbumResponse = {
-        ...existingAlbum,
-        ...response, // Overwrite with updated fields from API (id, title, artist, year)
-      };
-
-      // Update state pake set
-      set({
+      set((state) => ({
         albums: state.albums.map((album) =>
-          album.id === id ? updatedAlbum : album
+          album.id === id ? { ...album, ...response } : album
         ),
-      });
+        albumDetailPage:
+          state.albumDetailPage?.id === id
+            ? { ...state.albumDetailPage, ...response }
+            : state.albumDetailPage,
+      }));
+
       useModalStore.getState().hideModal();
       showSuccessToast(
         'The album has been saved successfully',
@@ -81,10 +132,65 @@ const useAlbumStore = create<AlbumState>((set, get) => ({
     }
   },
 
-  setAlbumDetail: (id: string) => {
-    set((state) => ({
-      albumDetail: state.albums.find((album) => album.id === id) || null,
-    }));
+  deleteAlbumById: async (id: string) => {
+    set({ loading: true });
+    try {
+      await ClientAlbumAction.deleteAlbumById(id);
+
+      set((state) => ({
+        albums: state.albums.filter((album) => album.id !== id),
+        albumDetailPage: null,
+      }));
+
+      useModalStore.getState().hideModal();
+      showSuccessToast('The album has been deleted successfully', ``);
+    } catch (err) {
+      throw err;
+    } finally {
+      set({ loading: false });
+    }
+  },
+
+  deleteSongFromAlbum: async (id: string, songId: string) => {
+    set({ loading: true });
+
+    try {
+      await ClientAlbumAction.deleteSongFromAlbum(id, songId);
+
+      set((state) => {
+        const currentDetail = state.albumDetailPage;
+
+        if (!currentDetail) return {};
+
+        // Filter lagu yang dihapus
+        const updatedSongs = currentDetail.songs.filter(
+          (song) => song.id !== songId
+        );
+
+        // Hitung ulang total duration (dalam detik), dan jumlah lagu
+        const totalDurationInSeconds = updatedSongs.reduce(
+          (total, song) => total + song.duration,
+          0
+        );
+        const songCount = updatedSongs.length;
+
+        return {
+          albumDetailPage: {
+            ...currentDetail,
+            songs: updatedSongs,
+            songCount: songCount.toString(),
+            totalDuration: formatDurationToMinutes(totalDurationInSeconds),
+          },
+        };
+      });
+
+      useModalStore.getState().hideModal();
+      showSuccessToast('Lagu berhasil dihapus dari album.', '');
+    } catch (err) {
+      throw err;
+    } finally {
+      set({ loading: false });
+    }
   },
 
   searchAlbums: async (query: string): Promise<AlbumSection[]> => {

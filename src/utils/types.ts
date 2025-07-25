@@ -4,6 +4,15 @@ export interface ApiResponse<T = any> {
   status?: number;
 }
 
+export interface SongSection {
+  id: string;
+  title: string;
+  performer: string;
+  duration: number;
+  coverUrl: string;
+  userId: string;
+}
+
 export interface AlbumSection {
   id: string;
   title: string;

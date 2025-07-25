@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { urlPage } from '@/utils/constans';
 import { AlbumResponse } from '@/lib/action/AlbumAction';
 import { formatDurationToMinutes } from '@/utils/helper';
-import AlbumActionButton from './AlbumActionButton';
+import ActionButton from '../layout/ActionButton';
 
 interface AlbumCardProps {
   album: AlbumResponse;
@@ -21,7 +21,7 @@ const AlbumCard: React.FC<AlbumCardProps> = ({ album }) => {
 
       {/* Tombol aksi */}
       <div className="absolute top-2 right-2 z-10">
-        <AlbumActionButton owner={userId} albumId={id} />
+        <ActionButton owner={userId} resourceId={id} type="album" />
       </div>
       <Image
         src={coverUrl || '/img/default.svg'}

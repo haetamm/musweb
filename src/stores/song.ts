@@ -16,6 +16,7 @@ interface SongState {
   createSong: (data: SongFormData) => Promise<void>;
   getSongById: (id: string) => Promise<void>;
   updateSongById: (id: string, data: SongFormData) => Promise<void>;
+  deleteSongById: (id: string) => Promise<void>;
   setSongs: (data: SongDetail[]) => void;
   setSongDetailPage: (data: SongDetailResponse) => void;
 }
@@ -79,6 +80,26 @@ const useSongStore = create<SongState>((set) => ({
         'The song has been updated successfully.',
         `${urlPage.SONG}/${updatedSong.id}`
       );
+    } catch (err) {
+      throw err;
+    } finally {
+      set({ loading: false });
+    }
+  },
+
+  deleteSongById: async (id: string) => {
+    set({ loading: true });
+
+    try {
+      await ClientSongAction.deleteSongById(id);
+
+      set((state) => ({
+        songs: state.songs.filter((song) => song.id !== id),
+        songDetailPage: null,
+      }));
+
+      useModalStore.getState().hideModal();
+      showSuccessToast('The song has been deleted successfully.', '');
     } catch (err) {
       throw err;
     } finally {

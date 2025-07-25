@@ -26,12 +26,25 @@ const AlbumCarousel: React.FC<AlbumCarouselProps> = ({
     setLoading(false);
   }, [setAlbums, albumResults]);
 
-  const { carouselRef, currentIndex, isMobile, next, prev } = useCarousel(
-    albums,
-    5
-  );
+  const { carouselRef, currentIndex, isMobile, next, prev, mounted } =
+    useCarousel(albums, 5);
 
   const skeletons = Array.from({ length: 7 });
+
+  if (!mounted || loading) {
+    return (
+      <div className="flex space-x-4 overflow-x-auto no-scrollbar mt-10">
+        {skeletons.map((_, index) => (
+          <div
+            key={index}
+            className="flex-shrink-0 w-[156px] h-[156px] xs:w-[188px] xs:h-[188px] md:h-[240px] md:w-[240px] lg:w-[190px] lg:h-[190px] xl:h-[210px] xl:w-[210px]"
+          >
+            <AlbumCardSkeleton />
+          </div>
+        ))}
+      </div>
+    );
+  }
 
   return (
     <div className="relative mt-10 lg:mt-0">
@@ -64,25 +77,16 @@ const AlbumCarousel: React.FC<AlbumCarouselProps> = ({
               WebkitOverflowScrolling: isMobile ? 'touch' : 'auto',
             }}
           >
-            {loading
-              ? skeletons.map((_, index) => (
-                  <div
-                    key={index}
-                    className={`flex-shrink-0 w-[156px] h-[156px] xs:w-[188px] xs:h-[188px] md:h-[240px] md:w-[240px] lg:w-[190px] lg:h-[190px] xl:h-[210px] xl:w-[210px]`}
-                  >
-                    <AlbumCardSkeleton />
-                  </div>
-                ))
-              : albums.map((album) => (
-                  <div
-                    key={album.id}
-                    className={`flex-shrink-0 glass-card overflow-hidden no-scrollbar w-[156px] h-[156px] xs:w-[188px] xs:h-[188px] md:h-[240px] md:w-[240px] lg:w-[190px] lg:h-[190px] xl:h-[210px] xl:w-[210px] transition-transform ${
-                      isMobile ? 'snap-start' : ''
-                    }`}
-                  >
-                    <AlbumCard album={album} />
-                  </div>
-                ))}
+            {albums.map((album) => (
+              <div
+                key={album.id}
+                className={`flex-shrink-0 glass-card overflow-hidden w-[156px] h-[156px] xs:w-[188px] xs:h-[188px] md:h-[240px] md:w-[240px] lg:w-[190px] lg:h-[190px] xl:h-[210px] xl:w-[210px] transition-transform ${
+                  isMobile ? 'snap-start' : ''
+                }`}
+              >
+                <AlbumCard album={album} />
+              </div>
+            ))}
           </div>
 
           <button

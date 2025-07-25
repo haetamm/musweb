@@ -7,9 +7,9 @@ import { FaPlay } from 'react-icons/fa';
 import { formatDurationToMinutes } from '@/utils/helper';
 import { urlPage } from '@/utils/constans';
 import { SongDetail } from '@/utils/types';
-import SongActionButton from './SongActionButton';
 import useSongStore from '@/stores/song';
 import ErrorMessageSection from '../layout/ErrorMessageSection';
+import ActionButton from '../layout/ActionButton';
 
 interface Props {
   songsResult: SongDetail[] | undefined;
@@ -91,7 +91,11 @@ const SongTableList: React.FC<Props> = ({ songsResult, error }) => {
               <span className="text-white/70 text-sm">
                 {formatDurationToMinutes(song.duration)}
               </span>
-              <SongActionButton owner={song.userId} songId={song.id} />
+              <ActionButton
+                owner={song.userId}
+                resourceId={song.id}
+                type="song"
+              />
             </div>
           </div>
         ))}

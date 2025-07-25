@@ -1,16 +1,17 @@
 import { handleApiError } from '@/utils/helper';
 import { createServerApiAxios } from '@/utils/serverAxios';
-import { ApiResponse, PaginationResponse, SongDetail } from '@/utils/types';
+import { ApiResponse, PaginationResponse, SongSection } from '@/utils/types';
 
 export type AlbumDetailResponse = {
   id: string;
   title: string;
   artist: string;
-  year: number;
+  year: string;
   coverUrl: string;
+  userId: string;
   songCount: string;
   totalDuration: string;
-  songs: SongDetail[];
+  songs: SongSection[];
 };
 
 export type AlbumResponse = {

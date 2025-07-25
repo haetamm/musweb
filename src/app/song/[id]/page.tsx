@@ -1,7 +1,7 @@
 import ErrorMessage from '@/components/common/ErrorMessage';
 import NotFoundMessage from '@/components/common/NotFoundMessage';
-import SongActionButton from '@/components/common/SongActionButton';
 import SongInfoSection from '@/components/common/SongInfoSection';
+import ActionButton from '@/components/layout/ActionButton';
 import { SongAction } from '@/lib/action/SongAction';
 
 const SongDetailPage = async ({
@@ -29,7 +29,11 @@ const SongDetailPage = async ({
             <h1 className="text-3xl font-bold bg-gradient-to-r from-indigo-400 to-purple-600 bg-clip-text text-transparent">
               Song Details
             </h1>
-            <SongActionButton owner={song.userId} songId={song.id} />
+            <ActionButton
+              owner={song.userId}
+              resourceId={song.id}
+              type="song"
+            />
           </div>
 
           {/* Song Info */}

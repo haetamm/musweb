@@ -9,7 +9,7 @@ import AlbumForm from '../common/AlbumForm';
 import UpdateSongForm from '../common/UpdateSongForm';
 
 const Modal = () => {
-  const { isVisible, type, hideModal, loading, executeCallback } =
+  const { isVisible, type, hideModal, loading, executeCallback, desc } =
     useModalStore();
 
   if (!isVisible) return null;
@@ -32,6 +32,7 @@ const Modal = () => {
             type === MODAL_TYPES.GOOGLE_LOGIN_FORM) && (
             <LoginSection type={type} />
           )}
+
           {type === MODAL_TYPES.LOGOUT && (
             <SmallModalSection
               title="Logout Confirmation"
@@ -42,10 +43,24 @@ const Modal = () => {
               loading={loading}
             />
           )}
+
+          {type === MODAL_TYPES.DELETE && (
+            <SmallModalSection
+              title="Delete Confirmation"
+              desc={desc}
+              buttonLabel="Delete"
+              handleButton={executeCallback}
+              cancelButton={hideModal}
+              loading={loading}
+            />
+          )}
+
           {type === MODAL_TYPES.CREATE_SONG_FORM && <CreateSongForm />}
+
           {type === MODAL_TYPES.UPDATE_SONG_FORM && (
             <UpdateSongForm fetchSong={executeCallback} />
           )}
+
           {(type === MODAL_TYPES.CREATE_ALBUM_FORM ||
             type === MODAL_TYPES.UPDATE_ALBUM_FORM) && <AlbumForm />}
         </div>

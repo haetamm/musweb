@@ -10,7 +10,7 @@ import useAuthStore from '@/stores/auth';
 import toast from 'react-hot-toast';
 import { useHandleErrors } from '@/hooks/useHandleToast';
 import { LoginRequest } from '@/lib/action/AuthAction';
-import { FiLoader } from 'react-icons/fi';
+import CustomButton from './CustomButton';
 
 const LoginForm = () => {
   const { showGoogleLogin } = useModalStore();
@@ -64,15 +64,13 @@ const LoginForm = () => {
           </div>
         ))}
 
-        <button
+        <CustomButton
+          type="submit"
+          loading={loading}
           disabled={!isValid || isSubmitting || loading}
-          className="w-full disabled:bg-gray-500 disabled:cursor-not-allowed cursor-pointer bg-purple-600 text-white font-semibold py-2 rounded mb-4"
         >
-          <span className="inline-flex items-center justify-center">
-            {loading && <FiLoader className="animate-spin h-4 w-4 mr-2" />}
-            <span>Login</span>
-          </span>
-        </button>
+          Login
+        </CustomButton>
       </form>
     </>
   );

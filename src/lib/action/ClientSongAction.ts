@@ -45,4 +45,9 @@ export class ClientSongAction {
     const response = await axios.post('/api/song/detail', { id });
     return response.data.song;
   }
+
+  static async deleteSongById(id: string): Promise<{ messsage: string }> {
+    const response = await axios.delete('/api/song/delete', { data: { id } });
+    return response.data.message;
+  }
 }

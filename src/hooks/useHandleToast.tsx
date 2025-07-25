@@ -96,13 +96,15 @@ export const showSuccessToast = (
           <p className="font-medium">Success</p>
           <p className="mt-1">
             {message},{' '}
-            <Link
-              onClick={() => toast.dismiss(t.id)}
-              href={linkHref}
-              className="underline font-semibold text-green-700 hover:text-green-900"
-            >
-              {linkLabel}
-            </Link>
+            {linkHref && (
+              <Link
+                onClick={() => toast.dismiss(t.id)}
+                href={linkHref}
+                className="underline font-semibold text-green-700 hover:text-green-900"
+              >
+                {linkLabel}
+              </Link>
+            )}
           </p>
         </div>
         <button

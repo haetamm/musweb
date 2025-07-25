@@ -35,4 +35,19 @@ export class ClientAlbumAction {
     const response = await axios.post('/api/album/search', { title: query });
     return response.data.albums;
   }
+
+  static async deleteAlbumById(id: string): Promise<{ messsage: string }> {
+    const response = await axios.delete('/api/album/delete', { data: { id } });
+    return response.data.message;
+  }
+
+  static async deleteSongFromAlbum(
+    id: string,
+    songId: string
+  ): Promise<{ messsage: string }> {
+    const response = await axios.delete('/api/album/delete/song', {
+      data: { id, songId },
+    });
+    return response.data.message;
+  }
 }

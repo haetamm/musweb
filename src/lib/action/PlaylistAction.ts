@@ -1,7 +1,11 @@
-import { collaborationDetail, PaginationResponse } from './../../utils/types';
+import {
+  collaborationDetail,
+  PaginationResponse,
+  SongSection,
+} from './../../utils/types';
 import { handleApiError } from '@/utils/helper';
 import { createServerApiAxios } from '@/utils/serverAxios';
-import { ApiResponse, likeDetail, SongDetail } from '@/utils/types';
+import { ApiResponse, likeDetail } from '@/utils/types';
 
 export type PlaylistDetailResponse = {
   id: string;
@@ -9,7 +13,7 @@ export type PlaylistDetailResponse = {
   owner: string;
   songCount: string;
   totalDuration: string;
-  songs: SongDetail[];
+  songs: SongSection[];
   likes: likeDetail[];
   collaborations: collaborationDetail[];
 };

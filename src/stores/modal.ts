@@ -4,6 +4,7 @@ import { MODAL_TYPES } from '@/utils/constans';
 interface ModalState {
   isVisible: boolean;
   type: string;
+  desc: string;
   callback: (() => void | Promise<void>) | null;
   loading: boolean;
   showModal: (
@@ -17,7 +18,7 @@ interface ModalState {
   showUpdateSong: (callback: () => void | Promise<void>) => void;
   showCreateAlbum: () => void;
   showUpdateAlbum: () => void;
-  showDelete: (callback: () => void | Promise<void>) => void;
+  showDelete: (desc: string, callback: () => void | Promise<void>) => void;
   showUserGoogleForm: () => void;
   hideModal: () => void;
   executeCallback: () => Promise<void>;
@@ -26,6 +27,7 @@ interface ModalState {
 export const useModalStore = create<ModalState>((set, get) => ({
   isVisible: false,
   type: '',
+  desc: '',
   callback: null,
   loading: false,
 
@@ -43,7 +45,8 @@ export const useModalStore = create<ModalState>((set, get) => ({
     get().showModal(MODAL_TYPES.LOGOUT, callback);
   },
 
-  showDelete: (callback) => {
+  showDelete: (desc, callback) => {
+    set({ desc });
     get().showModal(MODAL_TYPES.DELETE, callback);
   },
 

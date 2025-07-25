@@ -5,13 +5,15 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { songFormSchema, SongFormData } from '@/utils/validation';
 import FormControllerInput from './FormControllerInput';
-import { FiLoader } from 'react-icons/fi';
 import { useHandleErrors } from '@/hooks/useHandleToast';
 import { SongMetadata, AlbumSection } from '@/utils/types';
 import useSongStore from '@/stores/song';
 import { songFields } from '@/utils/fields';
 import SearchAlbumCard from './SearchAlbumCard';
 import useAlbumStore from '@/stores/album';
+import Link from 'next/link';
+import { urlPage } from '@/utils/constans';
+import CustomButton from './CustomButton';
 
 interface SongFormProps {
   metadata: SongMetadata;
@@ -100,10 +102,11 @@ const SongForm: React.FC<SongFormProps> = ({ metadata, onCancel }) => {
 
   return (
     <div className="my-10">
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-2">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-4">
+      <form onSubmit={handleSubmit(onSubmit)} className="">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4">
           {songFields.map((field, index) => (
             <div key={index}>
+              <label>{field.placeholder}:</label>
               <FormControllerInput
                 name={field.name}
                 control={control}
@@ -114,61 +117,78 @@ const SongForm: React.FC<SongFormProps> = ({ metadata, onCancel }) => {
           ))}
           {/* Album Search Input */}
           <div className="relative">
+            <label>Search Album:</label>
             <input
-              type="text"
+              type="search"
               defaultValue={searchQuery}
               onKeyDown={handleSearch}
-              placeholder="Search for an album..."
+              placeholder="Search for an album"
               className="w-full p-3 focus:bg-white focus:text-black bg-gray-900 rounded-lg focus:outline-none text-white placeholder-gray-400"
             />
           </div>
         </div>
         {/* Search Results and Selected Album Cards */}
         <div className="col-span-1 md:col-span-2">
-          <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-4">
+          <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-x-4">
             {selectedAlbum && (
-              <SearchAlbumCard
-                album={selectedAlbum}
-                loading={searchLoading}
-                isSelected={true}
-                onRemove={() => setSelectedAlbum(null)}
-              />
+              <div className="flex-col">
+                <p>Album: </p>
+                <SearchAlbumCard
+                  album={selectedAlbum}
+                  loading={searchLoading}
+                  isSelected={true}
+                  onRemove={() => setSelectedAlbum(null)}
+                />
+              </div>
             )}
             {!searchResults.length && searchQuery && !searchLoading ? (
-              <div className="flex items-center justify-center col-span-1 md:col-span-2 lg:col-span-3 xl:col-span-5">
-                <p className=" font-semibold">Album tidak ditemukan</p>
+              <div
+                className={`${searchResults.length ? 'flex items-center justify-center' : 'inline-block mb-3 mt-auto '} col-span-1 md:col-span-2 lg:col-span-3 xl:col-span-5 flex  `}
+              >
+                <div className="flex-col text-center border-red-300 border-[1px] p-5 rounded-lg">
+                  <p className="text-red-300">Album tidak ditemukan</p>
+                  <Link
+                    href={urlPage.LIBRARY_ALBUM}
+                    target="_blank"
+                    className="font-bold "
+                  >
+                    <span className="hover:underline cursor-pointer">
+                      Tambah Album
+                    </span>
+                  </Link>
+                </div>
               </div>
             ) : (
               searchResults.map((album) => (
-                <SearchAlbumCard
-                  key={album.id}
-                  album={album}
-                  loading={searchLoading}
-                  isSelected={selectedAlbum?.id === album.id}
-                  onSelect={() => handleAlbumSelect(album)}
-                />
+                <div key={album.id} className="flex-col">
+                  <p className="text-transparent">Album: </p>
+                  <SearchAlbumCard
+                    key={album.id}
+                    album={album}
+                    loading={searchLoading}
+                    isSelected={selectedAlbum?.id === album.id}
+                    onSelect={() => handleAlbumSelect(album)}
+                  />
+                </div>
               ))
             )}
           </div>
         </div>
         <div className="flex space-x-4">
-          <button
+          <CustomButton
             type="button"
             onClick={handleCancel}
-            className="w-full bg-gray-600 cursor-pointer text-white font-semibold py-2 rounded"
+            variant="secondary"
           >
             Cancel
-          </button>
-          <button
+          </CustomButton>
+          <CustomButton
             type="submit"
+            loading={loading}
             disabled={!isValid || isSubmitting || loading}
-            className="w-full disabled:bg-gray-500 disabled:cursor-not-allowed cursor-pointer bg-purple-600 text-white font-semibold py-2 rounded"
           >
-            <span className="inline-flex items-center justify-center">
-              {loading && <FiLoader className="animate-spin h-4 w-4 mr-2" />}
-              <span>{metadata.id ? 'Update' : 'Save'}</span>
-            </span>
-          </button>
+            {metadata.id ? 'Update' : 'Save'}
+          </CustomButton>
         </div>
       </form>
     </div>
