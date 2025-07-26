@@ -9,7 +9,7 @@ const PlaylistCard: React.FC<{ playlist: PlaylistResponse }> = ({
   playlist,
 }) => {
   return (
-    <div className="relative group overflow-hidden rounded-2xl bg-gradient-to-br from-indigo-900 to-purple-800 shadow-xl hover:shadow-2xl transition-all duration-500 h-full w-full">
+    <div className="relative group overflow-hidden bg-gradient-to-br from-indigo-900 to-purple-800 shadow-xl hover:shadow-2xl transition-all duration-500 h-full w-full">
       {/* Subtle noise texture */}
       <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-10 group-hover:opacity-15 transition-opacity duration-700" />
 
@@ -23,7 +23,7 @@ const PlaylistCard: React.FC<{ playlist: PlaylistResponse }> = ({
         <div className="flex justify-between items-start">
           {/* Icon with floating effect */}
           <div className="relative">
-            <div className="absolute -inset-4 bg-gradient-to-r from-indigo-600/30 to-purple-600/30 rounded-xl blur-md opacity-0 group-hover:opacity-40 transition-opacity" />
+            <div className="absolute -inset-4 bg-gradient-to-r from-indigo-600/30 to-purple-600/30 blur-md opacity-0 group-hover:opacity-40 transition-opacity" />
             <div className="relative p-3 rounded-lg bg-gradient-to-br from-indigo-800/50 to-purple-800/50 shadow-lg backdrop-blur-sm border border-indigo-700/30 group-hover:border-purple-400/30 transition-all">
               <FaMusic className="text-purple-300 text-xl group-hover:text-purple-100 transition-colors" />
             </div>
@@ -56,7 +56,7 @@ const PlaylistCard: React.FC<{ playlist: PlaylistResponse }> = ({
         </div>
 
         {/* Hover effect elements */}
-        <div className="absolute inset-0 border border-transparent group-hover:border-purple-400/20 rounded-2xl pointer-events-none transition-all duration-500" />
+        <div className="absolute inset-0 border border-transparent group-hover:border-purple-400/20 pointer-events-none transition-all duration-500" />
         <div className="absolute inset-0 shadow-[inset_0_0_30px_0_rgba(139,92,246,0.2)] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
       </div>
     </div>

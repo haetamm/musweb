@@ -1,5 +1,5 @@
 import ErrorMessage from '@/components/common/ErrorMessage';
-import MySongList from '@/components/common/MySongList';
+import MySongList from '@/components/you/MySongList';
 import Pagination from '@/components/common/Pagination';
 import { SongAction } from '@/lib/action/SongAction';
 import { urlPage } from '@/utils/constans';

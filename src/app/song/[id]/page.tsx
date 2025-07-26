@@ -1,7 +1,7 @@
 import ErrorMessage from '@/components/common/ErrorMessage';
 import NotFoundMessage from '@/components/common/NotFoundMessage';
-import SongInfoSection from '@/components/common/SongInfoSection';
-import ActionButton from '@/components/layout/ActionButton';
+import SongDetailPageSection from '@/components/song/SongDetailPageSection';
+import ActionButton from '@/components/common/ActionButton';
 import { SongAction } from '@/lib/action/SongAction';
 
 const SongDetailPage = async ({
@@ -37,7 +37,7 @@ const SongDetailPage = async ({
           </div>
 
           {/* Song Info */}
-          <SongInfoSection songResult={song} />
+          <SongDetailPageSection songResult={song} />
         </div>
       </div>
     </div>

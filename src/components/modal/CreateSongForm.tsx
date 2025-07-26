@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { useModalStore } from '@/stores/modal';
 import { MdClose } from 'react-icons/md';
 import SongForm from './SongForm';
-import SongInputFile from './SongInputFile';
+import SongInputFile from '../common/SongInputFile';
 import { SongMetadata } from '@/utils/types';
 
 const CreateSongForm = () => {
@@ -17,7 +17,7 @@ const CreateSongForm = () => {
         <div className="flex justify-end pt-3 px-5">
           <MdClose onClick={hideModal} className="h-6 w-6 cursor-pointer" />
         </div>
-        <div className="min-h-[calc(100vh-60px)] md:min-h-[calc(100vh-200px)] kontener px-8 py-3 mx-auto">
+        <div className="min-h-[calc(100vh-60px)] md:min-h-[calc(100vh-200px)] kontener px-3 py-3 mx-auto">
           <div className="space-y-3">
             <p className="text-2xl lg:text-3xl">Upload your audio files.</p>
             <p className="text-xs lg:text-sm">

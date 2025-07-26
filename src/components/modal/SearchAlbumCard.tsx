@@ -40,7 +40,7 @@ const SearchAlbumCard = ({
   return (
     <div
       onClick={onSelect}
-      className="relative border rounded-lg p-3 mb-3 flex items-center gap-3 transition-all cursor-pointer hover:bg-white/10 backdrop-blur-sm group"
+      className="relative border rounded-lg px-3 py-4 mb-3 flex items-center gap-3 transition-all cursor-pointer hover:bg-white/10 backdrop-blur-sm group"
       style={{
         borderColor: isSelected
           ? 'rgba(129, 140, 248, 0.5)'

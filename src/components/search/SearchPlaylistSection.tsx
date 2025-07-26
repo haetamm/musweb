@@ -1,15 +1,15 @@
 'use client';
 import React, { useEffect, useState } from 'react';
-import PlaylistCard from './PlaylistCard';
+import PlaylistCard from '../common/PlaylistCard';
 import usePlaylistStore from '@/stores/playlists';
 import { PlaylistResponse } from '@/lib/action/PlaylistAction';
-import PlaylistSkeletonCard from '../layout/PlaylistSkeletonCard';
+import PlaylistSkeletonCard from '../common/PlaylistSkeletonCard';
 
 interface Props {
   playlistResults: PlaylistResponse[];
 }
 
-const PlaylistSection: React.FC<Props> = ({ playlistResults }) => {
+const SearchPlaylistSection: React.FC<Props> = ({ playlistResults }) => {
   const { setPlaylists, playlists } = usePlaylistStore();
   const [loading, setLoading] = useState(true);
 
@@ -31,4 +31,4 @@ const PlaylistSection: React.FC<Props> = ({ playlistResults }) => {
   );
 };
 
-export default PlaylistSection;
+export default SearchPlaylistSection;

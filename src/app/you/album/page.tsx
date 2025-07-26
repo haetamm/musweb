@@ -1,6 +1,6 @@
 import ErrorMessage from '@/components/common/ErrorMessage';
-import MyAlbumList from '@/components/common/MyAlbumList';
 import Pagination from '@/components/common/Pagination';
+import MyAlbumList from '@/components/you/MyAlbumList';
 import { AlbumAction } from '@/lib/action/AlbumAction';
 import { urlPage } from '@/utils/constans';
 import React from 'react';

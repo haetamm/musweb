@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { songFormSchema, SongFormData } from '@/utils/validation';
-import FormControllerInput from './FormControllerInput';
+import FormControllerInput from '../common/FormControllerInput';
 import { useHandleErrors } from '@/hooks/useHandleToast';
 import { SongMetadata, AlbumSection } from '@/utils/types';
 import useSongStore from '@/stores/song';
@@ -13,7 +13,7 @@ import SearchAlbumCard from './SearchAlbumCard';
 import useAlbumStore from '@/stores/album';
 import Link from 'next/link';
 import { urlPage } from '@/utils/constans';
-import CustomButton from './CustomButton';
+import CustomButton from '../common/CustomButton';
 
 interface SongFormProps {
   metadata: SongMetadata;
@@ -128,7 +128,7 @@ const SongForm: React.FC<SongFormProps> = ({ metadata, onCancel }) => {
           </div>
         </div>
         {/* Search Results and Selected Album Cards */}
-        <div className="col-span-1 md:col-span-2">
+        <div className="col-span-1 md:col-span-2 mt-2 md:mt-0">
           <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-x-4">
             {selectedAlbum && (
               <div className="flex-col">
@@ -174,7 +174,7 @@ const SongForm: React.FC<SongFormProps> = ({ metadata, onCancel }) => {
             )}
           </div>
         </div>
-        <div className="flex space-x-4">
+        <div className="flex space-x-4 mt-4">
           <CustomButton
             type="button"
             onClick={handleCancel}

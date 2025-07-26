@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { urlPage } from '@/utils/constans';
 import { AlbumResponse } from '@/lib/action/AlbumAction';
 import { formatDurationToMinutes } from '@/utils/helper';
-import ActionButton from '../layout/ActionButton';
+import ActionButton from './ActionButton';
 
 interface AlbumCardProps {
   album: AlbumResponse;

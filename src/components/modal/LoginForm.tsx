@@ -5,12 +5,11 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { FaArrowCircleLeft } from 'react-icons/fa';
-import FormControllerInput from './FormControllerInput';
+import FormControllerInput from '../common/FormControllerInput';
 import useAuthStore from '@/stores/auth';
-import toast from 'react-hot-toast';
 import { useHandleErrors } from '@/hooks/useHandleToast';
 import { LoginRequest } from '@/lib/action/AuthAction';
-import CustomButton from './CustomButton';
+import CustomButton from '../common/CustomButton';
 
 const LoginForm = () => {
   const { showGoogleLogin } = useModalStore();
@@ -33,7 +32,6 @@ const LoginForm = () => {
   const onSubmit = async (data: LoginRequest) => {
     try {
       await loginUser(data);
-      toast.success('Login berhasil!');
     } catch (error) {
       console.log(error);
       handleErrors(error);

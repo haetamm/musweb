@@ -1,10 +1,10 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import SongCard from './SongCard';
+import SongCard from '../common/SongCard';
 import { SongDetail } from '@/utils/types';
 import useSongStore from '@/stores/song';
-import SongCardSkeleton from './SongCardSkeleton';
+import SongCardSkeleton from '../common/SongCardSkeleton';
 
 interface MySongListProps {
   songsResult: SongDetail[];

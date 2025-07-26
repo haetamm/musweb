@@ -41,7 +41,7 @@ const Searchbar = () => {
     >
       <div className="relative flex-1">
         <input
-          type="text"
+          type="search"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder="Search songs, albums, playlists"

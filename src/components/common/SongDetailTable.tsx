@@ -5,10 +5,28 @@ import { urlPage } from '@/utils/constans';
 import Link from 'next/link';
 import React from 'react';
 import { SongSection } from '@/utils/types';
-import ActionButton from '../layout/ActionButton';
+import ActionButton from './ActionButton';
 import { useModalStore } from '@/stores/modal';
 import { useHandleErrors } from '@/hooks/useHandleToast';
 import useAlbumStore from '@/stores/album';
+
+const RawSkeleton = () => {
+  return (
+    <tr className="border-b border-white/10 animate-pulse">
+      <td className="py-4 px-4 text-gray-600"></td>
+      <td className="py-4 px-2">
+        <div className="h-4 w-32 bg-gray-600 rounded" />
+      </td>
+      <td className="py-4 px-2">
+        <div className="h-4 w-24 bg-gray-600 rounded" />
+      </td>
+      <td className="py-4 px-2 text-right pr-4">
+        <div className="h-4 w-12 bg-gray-600 rounded ml-auto" />
+      </td>
+      <td className="py-4"></td>
+    </tr>
+  );
+};
 
 interface SongDetailTableProps {
   owner?: string;
@@ -57,30 +75,15 @@ const SongDetailTable: React.FC<SongDetailTableProps> = ({
               <th className="pb-4 px-4 w-12">#</th>
               <th className="pb-4 px-2">Title</th>
               <th className="pb-4 px-2">Performer</th>
-              <th className="pb-4 px-2 text-right pr-4">Duration</th>
-              <th className="pb-4"></th>
+              <th className="pb-4 px-2 text-right pr-4 hidden xs:block">
+                Duration
+              </th>
+              <th className="pb-4 px-4"></th>
             </tr>
           </thead>
           <tbody>
             {loading
-              ? skeletonRows.map((_, index) => (
-                  <tr
-                    key={index}
-                    className="border-b border-white/10 animate-pulse"
-                  >
-                    <td className="py-4 px-4 text-gray-600">{index + 1}</td>
-                    <td className="py-4 px-2">
-                      <div className="h-4 w-32 bg-gray-600 rounded" />
-                    </td>
-                    <td className="py-4 px-2">
-                      <div className="h-4 w-24 bg-gray-600 rounded" />
-                    </td>
-                    <td className="py-4 px-2 text-right pr-4">
-                      <div className="h-4 w-12 bg-gray-600 rounded ml-auto" />
-                    </td>
-                    <td className="py-4"></td>
-                  </tr>
-                ))
+              ? skeletonRows.map((_, index) => <RawSkeleton key={index} />)
               : songs.map((song, index) => (
                   <tr
                     key={song.id}
@@ -100,10 +103,10 @@ const SongDetailTable: React.FC<SongDetailTableProps> = ({
                     <td className="py-4 px-2 text-purple-200">
                       {song.performer}
                     </td>
-                    <td className="py-4 px-2 text-right pr-4 text-gray-400">
+                    <td className="py-4 px-2 text-right pr-4 text-gray-400 hidden xs:block">
                       {formatDurationToMinutes(song.duration)}
                     </td>
-                    <td className="py-4 text-right hidden xs:block">
+                    <td className="py-4 text-right px-4">
                       <ActionButton owner={owner!} resourceId="" type="album">
                         <button
                           onClick={() => {

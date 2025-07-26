@@ -1,7 +1,7 @@
 import ErrorMessage from '@/components/common/ErrorMessage';
 import Pagination from '@/components/common/Pagination';
-import PlaylistSection from '@/components/common/PlaylistSection';
-import SearchNotFound from '@/components/layout/SearchNotFound';
+import SearchPlaylistSection from '@/components/search/SearchPlaylistSection';
+import SearchNotFound from '@/components/search/SearchNotFound';
 import { PlaylistAction } from '@/lib/action/PlaylistAction';
 import { urlPage } from '@/utils/constans';
 import React from 'react';
@@ -29,7 +29,7 @@ const SearchPalylistPage = async ({
   return (
     <>
       <div className="py-4 lg:py-0 space-y-6">
-        <PlaylistSection playlistResults={playlists} />
+        <SearchPlaylistSection playlistResults={playlists} />
       </div>
 
       {isEmpty && <SearchNotFound q={q || ''} />}

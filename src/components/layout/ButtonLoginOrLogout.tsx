@@ -7,7 +7,6 @@ import { useModalStore } from '@/stores/modal';
 import { urlPage } from '@/utils/constans';
 import { useRouter } from 'next/navigation';
 import React from 'react';
-import toast from 'react-hot-toast';
 
 const ButtonLoginOrLogout = () => {
   const { showGoogleLogin, showLogout, hideModal } = useModalStore();
@@ -21,7 +20,6 @@ const ButtonLoginOrLogout = () => {
     showLogout(async () => {
       try {
         await logoutUser();
-        toast.success('Logout berhasil!');
         router.push(urlPage.HOME);
         hideModal();
       } catch (error) {

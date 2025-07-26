@@ -18,56 +18,14 @@ import {
   FaUser,
 } from 'react-icons/fa6';
 import { IoMdTime } from 'react-icons/io';
-
-const SongDetailItem = ({
-  icon,
-  label,
-  value,
-}: {
-  icon: React.ReactNode;
-  label: string;
-  value: React.ReactNode;
-}) => (
-  <div className="bg-gray-800/40 p-4 rounded-xl backdrop-blur-sm">
-    <div className="flex items-center gap-3">
-      <div className="p-3 bg-white/5 rounded-full">{icon}</div>
-      <div>
-        <p className="text-gray-400 text-sm">{label}</p>
-        <p className="font-medium">{value}</p>
-      </div>
-    </div>
-  </div>
-);
-
-const SkeletonBox = ({ className = '' }: { className?: string }) => (
-  <div className={`bg-gray-700/50 animate-pulse rounded ${className}`} />
-);
-
-const SkeletonLoader = () => (
-  <div className="flex flex-col lg:flex-row gap-8 mb-10">
-    <div className="w-full lg:w-80 h-80 rounded-2xl bg-gray-700 animate-pulse" />
-    <div className="flex-1 space-y-6">
-      <SkeletonBox className="h-10 w-3/4" />
-      <SkeletonBox className="h-6 w-1/2" />
-      <SkeletonBox className="h-5 w-1/3" />
-      <div className="flex gap-4 mt-4">
-        <SkeletonBox className="h-12 w-12 rounded-full" />
-        <SkeletonBox className="h-12 w-12 rounded-full" />
-      </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {Array.from({ length: 6 }).map((_, idx) => (
-          <SkeletonBox key={idx} className="h-20 w-full rounded-xl" />
-        ))}
-      </div>
-    </div>
-  </div>
-);
+import SongDetailItem from './SongDetailItem';
+import SongDetailPageSkeleton from './SongDetailPageSkeleton';
 
 interface Props {
   songResult: SongDetailResponse;
 }
 
-const SongInfoSection: React.FC<Props> = ({ songResult }) => {
+const SongDetailPageSectionSection: React.FC<Props> = ({ songResult }) => {
   const { songDetailPage: song, setSongDetailPage } = useSongStore();
   const [loading, setLoading] = useState(true);
   const router = useRouter();
@@ -77,7 +35,7 @@ const SongInfoSection: React.FC<Props> = ({ songResult }) => {
     setLoading(false);
   }, [setSongDetailPage, songResult]);
 
-  if (loading) return <SkeletonLoader />;
+  if (loading) return <SongDetailPageSkeleton />;
 
   if (!song) {
     router.back();
@@ -216,4 +174,4 @@ const SongInfoSection: React.FC<Props> = ({ songResult }) => {
   );
 };
 
-export default SongInfoSection;
+export default SongDetailPageSectionSection;

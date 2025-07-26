@@ -9,7 +9,7 @@ import { FaHeart, FaPlay } from 'react-icons/fa';
 import { MdAccessTime } from 'react-icons/md';
 import { SongDetail } from '@/utils/types';
 import useSongStore from '@/stores/song';
-import ActionButton from '../layout/ActionButton';
+import ActionButton from '../common/ActionButton';
 
 interface SearchSongListProps {
   songsResult: SongDetail[];

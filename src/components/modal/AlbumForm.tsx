@@ -7,10 +7,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { MdClose } from 'react-icons/md';
-import FormControllerInput from './FormControllerInput';
+import FormControllerInput from '../common/FormControllerInput';
 import { albumFields } from '@/utils/fields';
 import useAlbumStore from '@/stores/album';
-import CustomButton from './CustomButton';
+import CustomButton from '../common/CustomButton';
 
 const AlbumForm = () => {
   const { hideModal } = useModalStore();
@@ -61,7 +61,7 @@ const AlbumForm = () => {
           </div>
           <div className="px-6 pb-6">
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-3">
-              <div className="space-y-3">
+              <div className="space-y-3 mb-4">
                 {albumFields.map((field, index) => (
                   <div key={index}>
                     <FormControllerInput

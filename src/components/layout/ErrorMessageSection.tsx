@@ -12,7 +12,7 @@ const ErrorMessageSection: React.FC<ErrorMessageSectionProps> = ({
 }) => {
   return (
     <div
-      className={`flex flex-col glass-card items-center justify-center text-red-400 text-sm px-4 py-2 text-center ${height}`}
+      className={`flex flex-col divide-white/5 glass-card  items-center justify-center text-red-400 text-sm px-4 py-2 text-center my-10 ${height}`}
     >
       <MdErrorOutline className="text-3xl mb-2" />
       {typeof error === 'string'

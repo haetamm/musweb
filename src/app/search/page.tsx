@@ -1,7 +1,7 @@
 import ErrorMessage from '@/components/common/ErrorMessage';
 import Pagination from '@/components/common/Pagination';
-import SearchSongList from '@/components/common/SearchSongList';
-import SearchNotFound from '@/components/layout/SearchNotFound';
+import SearchSongList from '@/components/search/SearchSongList';
+import SearchNotFound from '@/components/search/SearchNotFound';
 import { SongAction } from '@/lib/action/SongAction';
 import { urlPage } from '@/utils/constans';
 import React from 'react';

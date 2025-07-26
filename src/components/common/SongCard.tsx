@@ -3,7 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 import { SongDetail } from '@/utils/types';
-import ActionButton from '../layout/ActionButton';
+import ActionButton from './ActionButton';
 
 interface SongCardProps {
   song: SongDetail;

@@ -4,9 +4,9 @@ import { AlbumResponse } from '@/lib/action/AlbumAction';
 import { useModalStore } from '@/stores/modal';
 import React, { useEffect, useState } from 'react';
 import { FaPlus } from 'react-icons/fa6';
-import AlbumCard from './AlbumCard';
 import useAlbumStore from '@/stores/album';
-import AlbumCardSkeleton from './AlbumCardSkeleton';
+import AlbumCard from '../common/AlbumCard';
+import AlbumCardSkeleton from '../common/AlbumCardSkeleton';
 
 interface Props {
   albumResults: AlbumResponse[];

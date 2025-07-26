@@ -17,7 +17,7 @@ const SubNavLayout = ({ nav, isActive, children }: SubNavLayoutProps) => {
 
   return (
     <>
-      <div className="px-4">
+      <div className="px-4 mt-4 lg:mt-0">
         <div className="mb-2">
           <div className="px-2 lg:px-4 py-0 lg:py-2 flex gap-x-8 items-center">
             {nav.map((item) => (

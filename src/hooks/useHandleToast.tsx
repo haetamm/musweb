@@ -95,7 +95,7 @@ export const showSuccessToast = (
         <div className="flex-1 py-2 pr-3 text-sm text-green-800">
           <p className="font-medium">Success</p>
           <p className="mt-1">
-            {message},{' '}
+            {message}{' '}
             {linkHref && (
               <Link
                 onClick={() => toast.dismiss(t.id)}

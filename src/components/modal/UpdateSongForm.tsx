@@ -32,7 +32,7 @@ const UpdateSongForm: React.FC<UpdateSongFormProps> = ({ fetchSong }) => {
 
   useEffect(() => {
     fetchSong();
-  }, []);
+  }, [fetchSong]);
 
   const handleBack = () => {
     hideModal();

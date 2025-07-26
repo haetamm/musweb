@@ -1,4 +1,4 @@
-import AlbumDetailSection from '@/components/common/AlbumDetailSection';
+import AlbumDetailPageSection from '@/components/album/AlbumDetailPageSection';
 import ErrorMessage from '@/components/common/ErrorMessage';
 import NotFoundMessage from '@/components/common/NotFoundMessage';
 import { AlbumAction } from '@/lib/action/AlbumAction';
@@ -22,7 +22,7 @@ const AlbumDetailPage = async ({
   return (
     <div className="px-4">
       <div className="text-white py-8 xl:mt-2 rounded-xl ">
-        <AlbumDetailSection albumResult={album} />
+        <AlbumDetailPageSection albumResult={album} />
       </div>
     </div>
   );

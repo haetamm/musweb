@@ -8,7 +8,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import { FaPlay, FaMusic, FaClock } from 'react-icons/fa';
-import ActionButton from '../layout/ActionButton';
+import ActionButton from '../common/ActionButton';
 
 interface SearchAlbumListProps {
   albumResults: AlbumResponse[];
@@ -72,10 +72,10 @@ const SearchAlbumList: React.FC<SearchAlbumListProps> = ({ albumResults }) => {
         }) => (
           <div
             key={id}
-            className="group w-full min-h-38 flex flex-col glass-card lg:flex-row lg:gap-6 px-3 pt-6 pb-2  lg:p-4 rounded-xl border border-gray-700 hover:border-indigo-500/30 transition-all duration-500 shadow-2xl hover:shadow-indigo-500/20 overflow-hidden"
+            className="relative group w-full min-h-38 flex flex-col lg:flex-row lg:gap-6 px-3 pt-6 pb-2 lg:px-4 lg:py-6 rounded-xl border border-gray-700 hover:border-indigo-500/30 transition-all duration-500 shadow-2xl hover:shadow-indigo-500/20 overflow-hidden"
           >
             {/* Album Cover */}
-            <div className="relative w-24 h-24 lg:w-38 lg:h-38 flex-shrink-0 overflow-hidden rounded-lg border-2 border-gray-600/50 group-hover:border-indigo-500/50 transition-all duration-300">
+            <div className="relative w-24 h-24 lg:w-40 lg:h-40 flex-shrink-0 overflow-hidden rounded-lg border-2 border-gray-600/50 group-hover:border-indigo-500/50 transition-all duration-300">
               <Image
                 src={coverUrl || '/img/default.svg'}
                 alt={`${title} album cover`}
@@ -89,7 +89,7 @@ const SearchAlbumList: React.FC<SearchAlbumListProps> = ({ albumResults }) => {
             </div>
 
             {/* Album Info */}
-            <div className="flex-grow flex flex-col justify-between mt-3 lg:mt-0">
+            <div className="flex-grow flex flex-col justify-between mt-3 py-1 lg:mt-0">
               <div>
                 <Link
                   href={`${urlPage.ALBUM}/${id}`}
@@ -121,7 +121,7 @@ const SearchAlbumList: React.FC<SearchAlbumListProps> = ({ albumResults }) => {
             </div>
 
             {/* Action Button */}
-            <div className="self-end lg:self-center">
+            <div className="absolute top-2 right-6 lg:static lg:self-center">
               <ActionButton owner={userId} resourceId={id} type="album" />
             </div>
           </div>

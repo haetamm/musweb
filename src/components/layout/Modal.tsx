@@ -2,11 +2,11 @@
 import { useModalStore } from '@/stores/modal';
 import { MODAL_TYPES } from '@/utils/constans';
 import React from 'react';
-import SmallModalSection from '../common/SmallModalSection';
-import LoginSection from '../common/LoginSection';
-import CreateSongForm from '../common/CreateSongForm';
-import AlbumForm from '../common/AlbumForm';
-import UpdateSongForm from '../common/UpdateSongForm';
+import SmallModalSection from '../modal/SmallModalSection';
+import LoginSection from '../modal/LoginSection';
+import CreateSongForm from '../modal/CreateSongForm';
+import AlbumForm from '../modal/AlbumForm';
+import UpdateSongForm from '../modal/UpdateSongForm';
 
 const Modal = () => {
   const { isVisible, type, hideModal, loading, executeCallback, desc } =

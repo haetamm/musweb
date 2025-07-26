@@ -1,6 +1,6 @@
 import ErrorMessage from '@/components/common/ErrorMessage';
 import Pagination from '@/components/common/Pagination';
-import PlaylistSection from '@/components/common/PlaylistSection';
+import PlaylistSection from '@/components/search/SearchPlaylistSection';
 import { PlaylistAction } from '@/lib/action/PlaylistAction';
 import { urlPage } from '@/utils/constans';
 import React from 'react';

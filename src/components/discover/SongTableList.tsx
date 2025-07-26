@@ -9,7 +9,7 @@ import { urlPage } from '@/utils/constans';
 import { SongDetail } from '@/utils/types';
 import useSongStore from '@/stores/song';
 import ErrorMessageSection from '../layout/ErrorMessageSection';
-import ActionButton from '../layout/ActionButton';
+import ActionButton from '../common/ActionButton';
 
 interface Props {
   songsResult: SongDetail[] | undefined;

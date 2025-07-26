@@ -1,10 +1,10 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import SongCard from './SongCard';
+import SongCard from '../common/SongCard';
 import { SongDetail } from '@/utils/types';
 import useSongStore from '@/stores/song';
-import SongCardSkeleton from './SongCardSkeleton';
+import SongCardSkeleton from '../common/SongCardSkeleton';
 import ErrorMessageSection from '../layout/ErrorMessageSection';
 
 interface Props {
@@ -13,7 +13,7 @@ interface Props {
 }
 
 const DiscoverSongList: React.FC<Props> = ({ songsResult, error }) => {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const { songs, setSongs } = useSongStore();
 
   useEffect(() => {
@@ -25,6 +25,9 @@ const DiscoverSongList: React.FC<Props> = ({ songsResult, error }) => {
 
   return (
     <>
+      {songs.length > 0 && (
+        <h2 className="text-lg font-bold mb-2">More of what you like</h2>
+      )}
       {error && <ErrorMessageSection error={error} />}
 
       <div className="grid grid-cols-2 xs:grid-cols-3 md:grid-cols-3 xl:grid-cols-4 gap-4 gap-y-6 xl:gap-y-10">

@@ -1,7 +1,7 @@
 import ErrorMessage from '@/components/common/ErrorMessage';
 import Pagination from '@/components/common/Pagination';
-import SearchAlbumList from '@/components/common/SearchAlbumList';
-import SearchNotFound from '@/components/layout/SearchNotFound';
+import SearchAlbumList from '@/components/search/SearchAlbumList';
+import SearchNotFound from '@/components/search/SearchNotFound';
 import { AlbumAction } from '@/lib/action/AlbumAction';
 import { urlPage } from '@/utils/constans';
 import React from 'react';

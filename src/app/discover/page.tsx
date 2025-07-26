@@ -1,7 +1,7 @@
-import AlbumCarousel from '@/components/common/AlbumCarousel';
-import DiscoverSong from '@/components/common/DiscoverSong';
-import SongCarousel from '@/components/common/SongCarousel';
-import SongTable from '@/components/common/SongTable';
+import AlbumCarousel from '@/components/discover/AlbumCarousel';
+import DiscoverSong from '@/components/discover/DiscoverSong';
+import SongCarousel from '@/components/discover/SongCarousel';
+import SongTable from '@/components/discover/SongTable';
 import { AlbumAction } from '@/lib/action/AlbumAction';
 import { SongAction } from '@/lib/action/SongAction';
 import React from 'react';

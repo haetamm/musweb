@@ -5,6 +5,7 @@ import { signInWithPopup, signOut } from 'firebase/auth';
 import { auth, googleProvider } from '@/lib/firebase/firebaseConfig';
 import { UserAction, UserResponse } from '@/lib/action/UserAction';
 import { useModalStore } from './modal';
+import { showSuccessToast } from '@/hooks/useHandleToast';
 
 interface AuthState {
   accessToken: string;
@@ -38,6 +39,7 @@ const useAuthStore = create<AuthState>((set) => ({
       const user = await UserAction.getUserCurrent();
       set({ user, isAuthenticated: true });
       useModalStore.getState().hideModal();
+      showSuccessToast('Login berhasil', '');
     } catch (error) {
       throw error;
     } finally {
@@ -80,6 +82,7 @@ const useAuthStore = create<AuthState>((set) => ({
         user: null,
       });
       useModalStore.getState().hideModal();
+      showSuccessToast('Logout berhasil', '');
     } catch (error) {
       throw error;
     }

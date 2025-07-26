@@ -93,7 +93,7 @@ const ActionButton: React.FC<Props> = ({
       </button>
 
       {open && (
-        <div className="absolute right-2 z-100 mt-0 w-36 bg-gradient-to-br from-indigo-900 to-purple-800 rounded-md shadow-lg ring-opacity-5">
+        <div className="absolute right-2 z-100 mt-0 w-36 bg-gradient-to-tr from-indigo-800 to-purple-700 rounded-md shadow-lg ring-1 ring-white/10">
           {children ? (
             <div className="py-1 text-sm text-white">{children}</div>
           ) : (

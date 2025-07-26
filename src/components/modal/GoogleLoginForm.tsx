@@ -3,7 +3,7 @@ import useAuthStore from '@/stores/auth';
 import { useModalStore } from '@/stores/modal';
 import React from 'react';
 import toast from 'react-hot-toast';
-import CustomButton from './CustomButton';
+import CustomButton from '../common/CustomButton';
 import { FcGoogle } from 'react-icons/fc';
 
 const GoogleLoginForm = () => {
@@ -38,7 +38,7 @@ const GoogleLoginForm = () => {
         </span>
       </CustomButton>
 
-      <div className="text-center mb-4">
+      <div className="text-center my-4">
         <span className="text-gray-400">Or with email</span>
       </div>
 
