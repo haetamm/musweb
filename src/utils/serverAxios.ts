@@ -2,7 +2,8 @@ import axios, { AxiosInstance } from 'axios';
 import { cookies, headers } from 'next/headers';
 import { HandleServerInternalErrors } from './handleServerInternalErrors';
 
-const ALLOWED_ORIGINS = ['http://localhost:3000', 'http://10.219.157.178:3000'];
+const ALLOWED_ORIGINS =
+  process.env.NEXT_PUBLIC_ALLOWED_ORIGINS?.split(',') || [];
 
 export async function createServerInternalAxios(): Promise<AxiosInstance> {
   try {

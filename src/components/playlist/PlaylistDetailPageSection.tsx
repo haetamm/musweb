@@ -201,7 +201,7 @@ const PlaylistLikes = ({ likes }: { likes: likeDetail[] }) => (
       isSmall
     />
 
-    <div className="flex flex-wrap gap-3">
+    <div className="flex flex-wrap gap-3 mt-3">
       {likes.map(({ fullname }, index) => (
         <div
           key={index}

@@ -29,3 +29,9 @@ export const albumFormSchema = z.object({
 });
 
 export type AlbumFormData = z.infer<typeof albumFormSchema>;
+
+export const playlistFormSchema = z.object({
+  title,
+});
+
+export type PlaylistFormData = z.infer<typeof playlistFormSchema>;

@@ -123,7 +123,7 @@ const SongForm: React.FC<SongFormProps> = ({ metadata, onCancel }) => {
               defaultValue={searchQuery}
               onKeyDown={handleSearch}
               placeholder="Search for an album"
-              className="w-full p-3 focus:bg-white focus:text-black bg-gray-900 rounded-lg focus:outline-none text-white placeholder-gray-400"
+              className="w-full p-2.5 focus:bg-white focus:text-black bg-gray-900 rounded-lg focus:outline-none text-white placeholder-gray-400"
             />
           </div>
         </div>

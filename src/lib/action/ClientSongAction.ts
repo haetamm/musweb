@@ -7,17 +7,23 @@ export type CreateSongResponse = {
 };
 
 export class ClientSongAction {
-  static async createSong(data: SongFormData): Promise<CreateSongResponse> {
-    const payload = {
+  private static buildPayload(data: SongFormData, id?: string) {
+    const payload: any = {
       title: data.title,
       year: data.year,
       performer: data.performer,
       genre: data.genre,
       duration: data.duration,
-      ...(data.albumId &&
-        data.albumId.trim() !== '' && { albumId: data.albumId }),
     };
 
+    if (id) payload.id = id;
+    if (data.albumId?.trim()) payload.albumId = data.albumId;
+
+    return payload;
+  }
+
+  static async createSong(data: SongFormData): Promise<CreateSongResponse> {
+    const payload = this.buildPayload(data);
     const response = await axios.post('/api/song/create', payload);
     return response.data;
   }
@@ -26,17 +32,7 @@ export class ClientSongAction {
     id: string,
     data: SongFormData
   ): Promise<CreateSongResponse> {
-    const payload = {
-      id,
-      title: data.title,
-      year: data.year,
-      performer: data.performer,
-      genre: data.genre,
-      duration: data.duration,
-      ...(data.albumId &&
-        data.albumId.trim() !== '' && { albumId: data.albumId }),
-    };
-
+    const payload = this.buildPayload(data, id);
     const response = await axios.put('/api/song/update', payload);
     return response.data;
   }

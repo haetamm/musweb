@@ -35,6 +35,22 @@ export type PaginatedSongResponse = {
 };
 
 export class SongAction {
+  private static getDefaultPaginatedResponse(): PaginatedSongResponse {
+    return {
+      songs: [],
+      _pagination: {
+        total: 0,
+        page: 1,
+        limit: 10,
+        totalPages: 1,
+        hasPreviousPage: false,
+        hasNextPage: false,
+        previousPage: null,
+        nextPage: null,
+      },
+    };
+  }
+
   static async getSongByCurrentUser(
     page: number = 1,
     limit: number = 10
@@ -46,19 +62,10 @@ export class SongAction {
       });
       return { data: response.data.data };
     } catch (error) {
-      return handleApiError<PaginatedSongResponse>(error, {
-        songs: [],
-        _pagination: {
-          total: 0,
-          page: 1,
-          limit: 10,
-          totalPages: 1,
-          hasPreviousPage: false,
-          hasNextPage: false,
-          previousPage: null,
-          nextPage: null,
-        },
-      });
+      return handleApiError<PaginatedSongResponse>(
+        error,
+        this.getDefaultPaginatedResponse()
+      );
     }
   }
 
@@ -73,19 +80,10 @@ export class SongAction {
       });
       return { data: response.data.data };
     } catch (error) {
-      return handleApiError<PaginatedSongResponse>(error, {
-        songs: [],
-        _pagination: {
-          total: 0,
-          page: 1,
-          limit: 10,
-          totalPages: 1,
-          hasPreviousPage: false,
-          hasNextPage: false,
-          previousPage: null,
-          nextPage: null,
-        },
-      });
+      return handleApiError<PaginatedSongResponse>(
+        error,
+        this.getDefaultPaginatedResponse()
+      );
     }
   }
 
@@ -116,19 +114,10 @@ export class SongAction {
       });
       return { data: response.data.data };
     } catch (error) {
-      return handleApiError<PaginatedSongResponse>(error, {
-        songs: [],
-        _pagination: {
-          total: 0,
-          page: 1,
-          limit: 10,
-          totalPages: 1,
-          hasPreviousPage: false,
-          hasNextPage: false,
-          previousPage: null,
-          nextPage: null,
-        },
-      });
+      return handleApiError<PaginatedSongResponse>(
+        error,
+        this.getDefaultPaginatedResponse()
+      );
     }
   }
 }

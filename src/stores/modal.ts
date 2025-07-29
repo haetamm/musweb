@@ -18,6 +18,7 @@ interface ModalState {
   showUpdateSong: (callback: () => void | Promise<void>) => void;
   showCreateAlbum: () => void;
   showUpdateAlbum: () => void;
+  showPlaylistForm: () => void;
   showDelete: (desc: string, callback: () => void | Promise<void>) => void;
   showUserGoogleForm: () => void;
   hideModal: () => void;
@@ -72,6 +73,10 @@ export const useModalStore = create<ModalState>((set, get) => ({
 
   showUpdateAlbum: () => {
     get().showModal(MODAL_TYPES.UPDATE_ALBUM_FORM);
+  },
+
+  showPlaylistForm: () => {
+    get().showModal(MODAL_TYPES.PLAYLIST_FORM);
   },
 
   showUserGoogleForm: () => {

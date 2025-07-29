@@ -7,6 +7,7 @@ import LoginSection from '../modal/LoginSection';
 import CreateSongForm from '../modal/CreateSongForm';
 import AlbumForm from '../modal/AlbumForm';
 import UpdateSongForm from '../modal/UpdateSongForm';
+import PlaylistSection from '../modal/PlaylistSection';
 
 const Modal = () => {
   const { isVisible, type, hideModal, loading, executeCallback, desc } =
@@ -63,6 +64,8 @@ const Modal = () => {
 
           {(type === MODAL_TYPES.CREATE_ALBUM_FORM ||
             type === MODAL_TYPES.UPDATE_ALBUM_FORM) && <AlbumForm />}
+
+          {type === MODAL_TYPES.PLAYLIST_FORM && <PlaylistSection />}
         </div>
       </div>
     </>

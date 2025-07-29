@@ -32,6 +32,22 @@ export type PaginatedPlaylistResponse = {
 };
 
 export class PlaylistAction {
+  private static getDefaultPaginatedResponse(): PaginatedPlaylistResponse {
+    return {
+      playlists: [],
+      _pagination: {
+        total: 0,
+        page: 1,
+        limit: 10,
+        totalPages: 1,
+        hasPreviousPage: false,
+        hasNextPage: false,
+        previousPage: null,
+        nextPage: null,
+      },
+    };
+  }
+
   static async getPlaylistByUserCurrent(
     page: number = 1,
     limit: number = 10
@@ -43,19 +59,10 @@ export class PlaylistAction {
       });
       return { data: response.data.data };
     } catch (error) {
-      return handleApiError<PaginatedPlaylistResponse>(error, {
-        playlists: [],
-        _pagination: {
-          total: 0,
-          page: 1,
-          limit: 10,
-          totalPages: 1,
-          hasPreviousPage: false,
-          hasNextPage: false,
-          previousPage: null,
-          nextPage: null,
-        },
-      });
+      return handleApiError<PaginatedPlaylistResponse>(
+        error,
+        this.getDefaultPaginatedResponse()
+      );
     }
   }
 
@@ -70,19 +77,10 @@ export class PlaylistAction {
       });
       return { data: response.data.data };
     } catch (error) {
-      return handleApiError<PaginatedPlaylistResponse>(error, {
-        playlists: [],
-        _pagination: {
-          total: 0,
-          page: 1,
-          limit: 10,
-          totalPages: 1,
-          hasPreviousPage: false,
-          hasNextPage: false,
-          previousPage: null,
-          nextPage: null,
-        },
-      });
+      return handleApiError<PaginatedPlaylistResponse>(
+        error,
+        this.getDefaultPaginatedResponse()
+      );
     }
   }
 
@@ -97,19 +95,10 @@ export class PlaylistAction {
       });
       return { data: response.data.data };
     } catch (error) {
-      return handleApiError<PaginatedPlaylistResponse>(error, {
-        playlists: [],
-        _pagination: {
-          total: 0,
-          page: 1,
-          limit: 10,
-          totalPages: 1,
-          hasPreviousPage: false,
-          hasNextPage: false,
-          previousPage: null,
-          nextPage: null,
-        },
-      });
+      return handleApiError<PaginatedPlaylistResponse>(
+        error,
+        this.getDefaultPaginatedResponse()
+      );
     }
   }
 
@@ -137,19 +126,10 @@ export class PlaylistAction {
       });
       return { data: response.data.data };
     } catch (error) {
-      return handleApiError<PaginatedPlaylistResponse>(error, {
-        playlists: [],
-        _pagination: {
-          total: 0,
-          page: 1,
-          limit: 10,
-          totalPages: 1,
-          hasPreviousPage: false,
-          hasNextPage: false,
-          previousPage: null,
-          nextPage: null,
-        },
-      });
+      return handleApiError<PaginatedPlaylistResponse>(
+        error,
+        this.getDefaultPaginatedResponse()
+      );
     }
   }
 }

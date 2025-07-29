@@ -28,4 +28,5 @@ export const MODAL_TYPES = {
   CREATE_ALBUM_FORM: 'createAlbumForm',
   UPDATE_ALBUM_FORM: 'updateAlbumForm',
   GOOGLE_LOGIN_FORM: 'googleLoginForm',
+  PLAYLIST_FORM: 'playlistForm',
 } as const;

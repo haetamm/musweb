@@ -31,6 +31,21 @@ export type PaginatedAlbumResponse = {
 };
 
 export class AlbumAction {
+  private static getDefaultPaginatedResponse(): PaginatedAlbumResponse {
+    return {
+      albums: [],
+      _pagination: {
+        total: 0,
+        page: 1,
+        limit: 10,
+        totalPages: 1,
+        hasPreviousPage: false,
+        hasNextPage: false,
+        previousPage: null,
+        nextPage: null,
+      },
+    };
+  }
   static async getAlbumByUserCurrent(
     page: number = 1,
     limit: number = 10
@@ -42,19 +57,10 @@ export class AlbumAction {
       });
       return { data: response.data.data };
     } catch (error) {
-      return handleApiError<PaginatedAlbumResponse>(error, {
-        albums: [],
-        _pagination: {
-          total: 0,
-          page: 1,
-          limit: 10,
-          totalPages: 1,
-          hasPreviousPage: false,
-          hasNextPage: false,
-          previousPage: null,
-          nextPage: null,
-        },
-      });
+      return handleApiError<PaginatedAlbumResponse>(
+        error,
+        this.getDefaultPaginatedResponse()
+      );
     }
   }
 
@@ -82,19 +88,10 @@ export class AlbumAction {
       });
       return { data: response.data.data };
     } catch (error) {
-      return handleApiError<PaginatedAlbumResponse>(error, {
-        albums: [],
-        _pagination: {
-          total: 0,
-          page: 1,
-          limit: 10,
-          totalPages: 1,
-          hasPreviousPage: false,
-          hasNextPage: false,
-          previousPage: null,
-          nextPage: null,
-        },
-      });
+      return handleApiError<PaginatedAlbumResponse>(
+        error,
+        this.getDefaultPaginatedResponse()
+      );
     }
   }
 }

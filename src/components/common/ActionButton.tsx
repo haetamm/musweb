@@ -4,6 +4,7 @@ import { useHandleErrors } from '@/hooks/useHandleToast';
 import useAlbumStore from '@/stores/album';
 import useAuthStore from '@/stores/auth';
 import { useModalStore } from '@/stores/modal';
+import usePlaylistStore from '@/stores/playlists';
 import useSongStore from '@/stores/song';
 import React, { useEffect, useRef, useState } from 'react';
 import { FaEllipsisH } from 'react-icons/fa';
@@ -25,9 +26,11 @@ const ActionButton: React.FC<Props> = ({
   const { handleErrors } = useHandleErrors();
   const [open, setOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const { showUpdateSong, showUpdateAlbum, showDelete } = useModalStore();
+  const { showUpdateSong, showUpdateAlbum, showDelete, showPlaylistForm } =
+    useModalStore();
   const { getSongById, deleteSongById } = useSongStore();
   const { setAlbumDetail, deleteAlbumById } = useAlbumStore();
+  const { setPlaylistSong } = usePlaylistStore();
 
   // Close dropdown on outside click
   useEffect(() => {
@@ -69,6 +72,11 @@ const ActionButton: React.FC<Props> = ({
     }
   };
 
+  const handlePlaylist = () => {
+    setPlaylistSong(resourceId);
+    showPlaylistForm();
+  };
+
   const handleDelete = () => {
     showDelete(`Are you sure you want to delete this ${type}?`, async () => {
       try {
@@ -99,7 +107,10 @@ const ActionButton: React.FC<Props> = ({
           ) : (
             <div className="py-1 text-sm text-white">
               {isShow && (
-                <button className="w-full text-left px-4 py-2 hover:bg-white/20 rounded">
+                <button
+                  onClick={handlePlaylist}
+                  className="w-full text-left px-4 py-2 hover:bg-white/20 rounded"
+                >
                   Add to Playlist
                 </button>
               )}

@@ -62,6 +62,7 @@ const useAuthStore = create<AuthState>((set) => ({
       const user = await UserAction.getUserCurrent();
       set({ user, isAuthenticated: true });
       useModalStore.getState().hideModal();
+      showSuccessToast('Login berhasil', '');
     } catch (error) {
       throw error;
     } finally {

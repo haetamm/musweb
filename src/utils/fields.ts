@@ -56,3 +56,11 @@ export const albumFields = [
     placeholder: 'Year',
   },
 ] as const;
+
+export const playlistFields = [
+  {
+    name: 'title',
+    type: 'text',
+    placeholder: 'Playlist title',
+  },
+] as const;

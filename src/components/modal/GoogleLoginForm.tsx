@@ -2,7 +2,6 @@ import { useHandleErrors } from '@/hooks/useHandleToast';
 import useAuthStore from '@/stores/auth';
 import { useModalStore } from '@/stores/modal';
 import React from 'react';
-import toast from 'react-hot-toast';
 import CustomButton from '../common/CustomButton';
 import { FcGoogle } from 'react-icons/fc';
 
@@ -14,7 +13,6 @@ const GoogleLoginForm = () => {
   const handleGoogleLogin = async () => {
     try {
       await loginWithGoogle();
-      toast.success('Login berhasil!');
     } catch (error) {
       handleErrors(error);
     }

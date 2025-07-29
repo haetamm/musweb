@@ -18,7 +18,6 @@ const AlbumDetailPageSkeleton = () => {
             </div>
             <div className="flex gap-4 mt-4">
               <div className="h-10 w-28 bg-gray-600 rounded-full" />
-              <div className="h-10 w-10 bg-gray-600 rounded-full" />
             </div>
           </div>
         </div>
