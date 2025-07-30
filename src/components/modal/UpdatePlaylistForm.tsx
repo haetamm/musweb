@@ -2,6 +2,9 @@
 
 import React, { useState } from 'react';
 import usePlaylistStore, { PlaylistWithSongs } from '@/stores/playlists';
+import { useHandleErrors } from '@/hooks/useHandleToast';
+import Link from 'next/link';
+import { urlPage } from '@/utils/constans';
 
 const SkeletonCard = () => (
   <div className="glass-card h-[58px] flex justify-between px-2 py-1 items-center rounded-lg shadow-md animate-pulse bg-gray-800">
@@ -13,25 +16,53 @@ const SkeletonCard = () => (
   </div>
 );
 
-interface Props {
-  loading: boolean;
-  playlists: PlaylistWithSongs[];
-}
-
-const UpdatePlaylistForm: React.FC<Props> = ({ loading, playlists }) => {
+const UpdatePlaylistForm = () => {
+  const [loadingButton, setLoadingButton] = useState(false);
+  const { handleErrors } = useHandleErrors();
   const [searchTerm, setSearchTerm] = useState('');
-  const { playlistSong } = usePlaylistStore();
+  const {
+    loading,
+    playlistSong,
+    playlistWithSongs,
+    createPlaylistSong,
+    deletePlaylistSong,
+  } = usePlaylistStore();
 
   const filteredPlaylists =
     searchTerm.trim() === ''
-      ? playlists
-      : playlists.filter((playlist) =>
+      ? playlistWithSongs
+      : playlistWithSongs.filter((playlist) =>
           playlist.title.toLowerCase().includes(searchTerm.toLowerCase())
         );
 
   const getButtonCondition = (playlist: PlaylistWithSongs, songId: string) => {
     const isSongInPlaylist = playlist.songs.some((song) => song.id === songId);
     return isSongInPlaylist ? 'Remove' : 'Add to Playlist';
+  };
+
+  const handleButtonClick = async (
+    playlist: PlaylistWithSongs,
+    songId: string
+  ) => {
+    const isSongInPlaylist = playlist.songs.some((song) => song.id === songId);
+    setLoadingButton(true);
+    try {
+      if (isSongInPlaylist) {
+        await deletePlaylistSong({
+          id: playlist.id,
+          songId,
+        });
+      } else {
+        await createPlaylistSong({
+          id: playlist.id,
+          songId,
+        });
+      }
+    } catch (error) {
+      handleErrors(error);
+    } finally {
+      setLoadingButton(false);
+    }
   };
 
   return (
@@ -63,18 +94,30 @@ const UpdatePlaylistForm: React.FC<Props> = ({ loading, playlists }) => {
               className="glass-card h-[58px] flex justify-between px-2 py-1 items-center rounded-lg shadow-md hover:bg-gray-700 transition-all"
             >
               <div className="flex flex-col">
-                <h3 className="text-lg font-medium">{playlist.title}</h3>
+                <Link
+                  href={`${urlPage.PLAYLIST_DETAIL}/${playlist.id}`}
+                  className="text-lg font-medium"
+                >
+                  {playlist.title}
+                </Link>
                 <p className="text-sm text-gray-300">
-                  {playlist.songCount} songs
+                  {playlist.songs.length} songs
                 </p>
               </div>
               <button
                 className="px-2 py-1.5 text-sm font-medium bg-white text-black rounded hover:bg-gray-200 transition"
-                disabled={!playlistSong}
+                disabled={!playlistSong || loadingButton}
+                onClick={() => {
+                  if (playlistSong) {
+                    handleButtonClick(playlist, playlistSong.id);
+                  }
+                }}
               >
-                {playlistSong
-                  ? getButtonCondition(playlist, playlistSong.id)
-                  : 'Select a song'}
+                {loadingButton
+                  ? 'Loading'
+                  : playlistSong
+                    ? getButtonCondition(playlist, playlistSong.id)
+                    : 'Select a song'}
               </button>
             </div>
           ))

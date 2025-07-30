@@ -11,6 +11,7 @@ export type PlaylistDetailResponse = {
   id: string;
   title: string;
   owner: string;
+  userId: string;
   songCount: string;
   totalDuration: string;
   songs: SongSection[];

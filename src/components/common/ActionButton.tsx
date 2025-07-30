@@ -6,6 +6,7 @@ import useAuthStore from '@/stores/auth';
 import { useModalStore } from '@/stores/modal';
 import usePlaylistStore from '@/stores/playlists';
 import useSongStore from '@/stores/song';
+import { collaborationDetail } from '@/utils/types';
 import React, { useEffect, useRef, useState } from 'react';
 import { FaEllipsisH } from 'react-icons/fa';
 
@@ -14,6 +15,7 @@ interface Props {
   resourceId: string;
   type: 'song' | 'album' | 'playlist';
   children?: React.ReactNode;
+  collaborations?: collaborationDetail[]; // Accept collaborationDetail[]
 }
 
 const ActionButton: React.FC<Props> = ({
@@ -21,6 +23,7 @@ const ActionButton: React.FC<Props> = ({
   resourceId,
   type,
   children,
+  collaborations = [],
 }) => {
   const { isAuthenticated, user } = useAuthStore();
   const { handleErrors } = useHandleErrors();
@@ -46,12 +49,16 @@ const ActionButton: React.FC<Props> = ({
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const isShow = type === 'song' ? true : false;
+  const isShow = type === 'song';
 
-  const isOwner = owner === user?.id ? true : false;
+  // Check if user is owner or collaborator
+  const isOwner =
+    type === 'playlist'
+      ? owner === user?.id ||
+        collaborations.some((collab) => collab.userId === user?.id)
+      : owner === user?.id;
 
-  const canOpen =
-    type === 'album' ? isAuthenticated && isOwner : isAuthenticated;
+  const canOpen = isAuthenticated && (type === 'song' || isOwner);
 
   const toggleDropdown = () => {
     if (canOpen) setOpen(!open);
@@ -92,7 +99,7 @@ const ActionButton: React.FC<Props> = ({
   };
 
   return (
-    <div className=" inline-block text-left" ref={dropdownRef}>
+    <div className="inline-block text-left" ref={dropdownRef}>
       <button
         onClick={toggleDropdown}
         className={`${canOpen ? 'text-white hover:text-white/20 cursor-pointer' : 'text-white/20'} `}

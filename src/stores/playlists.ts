@@ -17,6 +17,11 @@ export interface PlaylistSong {
   coverUrl: string;
 }
 
+export interface PlaylistSongRequest {
+  id: string;
+  songId: string;
+}
+
 export interface PlaylistWithSongs {
   id: string;
   title: string;
@@ -31,6 +36,7 @@ interface PlaylistState {
   playlists: PlaylistResponse[];
   playlistDetailPage: PlaylistDetailResponse | null;
   playlistSong: PlaylistSong | null;
+  playlistWithSongs: PlaylistWithSongs[] | [];
   setPlaylists: (data: PlaylistResponse[]) => void;
   setplaylistDetailPage: (data: PlaylistDetailResponse) => void;
   setPlaylistSong: (id: string) => void;
@@ -38,13 +44,17 @@ interface PlaylistState {
     data: PlaylistFormData,
     songId: string | null
   ) => Promise<void>;
+  getPlaylistWithSongs: () => Promise<void>;
+  createPlaylistSong: (data: PlaylistSongRequest) => Promise<void>;
+  deletePlaylistSong: (data: PlaylistSongRequest) => Promise<void>;
 }
 
-const usePlaylistStore = create<PlaylistState>((set) => ({
+const usePlaylistStore = create<PlaylistState>((set, get) => ({
   loading: false,
   playlists: [],
   playlistDetailPage: null,
   playlistSong: null,
+  playlistWithSongs: [],
 
   setPlaylists: (data: PlaylistResponse[]) => {
     set({ playlists: data });
@@ -55,15 +65,30 @@ const usePlaylistStore = create<PlaylistState>((set) => ({
   },
 
   setPlaylistSong: (id: string) => {
-    const { songs } = useSongStore.getState();
-    const song = songs.find((song) => song.id === id);
-    if (song) {
+    const { songs, songDetailPage } = useSongStore.getState();
+
+    // 1. Cari di array songs
+    const foundSong = songs.find((song) => song.id === id);
+    if (foundSong) {
       set({
         playlistSong: {
-          id: song.id,
-          title: song.title,
-          performer: song.performer,
-          coverUrl: song.coverUrl,
+          id: foundSong.id,
+          title: foundSong.title,
+          performer: foundSong.performer,
+          coverUrl: foundSong.coverUrl,
+        },
+      });
+      return;
+    }
+
+    // 2. coba dari songDetailPage
+    if (songDetailPage && songDetailPage.id === id) {
+      set({
+        playlistSong: {
+          id: songDetailPage.id,
+          title: songDetailPage.title,
+          performer: songDetailPage.performer,
+          coverUrl: songDetailPage.coverUrl ?? '',
         },
       });
     }
@@ -73,7 +98,6 @@ const usePlaylistStore = create<PlaylistState>((set) => ({
     set({ loading: true });
     try {
       const playlist = await ClientPlaylistAction.createPlaylist(data, songId);
-      console.log(playlist);
 
       useModalStore.getState().hideModal();
       showSuccessToast(
@@ -84,6 +108,96 @@ const usePlaylistStore = create<PlaylistState>((set) => ({
       throw err;
     } finally {
       set({ loading: false });
+    }
+  },
+
+  getPlaylistWithSongs: async () => {
+    set({ loading: true });
+    try {
+      const playlists = await ClientPlaylistAction.getAllMyPlaylist();
+      set({ playlistWithSongs: playlists });
+    } catch (err) {
+      throw err;
+    } finally {
+      set({ loading: false });
+    }
+  },
+
+  createPlaylistSong: async (data: PlaylistSongRequest) => {
+    try {
+      const playlistId = await ClientPlaylistAction.createPlaylistSong(data);
+
+      const { playlistSong, playlistWithSongs } = get();
+
+      if (playlistSong && playlistSong.id === data.songId) {
+        const updatedPlaylists = playlistWithSongs.map((playlist) => {
+          if (playlist.id === data.id) {
+            return {
+              ...playlist,
+              songs: [...playlist.songs, playlistSong],
+            };
+          }
+          return playlist;
+        });
+
+        set({ playlistWithSongs: updatedPlaylists });
+      }
+
+      showSuccessToast(
+        'The song has been added to playlists.',
+        `${urlPage.PLAYLIST_DETAIL}/${playlistId}`
+      );
+    } catch (err) {
+      throw err;
+    }
+  },
+
+  deletePlaylistSong: async (data: PlaylistSongRequest) => {
+    try {
+      await ClientPlaylistAction.deletePlaylistSong(data);
+      const { playlistWithSongs, playlistDetailPage } = get();
+
+      // Update playlistWithSongs
+      const updatedPlaylists = playlistWithSongs.map((playlist) => {
+        if (playlist.id === data.id) {
+          return {
+            ...playlist,
+            songs: playlist.songs.filter((song) => song.id !== data.songId),
+          };
+        }
+        return playlist;
+      });
+
+      // Update playlistDetailPage if it exists and matches the playlist ID
+      let updatedPlaylistDetailPage = playlistDetailPage;
+      if (playlistDetailPage && playlistDetailPage.id === data.id) {
+        const deletedSong = playlistDetailPage.songs.find(
+          (song) => song.id === data.songId
+        );
+        const updatedSongs = playlistDetailPage.songs.filter(
+          (song) => song.id !== data.songId
+        );
+        updatedPlaylistDetailPage = {
+          ...playlistDetailPage,
+          songs: updatedSongs,
+          songCount: updatedSongs.length.toString(), // Update songCount
+          totalDuration: deletedSong
+            ? (
+                Number(playlistDetailPage.totalDuration) - deletedSong.duration
+              ).toString()
+            : playlistDetailPage.totalDuration, // Update totalDuration
+        };
+      }
+
+      // Update both states
+      set({
+        playlistWithSongs: updatedPlaylists,
+        playlistDetailPage: updatedPlaylistDetailPage,
+      });
+
+      showSuccessToast('The song has been deleted from the playlist.', '');
+    } catch (err) {
+      throw err;
     }
   },
 }));

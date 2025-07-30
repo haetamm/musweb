@@ -3,27 +3,21 @@ import { MdClose } from 'react-icons/md';
 import CreatePlaylistForm from './CreatePlaylistForm';
 import UpdatePlaylistForm from './UpdatePlaylistForm';
 import { useModalStore } from '@/stores/modal';
-import { ClientPlaylistAction } from '@/lib/action/ClientPlaylistAction';
 import { useHandleErrors } from '@/hooks/useHandleToast';
-import { PlaylistWithSongs } from '@/stores/playlists';
+import usePlaylistStore from '@/stores/playlists';
 
 const PlaylistSection = () => {
   const { hideModal } = useModalStore();
   const [activeTab, setActiveTab] = useState('create');
-  const [playlists, setPlaylists] = useState<PlaylistWithSongs[]>([]);
-  const [loading, setLoading] = useState(true);
   const { handleErrors } = useHandleErrors();
+  const { getPlaylistWithSongs } = usePlaylistStore();
 
   useEffect(() => {
     const fetchPlaylists = async () => {
       try {
-        const playlists = await ClientPlaylistAction.getAllMyPlaylist();
-        setPlaylists(playlists);
-        console.log(playlists);
+        await getPlaylistWithSongs();
       } catch (err) {
         handleErrors(err);
-      } finally {
-        setLoading(false);
       }
     };
 
@@ -68,7 +62,7 @@ const PlaylistSection = () => {
             {activeTab === 'create' ? (
               <CreatePlaylistForm />
             ) : (
-              <UpdatePlaylistForm loading={loading} playlists={playlists} />
+              <UpdatePlaylistForm />
             )}
           </div>
         </div>

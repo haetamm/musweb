@@ -1,14 +1,11 @@
-'use client';
-
-import { formatDurationToMinutes } from '@/utils/helper';
-import { urlPage } from '@/utils/constans';
-import Link from 'next/link';
-import React from 'react';
-import { SongSection } from '@/utils/types';
-import ActionButton from './ActionButton';
 import { useModalStore } from '@/stores/modal';
 import { useHandleErrors } from '@/hooks/useHandleToast';
 import useAlbumStore from '@/stores/album';
+import usePlaylistStore from '@/stores/playlists';
+import Link from 'next/link';
+import ActionButton from './ActionButton'; // Adjust the import path as needed
+import { collaborationDetail, SongSection } from '@/utils/types';
+import { formatDurationToMinutes } from '@/utils/helper';
 
 const RawSkeleton = () => {
   return (
@@ -33,25 +30,35 @@ interface SongDetailTableProps {
   resourceId?: string;
   songs: SongSection[];
   loading?: boolean;
+  type?: 'album' | 'playlist';
+  collaborations?: collaborationDetail[];
 }
 
 const SongDetailTable: React.FC<SongDetailTableProps> = ({
-  owner,
-  resourceId,
+  owner = '',
+  resourceId = '',
   songs,
-  loading,
+  loading = false,
+  type = 'album',
+  collaborations = [],
 }) => {
   const skeletonRows = Array.from({ length: 5 });
-  const { showDelete } = useModalStore();
+  const { showDelete, hideModal } = useModalStore();
   const { handleErrors } = useHandleErrors();
   const { deleteSongFromAlbum } = useAlbumStore();
+  const { deletePlaylistSong } = usePlaylistStore();
 
   const handleDelete = (songId: string) => {
     showDelete(
-      `Are you sure you want to delete this song from album?`,
+      `Are you sure you want to delete this song from ${type}?`,
       async () => {
         try {
-          await deleteSongFromAlbum(resourceId!, songId);
+          if (type === 'album') {
+            await deleteSongFromAlbum(resourceId, songId);
+          } else if (type === 'playlist') {
+            await deletePlaylistSong({ id: resourceId, songId });
+            hideModal();
+          }
         } catch (error) {
           handleErrors(error);
         }
@@ -94,7 +101,7 @@ const SongDetailTable: React.FC<SongDetailTableProps> = ({
                     </td>
                     <td className="py-4 px-2 text-purple-200">
                       <Link
-                        href={`${urlPage.SONG}/${song.id}`}
+                        href={`/song/${song.id}`} // Adjust the URL as needed
                         className="hover:underline cursor-pointer"
                       >
                         {song.title}
@@ -107,11 +114,14 @@ const SongDetailTable: React.FC<SongDetailTableProps> = ({
                       {formatDurationToMinutes(song.duration)}
                     </td>
                     <td className="py-4 text-right px-4">
-                      <ActionButton owner={owner!} resourceId="" type="album">
+                      <ActionButton
+                        owner={owner}
+                        resourceId={resourceId}
+                        type={type}
+                        collaborations={collaborations} // Pass collaborationDetail[] directly
+                      >
                         <button
-                          onClick={() => {
-                            handleDelete(song.id);
-                          }}
+                          onClick={() => handleDelete(song.id)}
                           className="w-full text-left px-4 py-2 text-red-600 hover:bg-white/20 rounded"
                         >
                           Delete

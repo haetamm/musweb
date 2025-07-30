@@ -98,6 +98,7 @@ const AlbumDetailSection: React.FC<Props> = ({ albumResult }) => {
         resourceId={album.id}
         songs={album.songs}
         loading={false}
+        type="album"
       />
     </div>
   );
