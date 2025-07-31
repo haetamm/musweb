@@ -48,7 +48,9 @@ const CreatePlaylistForm = () => {
         <div className="w-full">
           {playlistFields.map((field, index) => (
             <div key={index} className="space-y-1.5">
-              <label className="block">{field.placeholder}:</label>
+              <label className="-mb-2.5 block mt-3 font-medium text-lg">
+                {field.placeholder}:
+              </label>
               <FormControllerInput
                 name={field.name}
                 control={control}

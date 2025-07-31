@@ -22,7 +22,6 @@ const PlaylistDetailSkeleton = () => {
           <div className="flex space-x-4 pt-4">
             <div className="h-12 w-32 bg-purple-500/20 rounded-full"></div>
             <div className="h-12 w-12 bg-white/10 rounded-full"></div>
-            <div className="h-12 w-12 bg-white/10 rounded-full"></div>
           </div>
         </div>
       </div>

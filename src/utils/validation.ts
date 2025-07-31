@@ -8,7 +8,10 @@ export const loginFormSchema = z.object({
   password: passwordLogin,
 });
 
-const title = z.string().min(1, 'Title is required');
+const title = z
+  .string()
+  .min(3, 'Min. 3 characters')
+  .max(25, 'Max. 25 characters');
 const year = z.string().regex(/^\d{4}$/, 'Year must be a valid 4-digit number');
 
 export const songFormSchema = z.object({

@@ -44,7 +44,12 @@ const PlaylistDetailPageSection: React.FC<Props> = ({ playlistResult }) => {
       <PlaylistHeader owner={playlist.owner} />
 
       {/* Playlist Info */}
-      <PlaylistInfo title={playlist.title} owner={playlist.owner} />
+      <PlaylistInfo
+        id={playlist.id}
+        userId={playlist.userId}
+        title={playlist.title}
+        owner={playlist.owner}
+      />
 
       {/* Songs List */}
       <SongDetailTable

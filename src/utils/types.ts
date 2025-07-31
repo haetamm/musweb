@@ -66,6 +66,6 @@ export type PaginationResponse = {
 };
 
 export interface PaginatedResponse<T> {
-  data: T; // Will hold { songs: SongResponse[] } or similar
+  data: T;
   _pagination: PaginationResponse;
 }

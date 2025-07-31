@@ -47,12 +47,9 @@ const GoogleLoginForm = () => {
         className="w-full bg-gray-700 text-white placeholder-gray-400 p-2 rounded mb-4"
       />
 
-      <button
-        disabled
-        className="w-full bg-gray-500 text-white font-semibold py-2 rounded mb-4"
-      >
+      <CustomButton type="button" disabled={true} variant="secondary">
         Continue
-      </button>
+      </CustomButton>
     </>
   );
 };

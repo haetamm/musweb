@@ -52,7 +52,7 @@ const LoginForm = () => {
 
       <form onSubmit={handleSubmit(onSubmit)}>
         {loginFields.map((field, index) => (
-          <div key={index} className="">
+          <div key={index}>
             <FormControllerInput
               name={field.name}
               control={control}
@@ -62,13 +62,15 @@ const LoginForm = () => {
           </div>
         ))}
 
-        <CustomButton
-          type="submit"
-          loading={loading}
-          disabled={!isValid || isSubmitting || loading}
-        >
-          Login
-        </CustomButton>
+        <div className="mt-3">
+          <CustomButton
+            type="submit"
+            loading={loading}
+            disabled={!isValid || isSubmitting || loading}
+          >
+            Login
+          </CustomButton>
+        </div>
       </form>
     </>
   );

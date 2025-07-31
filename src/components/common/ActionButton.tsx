@@ -11,9 +11,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import { FaEllipsisH } from 'react-icons/fa';
 
 interface Props {
-  owner: string;
+  owner?: string;
   resourceId: string;
-  type: 'song' | 'album' | 'playlist';
+  type: 'song' | 'album' | 'playlist' | 'playlist-detail';
   children?: React.ReactNode;
   collaborations?: collaborationDetail[]; // Accept collaborationDetail[]
 }
@@ -58,7 +58,9 @@ const ActionButton: React.FC<Props> = ({
         collaborations.some((collab) => collab.userId === user?.id)
       : owner === user?.id;
 
-  const canOpen = isAuthenticated && (type === 'song' || isOwner);
+  const canOpen =
+    isAuthenticated &&
+    (type === 'song' || isOwner || type === 'playlist-detail');
 
   const toggleDropdown = () => {
     if (canOpen) setOpen(!open);

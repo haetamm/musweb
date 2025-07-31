@@ -47,6 +47,7 @@ interface PlaylistState {
   getPlaylistWithSongs: () => Promise<void>;
   createPlaylistSong: (data: PlaylistSongRequest) => Promise<void>;
   deletePlaylistSong: (data: PlaylistSongRequest) => Promise<void>;
+  updatePlaylist: (id: string, data: PlaylistFormData) => Promise<void>;
 }
 
 const usePlaylistStore = create<PlaylistState>((set, get) => ({
@@ -108,6 +109,28 @@ const usePlaylistStore = create<PlaylistState>((set, get) => ({
       throw err;
     } finally {
       set({ loading: false });
+    }
+  },
+
+  updatePlaylist: async (id: string, data: PlaylistFormData) => {
+    try {
+      await ClientPlaylistAction.updatePlaylist(id, data);
+
+      set((state) => {
+        if (state.playlistDetailPage && state.playlistDetailPage.id === id) {
+          return {
+            playlistDetailPage: {
+              ...state.playlistDetailPage,
+              title: data.title,
+            },
+          };
+        }
+        return {};
+      });
+      useModalStore.getState().hideModal();
+      showSuccessToast('The playlist has been updated successfully.', ``);
+    } catch (err) {
+      throw err;
     }
   },
 

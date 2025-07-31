@@ -106,7 +106,7 @@ const SongForm: React.FC<SongFormProps> = ({ metadata, onCancel }) => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4">
           {songFields.map((field, index) => (
             <div key={index}>
-              <label>{field.placeholder}:</label>
+              <label className="-mb-3 block mt-3">{field.placeholder}:</label>
               <FormControllerInput
                 name={field.name}
                 control={control}
@@ -117,18 +117,18 @@ const SongForm: React.FC<SongFormProps> = ({ metadata, onCancel }) => {
           ))}
           {/* Album Search Input */}
           <div className="relative">
-            <label>Search Album:</label>
+            <label className="-mb-3 block mt-3">Search Album:</label>
             <input
               type="search"
               defaultValue={searchQuery}
               onKeyDown={handleSearch}
               placeholder="Search for an album"
-              className="w-full p-2.5 focus:bg-white focus:text-black bg-gray-900 rounded-lg focus:outline-none text-white placeholder-gray-400"
+              className="w-full mt-3 p-2.5 focus:bg-white focus:text-black bg-gray-900 rounded-lg focus:outline-none text-white placeholder-gray-400"
             />
           </div>
         </div>
         {/* Search Results and Selected Album Cards */}
-        <div className="col-span-1 md:col-span-2 mt-2 md:mt-0">
+        <div className="col-span-1 md:col-span-2 mt-2 md:mt-3">
           <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-x-4">
             {selectedAlbum && (
               <div className="flex-col">

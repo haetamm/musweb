@@ -15,6 +15,18 @@ export class ClientPlaylistAction {
     return response.data.playlist;
   }
 
+  static async updatePlaylist(
+    id: string,
+    data: PlaylistFormData
+  ): Promise<string> {
+    const payload = {
+      id,
+      ...data,
+    };
+    const response = await axios.put('/api/playlist/update', payload);
+    return response.data.message;
+  }
+
   static async getAllMyPlaylist(): Promise<PlaylistWithSongs[]> {
     const response = await axios.post('/api/playlist/all');
     return response.data.playlists;
