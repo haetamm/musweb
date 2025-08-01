@@ -9,6 +9,7 @@ import { ClientPlaylistAction } from '@/lib/action/ClientPlaylistAction';
 import { useModalStore } from './modal';
 import { showSuccessToast } from '@/hooks/useHandleToast';
 import { urlPage } from '@/utils/constans';
+import { PlaylistData } from '@/utils/types';
 
 export interface PlaylistSong {
   id: string;
@@ -37,6 +38,7 @@ interface PlaylistState {
   playlistDetailPage: PlaylistDetailResponse | null;
   playlistSong: PlaylistSong | null;
   playlistWithSongs: PlaylistWithSongs[] | [];
+  playlistActivities: PlaylistData | null;
   setPlaylists: (data: PlaylistResponse[]) => void;
   setplaylistDetailPage: (data: PlaylistDetailResponse) => void;
   setPlaylistSong: (id: string) => void;
@@ -48,6 +50,8 @@ interface PlaylistState {
   createPlaylistSong: (data: PlaylistSongRequest) => Promise<void>;
   deletePlaylistSong: (data: PlaylistSongRequest) => Promise<void>;
   updatePlaylist: (id: string, data: PlaylistFormData) => Promise<void>;
+  getPlaylistActivities: (id: string) => Promise<void>;
+  resetPlaylistActivities: () => void;
 }
 
 const usePlaylistStore = create<PlaylistState>((set, get) => ({
@@ -56,6 +60,7 @@ const usePlaylistStore = create<PlaylistState>((set, get) => ({
   playlistDetailPage: null,
   playlistSong: null,
   playlistWithSongs: [],
+  playlistActivities: null,
 
   setPlaylists: (data: PlaylistResponse[]) => {
     set({ playlists: data });
@@ -223,6 +228,21 @@ const usePlaylistStore = create<PlaylistState>((set, get) => ({
       throw err;
     }
   },
+
+  getPlaylistActivities: async (id: string) => {
+    set({ loading: true });
+    try {
+      const playlistActivities =
+        await ClientPlaylistAction.getPlaylistActivities(id);
+      set({ playlistActivities });
+    } catch (err) {
+      throw err;
+    } finally {
+      set({ loading: false });
+    }
+  },
+
+  resetPlaylistActivities: () => set({ playlistActivities: null }),
 }));
 
 export default usePlaylistStore;

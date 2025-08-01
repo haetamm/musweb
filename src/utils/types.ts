@@ -69,3 +69,19 @@ export interface PaginatedResponse<T> {
   data: T;
   _pagination: PaginationResponse;
 }
+
+export interface Activity {
+  title: string;
+  action: 'add' | 'delete';
+  time: string;
+  fullname: string;
+}
+
+export interface PlaylistData {
+  id: string;
+  title: string;
+  owner: string;
+  created_at: string;
+  updated_at: string;
+  activities: Activity[];
+}

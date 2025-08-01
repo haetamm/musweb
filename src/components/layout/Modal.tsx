@@ -8,6 +8,7 @@ import CreateSongForm from '../modal/CreateSongForm';
 import AlbumForm from '../modal/AlbumForm';
 import UpdateSongForm from '../modal/UpdateSongForm';
 import PlaylistSection from '../modal/PlaylistSection';
+import PlaylistActivities from '../modal/PlaylistActivities';
 
 const Modal = () => {
   const { isVisible, type, hideModal, loading, executeCallback, desc } =
@@ -66,6 +67,10 @@ const Modal = () => {
             type === MODAL_TYPES.UPDATE_ALBUM_FORM) && <AlbumForm />}
 
           {type === MODAL_TYPES.PLAYLIST_FORM && <PlaylistSection />}
+
+          {type === MODAL_TYPES.PLAYLIST_ACTIVITIES && (
+            <PlaylistActivities fetchPlaylist={executeCallback} />
+          )}
         </div>
       </div>
     </>

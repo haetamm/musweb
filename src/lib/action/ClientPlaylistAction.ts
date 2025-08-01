@@ -1,4 +1,5 @@
 import { PlaylistSongRequest, PlaylistWithSongs } from '@/stores/playlists';
+import { PlaylistData } from '@/utils/types';
 import { PlaylistFormData } from '@/utils/validation';
 import axios from 'axios';
 
@@ -42,5 +43,12 @@ export class ClientPlaylistAction {
       data,
     });
     return response.data.message;
+  }
+
+  static async getPlaylistActivities(id: string): Promise<PlaylistData> {
+    const response = await axios.post('/api/playlist/activity', {
+      id,
+    });
+    return response.data.playlist;
   }
 }

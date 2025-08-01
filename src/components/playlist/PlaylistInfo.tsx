@@ -1,8 +1,13 @@
+'use client';
+
 import { FaHeart, FaPlay } from 'react-icons/fa';
 import { MdLibraryMusic } from 'react-icons/md';
 import ActionButton from '../common/ActionButton';
 import useAuthStore from '@/stores/auth';
 import { EditablePlaylistTitle } from './EditablePlaylistTitle';
+import { useModalStore } from '@/stores/modal';
+import { useHandleErrors } from '@/hooks/useHandleToast';
+import usePlaylistStore from '@/stores/playlists';
 
 const PlaylistInfo = ({
   id,
@@ -16,8 +21,21 @@ const PlaylistInfo = ({
   owner: string;
 }) => {
   const { user } = useAuthStore();
+  const { showPlaylistActivities } = useModalStore();
+  const { handleErrors } = useHandleErrors();
+  const { getPlaylistActivities } = usePlaylistStore();
 
   const isOwner = user?.id === userId;
+
+  const handleActivitiesPlaylist = () => {
+    showPlaylistActivities(async () => {
+      try {
+        await getPlaylistActivities(id);
+      } catch (error) {
+        handleErrors(error);
+      }
+    });
+  };
   return (
     <section className="flex px-2 flex-col xs:flex-row items-center md:items-end space-y-6 xs:space-y-0 xs:space-x-8 mb-12 relative">
       <div className="w-full xs:w-48 h-48 md:w-64 md:h-64 bg-indigo-800/30 rounded-xl shadow-lg flex items-center justify-center relative">
@@ -27,14 +45,14 @@ const PlaylistInfo = ({
       <div className="flex-1 w-full relative">
         <div className="absolute top-0 xs:-top-5 md:-top-16 lg:-top-10 right-0">
           <ActionButton resourceId={id} type="playlist-detail">
-            <button className="w-full text-left px-4 py-2 hover:bg-white/20 rounded">
+            <button
+              onClick={handleActivitiesPlaylist}
+              className="w-full text-left px-4 py-2 hover:bg-white/20 rounded"
+            >
               Activities
             </button>
             {isOwner && (
               <>
-                <button className="w-full text-left px-4 py-2 hover:bg-white/20 rounded">
-                  Update
-                </button>
                 <button className="w-full text-left px-4 py-2 hover:bg-white/20 rounded">
                   Collaborators
                 </button>
