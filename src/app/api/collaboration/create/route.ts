@@ -10,7 +10,6 @@ export async function POST(req: NextRequest) {
     const res = await axios.post('/collaborations', body);
     const { collaborations } = res.data.data;
     const response = NextResponse.json({ collaborations });
-    console.log(response);
     return response;
   } catch (error: any) {
     return HandleServerInternalErrors.toNextResponse(error);

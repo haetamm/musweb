@@ -197,7 +197,6 @@ const useAlbumStore = create<AlbumState>((set, get) => ({
     set({ loading: true });
     try {
       const data = await ClientAlbumAction.getAlbumByQuery(query);
-      console.log(data);
       return data;
     } catch (err) {
       throw err;

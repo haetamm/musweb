@@ -10,7 +10,6 @@ export async function POST(req: NextRequest) {
     const res = await axios.post(`/playlists/${id}/songs`, {
       songId,
     });
-    console.log(res.data);
 
     const { playlistId } = res.data.data;
     const response = NextResponse.json({ playlistId });

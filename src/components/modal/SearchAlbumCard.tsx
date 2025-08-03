@@ -25,7 +25,7 @@ const SearchAlbumCard = ({
 
   if (loading) {
     return (
-      <div className="border rounded-lg p-3 mb-3 flex items-center gap-3 transition-all cursor-pointer backdrop-blur-sm animate-pulse">
+      <div className="border rounded-lg p-3 flex items-center gap-3 transition-all cursor-pointer backdrop-blur-sm animate-pulse">
         <div className="w-16 h-16 min-w-[64px] rounded-lg bg-gray-700/50"></div>
 
         <div className="flex-1 min-w-0 space-y-2">

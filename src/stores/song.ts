@@ -109,7 +109,6 @@ const useSongStore = create<SongState>((set) => ({
 
   getSongById: async (songId: string) => {
     set({ loadingDetail: true });
-    console.log('hallo');
     try {
       const { id, title, year, performer, genre, duration, album } =
         await ClientSongAction.getSongById(songId);

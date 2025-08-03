@@ -137,7 +137,7 @@ const SongForm: React.FC<SongFormProps> = ({ metadata, onCancel }) => {
         </div>
         {/* Search Results and Selected Album Cards */}
         <div className="col-span-1 md:col-span-2 mt-2 md:mt-3">
-          <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-x-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4">
             {selectedAlbum && (
               <div className="flex-col">
                 <p>Album: </p>
@@ -151,9 +151,9 @@ const SongForm: React.FC<SongFormProps> = ({ metadata, onCancel }) => {
             )}
             {!searchResults.length && searchQuery && !searchLoading ? (
               <div
-                className={`${searchResults.length ? 'flex items-center justify-center' : 'inline-block mb-3 mt-auto '} col-span-1 md:col-span-2 lg:col-span-3 xl:col-span-5 flex  `}
+                className={`${searchResults.length ? 'flex items-center justify-center' : 'inline-block mb-3 mt-auto '} ${selectedAlbum ? 'col-span-1' : 'xs:col-span-2'}   flex  `}
               >
-                <div className="flex-col text-center border-red-300 border-[1px] p-5 rounded-lg">
+                <div className="flex-col text-center border-red-300 border-[1px] p-6 rounded-lg">
                   <p className="text-red-300">Album tidak ditemukan</p>
                   <Link
                     href={urlPage.LIBRARY_ALBUM}

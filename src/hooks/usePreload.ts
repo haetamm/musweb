@@ -21,7 +21,6 @@ const usePreload = () => {
     };
 
     loadAuth();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [checkAuth]);
 
   return { isAuthenticated, loading };
