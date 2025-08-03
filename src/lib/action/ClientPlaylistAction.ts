@@ -51,4 +51,11 @@ export class ClientPlaylistAction {
     });
     return response.data.playlist;
   }
+
+  static async deletePlaylistById(id: string): Promise<{ messsage: string }> {
+    const response = await axios.delete('/api/playlist/delete', {
+      data: { id },
+    });
+    return response.data.message;
+  }
 }

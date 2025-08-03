@@ -20,6 +20,7 @@ interface ModalState {
   showUpdateAlbum: () => void;
   showPlaylistForm: () => void;
   showPlaylistActivities: (callback: () => void | Promise<void>) => void;
+  showPlaylistCollaborationForm: () => void;
   showDelete: (desc: string, callback: () => void | Promise<void>) => void;
   showUserGoogleForm: () => void;
   hideModal: () => void;
@@ -81,8 +82,11 @@ export const useModalStore = create<ModalState>((set, get) => ({
   },
 
   showPlaylistActivities: (callback) => {
-    console.log('showPlaylistActivities called');
     get().showModal(MODAL_TYPES.PLAYLIST_ACTIVITIES, callback);
+  },
+
+  showPlaylistCollaborationForm: () => {
+    get().showModal(MODAL_TYPES.PLAYLIST_COLLABORATION_FORM);
   },
 
   showUserGoogleForm: () => {

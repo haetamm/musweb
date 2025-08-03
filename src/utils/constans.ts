@@ -30,4 +30,5 @@ export const MODAL_TYPES = {
   GOOGLE_LOGIN_FORM: 'googleLoginForm',
   PLAYLIST_FORM: 'playlistForm',
   PLAYLIST_ACTIVITIES: 'playlistActivities',
+  PLAYLIST_COLLABORATION_FORM: 'playlistCollaborationForm',
 } as const;

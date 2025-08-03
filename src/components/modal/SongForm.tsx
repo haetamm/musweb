@@ -102,7 +102,15 @@ const SongForm: React.FC<SongFormProps> = ({ metadata, onCancel }) => {
 
   return (
     <div className="my-10">
-      <form onSubmit={handleSubmit(onSubmit)} className="">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+          }
+        }}
+        className=""
+      >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4">
           {songFields.map((field, index) => (
             <div key={index}>

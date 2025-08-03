@@ -21,9 +21,11 @@ const PlaylistInfo = ({
   owner: string;
 }) => {
   const { user } = useAuthStore();
-  const { showPlaylistActivities } = useModalStore();
+  const { showPlaylistActivities, showPlaylistCollaborationForm, showDelete } =
+    useModalStore();
   const { handleErrors } = useHandleErrors();
-  const { getPlaylistActivities } = usePlaylistStore();
+  const { getPlaylistActivities, playlistDetailPage, deletePlaylistById } =
+    usePlaylistStore();
 
   const isOwner = user?.id === userId;
 
@@ -36,6 +38,23 @@ const PlaylistInfo = ({
       }
     });
   };
+
+  const handleCollaborations = () => {
+    if (playlistDetailPage) {
+      showPlaylistCollaborationForm();
+    }
+  };
+
+  const handleDeletePlaylist = async () => {
+    showDelete(`Are you sure you want to delete this playlist`, async () => {
+      try {
+        await deletePlaylistById(id);
+      } catch (error) {
+        handleErrors(error);
+      }
+    });
+  };
+
   return (
     <section className="flex px-2 flex-col xs:flex-row items-center md:items-end space-y-6 xs:space-y-0 xs:space-x-8 mb-12 relative">
       <div className="w-full xs:w-48 h-48 md:w-64 md:h-64 bg-indigo-800/30 rounded-xl shadow-lg flex items-center justify-center relative">
@@ -53,10 +72,16 @@ const PlaylistInfo = ({
             </button>
             {isOwner && (
               <>
-                <button className="w-full text-left px-4 py-2 hover:bg-white/20 rounded">
+                <button
+                  onClick={handleCollaborations}
+                  className="w-full text-left px-4 py-2 hover:bg-white/20 rounded"
+                >
                   Collaborators
                 </button>
-                <button className="w-full text-left px-4 py-2 text-red-600 hover:bg-white/20 rounded">
+                <button
+                  onClick={handleDeletePlaylist}
+                  className="w-full text-left px-4 py-2 text-red-600 hover:bg-white/20 rounded"
+                >
                   Delete
                 </button>
               </>

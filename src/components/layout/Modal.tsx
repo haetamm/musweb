@@ -9,10 +9,22 @@ import AlbumForm from '../modal/AlbumForm';
 import UpdateSongForm from '../modal/UpdateSongForm';
 import PlaylistSection from '../modal/PlaylistSection';
 import PlaylistActivities from '../modal/PlaylistActivities';
+import PlaylistCollaborationForm from '../modal/PlaylistCollaborationForm';
 
 const Modal = () => {
-  const { isVisible, type, hideModal, loading, executeCallback, desc } =
-    useModalStore();
+  const {
+    isVisible,
+    type,
+    hideModal,
+    loading,
+    executeCallback,
+    desc,
+    showPlaylistCollaborationForm,
+  } = useModalStore();
+
+  const cancelAction = desc?.toLowerCase().includes('collaborators')
+    ? showPlaylistCollaborationForm
+    : hideModal;
 
   if (!isVisible) return null;
 
@@ -52,7 +64,7 @@ const Modal = () => {
               desc={desc}
               buttonLabel="Delete"
               handleButton={executeCallback}
-              cancelButton={hideModal}
+              cancelButton={cancelAction}
               loading={loading}
             />
           )}
@@ -70,6 +82,10 @@ const Modal = () => {
 
           {type === MODAL_TYPES.PLAYLIST_ACTIVITIES && (
             <PlaylistActivities fetchPlaylist={executeCallback} />
+          )}
+
+          {type === MODAL_TYPES.PLAYLIST_COLLABORATION_FORM && (
+            <PlaylistCollaborationForm />
           )}
         </div>
       </div>

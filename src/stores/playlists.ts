@@ -9,7 +9,7 @@ import { ClientPlaylistAction } from '@/lib/action/ClientPlaylistAction';
 import { useModalStore } from './modal';
 import { showSuccessToast } from '@/hooks/useHandleToast';
 import { urlPage } from '@/utils/constans';
-import { PlaylistData } from '@/utils/types';
+import { collaborationDetail, PlaylistData } from '@/utils/types';
 
 export interface PlaylistSong {
   id: string;
@@ -52,6 +52,11 @@ interface PlaylistState {
   updatePlaylist: (id: string, data: PlaylistFormData) => Promise<void>;
   getPlaylistActivities: (id: string) => Promise<void>;
   resetPlaylistActivities: () => void;
+  addCollaborationsToPlaylist: (
+    newCollaborations: collaborationDetail[]
+  ) => void;
+  removeCollaborationFromPlaylist: (userId: string) => void;
+  deletePlaylistById: (id: string) => Promise<void>;
 }
 
 const usePlaylistStore = create<PlaylistState>((set, get) => ({
@@ -73,7 +78,7 @@ const usePlaylistStore = create<PlaylistState>((set, get) => ({
   setPlaylistSong: (id: string) => {
     const { songs, songDetailPage } = useSongStore.getState();
 
-    // 1. Cari di array songs
+    // 1. Cari di state songs
     const foundSong = songs.find((song) => song.id === id);
     if (foundSong) {
       set({
@@ -87,7 +92,7 @@ const usePlaylistStore = create<PlaylistState>((set, get) => ({
       return;
     }
 
-    // 2. coba dari songDetailPage
+    // 2. coba dari state songDetailPage
     if (songDetailPage && songDetailPage.id === id) {
       set({
         playlistSong: {
@@ -243,6 +248,53 @@ const usePlaylistStore = create<PlaylistState>((set, get) => ({
   },
 
   resetPlaylistActivities: () => set({ playlistActivities: null }),
+
+  addCollaborationsToPlaylist: (newCollaborations: collaborationDetail[]) => {
+    set((state) => {
+      if (!state.playlistDetailPage) return state;
+
+      // Cegah duplikasi userId
+      const existing = state.playlistDetailPage.collaborations;
+      const existingUserIds = new Set(existing.map((c) => c.userId));
+
+      const uniqueNew = newCollaborations.filter(
+        (c) => !existingUserIds.has(c.userId)
+      );
+
+      return {
+        playlistDetailPage: {
+          ...state.playlistDetailPage,
+          collaborations: [...existing, ...uniqueNew],
+        },
+      };
+    });
+  },
+
+  removeCollaborationFromPlaylist: (userId: string) => {
+    set((state) => {
+      if (!state.playlistDetailPage) return state;
+
+      const { collaborations, ...rest } = state.playlistDetailPage;
+
+      return {
+        playlistDetailPage: {
+          ...rest,
+          collaborations: collaborations.filter((c) => c.userId !== userId),
+        },
+      };
+    });
+  },
+
+  deletePlaylistById: async (id: string) => {
+    try {
+      await ClientPlaylistAction.deletePlaylistById(id);
+      set({ playlistDetailPage: null });
+      useModalStore.getState().hideModal();
+      showSuccessToast('The playlist has been deleted successfully.', '');
+    } catch (err) {
+      throw err;
+    }
+  },
 }));
 
 export default usePlaylistStore;
