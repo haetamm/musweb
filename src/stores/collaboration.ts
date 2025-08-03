@@ -1,6 +1,7 @@
 import { showSuccessToast } from '@/hooks/useHandleToast';
 import { ClientCollaborationAction } from '@/lib/action/ClientCollaborationAction';
 import { create } from 'zustand';
+import { useModalStore } from './modal';
 
 export interface CollaborationRequest {
   playlistId: string;
@@ -38,6 +39,7 @@ const useCollaboratorStore = create<CollaborationState>((set) => ({
     try {
       await ClientCollaborationAction.deleteCollaboration(data);
       showSuccessToast('Collaboration removed successfully.', '');
+      useModalStore.getState().showPlaylistCollaborationForm();
     } catch (error) {
       throw error;
     }

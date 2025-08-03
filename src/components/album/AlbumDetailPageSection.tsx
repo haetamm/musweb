@@ -8,8 +8,8 @@ import Image from 'next/image';
 import { AlbumDetailResponse } from '@/lib/action/AlbumAction';
 import useAlbumStore from '@/stores/album';
 import ActionButton from '../common/ActionButton';
-import { useRouter } from 'next/navigation';
 import AlbumDetailPageSkeleton from './AlbumDetailPageSkeleton';
+import NotFoundMessage from '../common/NotFoundMessage';
 
 interface Props {
   albumResult: AlbumDetailResponse;
@@ -18,7 +18,6 @@ interface Props {
 const AlbumDetailSection: React.FC<Props> = ({ albumResult }) => {
   const { setAlbumDetailPage, albumDetailPage: album } = useAlbumStore();
   const [loading, setLoading] = useState(true);
-  const router = useRouter();
 
   useEffect(() => {
     setAlbumDetailPage(albumResult);
@@ -30,8 +29,7 @@ const AlbumDetailSection: React.FC<Props> = ({ albumResult }) => {
   }
 
   if (!album) {
-    router.back();
-    return null;
+    return <NotFoundMessage label="Album" />;
   }
 
   return (

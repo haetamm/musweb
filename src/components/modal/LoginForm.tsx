@@ -33,7 +33,6 @@ const LoginForm = () => {
     try {
       await loginUser(data);
     } catch (error) {
-      console.log(error);
       handleErrors(error);
     }
   };

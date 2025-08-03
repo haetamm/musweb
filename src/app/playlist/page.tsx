@@ -24,7 +24,7 @@ const PlaylistPage = async ({
   const isEmpty = playlists.length === 0;
 
   return (
-    <div className="lg:px-4">
+    <div className="mb-10 lg:mb-0 lg:px-4">
       <h2 className="text-lg font-bold mt-4 lg:mt-0 mb-2">Your Playlist:</h2>
 
       <div className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-4 gap-y-6">

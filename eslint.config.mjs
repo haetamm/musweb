@@ -42,6 +42,7 @@ const config = [
       "@typescript-eslint/no-unused-vars": "error",
       "no-console": "off",
       "react-hooks/exhaustive-deps": "warn",
+      'react-hooks/exhaustive-deps': 'off',
     },
     settings: {
       react: {

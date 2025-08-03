@@ -4,15 +4,14 @@ import useCollaboratorStore from '@/stores/collaboration';
 import { useModalStore } from '@/stores/modal';
 import { MdSearch, MdCheck } from 'react-icons/md';
 import { collaborationDetail } from '@/utils/types';
-import { ClientUserAction } from '@/lib/action/ClientUserAction';
 import { useHandleErrors } from '@/hooks/useHandleToast';
 import useAuthStore from '@/stores/auth';
 import usePlaylistStore from '@/stores/playlists';
+import { UserAction } from '@/lib/action/UserAction';
 
 const PlaylistCollaborationForm = () => {
   const [loading, setLoading] = useState(false);
-  const { hideModal, showDelete, showPlaylistCollaborationForm } =
-    useModalStore();
+  const { hideModal, showDelete } = useModalStore();
   const { handleErrors } = useHandleErrors();
   const { user } = useAuthStore();
   const { createCollaboration, deleteCollaboration } = useCollaboratorStore();
@@ -46,10 +45,10 @@ const PlaylistCollaborationForm = () => {
 
     try {
       setIsSearching(true);
-      const results = await ClientUserAction.getUserByQuery(searchTerm);
+      const results = await UserAction.getUserByQuery(searchTerm);
       const filteredResults = results.filter(
         (u) =>
-          u.userId !== user?.id && // exclude current user
+          u.userId !== user?.id &&
           !collaborations.some((c) => c.userId === u.userId) &&
           !selectedCollaborations.some((s) => s.userId === u.userId)
       );
@@ -105,7 +104,6 @@ const PlaylistCollaborationForm = () => {
             userId,
           });
           removeCollaborationFromPlaylist(userId);
-          showPlaylistCollaborationForm();
         } catch (error) {
           handleErrors(error);
         }

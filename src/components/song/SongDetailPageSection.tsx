@@ -6,7 +6,6 @@ import { urlPage } from '@/utils/constans';
 import { formatDurationToMinutes } from '@/utils/helper';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { FaCalendarAlt } from 'react-icons/fa';
 import {
@@ -20,6 +19,7 @@ import {
 import { IoMdTime } from 'react-icons/io';
 import SongDetailItem from './SongDetailItem';
 import SongDetailPageSkeleton from './SongDetailPageSkeleton';
+import NotFoundMessage from '../common/NotFoundMessage';
 
 interface Props {
   songResult: SongDetailResponse;
@@ -28,7 +28,6 @@ interface Props {
 const SongDetailPageSectionSection: React.FC<Props> = ({ songResult }) => {
   const { songDetailPage: song, setSongDetailPage } = useSongStore();
   const [loading, setLoading] = useState(true);
-  const router = useRouter();
 
   useEffect(() => {
     setSongDetailPage(songResult);
@@ -38,13 +37,11 @@ const SongDetailPageSectionSection: React.FC<Props> = ({ songResult }) => {
   if (loading) return <SongDetailPageSkeleton />;
 
   if (!song) {
-    router.back();
-    return null;
+    return <NotFoundMessage label="Song" />;
   }
 
   return (
     <div className="flex flex-col lg:flex-row gap-8 mb-10">
-      {/* Album Art */}
       <div className="w-full lg:w-80 h-80 relative group overflow-hidden rounded-2xl shadow-2xl flex-shrink-0">
         {song.coverUrl ? (
           <Image

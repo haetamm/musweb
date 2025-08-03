@@ -16,7 +16,7 @@ const PlaylistDetailPage = async ({
   } = await PlaylistAction.getPlaylistById(id);
 
   if (status === 404) {
-    return <NotFoundMessage label="Album" />;
+    return <NotFoundMessage label="Playlist" />;
   }
 
   if (error || !playlist) {

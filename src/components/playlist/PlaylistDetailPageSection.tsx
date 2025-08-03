@@ -4,13 +4,13 @@ import React, { useEffect, useState } from 'react';
 import SongDetailTable from '../common/SongDetailTable';
 import { PlaylistDetailResponse } from '@/lib/action/PlaylistAction';
 import usePlaylistStore from '@/stores/playlists';
-import { useRouter } from 'next/navigation';
 import PlaylistDetailSkeleton from './PlaylistDetailSkeleton';
 import PlaylistHeader from './PlaylistHeader';
 import PlaylistInfo from './PlaylistInfo';
 import PlaylistLikes from './PlaylistLikes';
 import PlaylistStats from './PlaylistStats';
 import { useModalStore } from '@/stores/modal';
+import NotFoundMessage from '../common/NotFoundMessage';
 
 interface Props {
   playlistResult: PlaylistDetailResponse;
@@ -19,7 +19,6 @@ interface Props {
 const PlaylistDetailPageSection: React.FC<Props> = ({ playlistResult }) => {
   const [loading, setLoading] = useState(true);
   const { hideModal } = useModalStore();
-  const router = useRouter();
   const { playlistDetailPage: playlist, setplaylistDetailPage } =
     usePlaylistStore();
 
@@ -34,8 +33,7 @@ const PlaylistDetailPageSection: React.FC<Props> = ({ playlistResult }) => {
   }
 
   if (!playlist) {
-    router.back();
-    return null;
+    return <NotFoundMessage label="Playlist" />;
   }
 
   return (
